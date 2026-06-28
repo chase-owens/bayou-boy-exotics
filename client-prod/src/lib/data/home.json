@@ -1,0 +1,32 @@
+{
+	"hero": {
+		"image": "/images/hero5.png",
+		"eyebrow": "Bayou Boy",
+		"title": "Premium Flower",
+		"subtitle": "Fresh drops every week.",
+		"primaryAction": {
+			"label": "Browse Flower",
+			"href": "/flower"
+		}
+	},
+	"announcements": [
+		{
+			"title": "Today's Update",
+			"summary": "Closed until Monday. Menu drops Sunday night.",
+			"body": "We are currently out of town until Monday morning...",
+			"priority": "urgent",
+			"updatedAt": "2026-06-27T08:00:00-05:00"
+		}
+	],
+	"raffle": {
+		"title": "July Giveaway",
+		"reward": "$1000 Cash + $250 Store Credit",
+		"drawingAt": "2026-07-05T12:00:00-05:00",
+		"requirements": [
+			"Shop between June 29 and July 4",
+			"Follow all Bayou Instagram pages",
+			"Request to be entered"
+		],
+		"enabled": true
+	}
+}

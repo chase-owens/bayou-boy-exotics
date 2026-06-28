@@ -1,0 +1,111 @@
+{
+	"branding": {
+		"name": "Bayou Exotics",
+		"tagline": "Premium Flower • Premium Service"
+	},
+	"business": {
+		"hours": {
+			"dailyBreaks": [
+				{
+					"startsAt": "12:00",
+					"endsAt": "14:00",
+					"label": "Gym break"
+				}
+			],
+			"schedule": [
+				{
+					"day": "Monday",
+					"opensAt": "08:00",
+					"closesAt": "20:30"
+				},
+				{
+					"day": "Tuesday",
+					"opensAt": "08:00",
+					"closesAt": "20:30"
+				},
+				{
+					"day": "Wednesday",
+					"opensAt": "08:00",
+					"closesAt": "20:30"
+				},
+				{
+					"day": "Thursday",
+					"opensAt": "08:00",
+					"closesAt": "20:30"
+				},
+				{
+					"day": "Friday",
+					"opensAt": "08:00",
+					"closesAt": "20:30"
+				},
+				{
+					"day": "Saturday",
+					"opensAt": "07:30",
+					"closesAt": "17:00"
+				},
+				{
+					"day": "Sunday",
+					"closed": true,
+					"note": "Permanently closed Sundays"
+				}
+			],
+			"meetSchedule": {
+				"defaultTimes": ["08:15", "09:15", "10:45", "11:45", "14:15", "15:45", "17:00", "18:30"]
+			},
+			"meetCancellations": [
+				{
+					"id": "2026-07-03-cancel-evening",
+					"date": "2026-07-03",
+					"times": ["18:30", "19:30"],
+					"reason": "Evening meets unavailable"
+				}
+			]
+		},
+		"shipping": {
+			"enabled": true,
+			"minimumOrder": 500
+		},
+		"meeting": {
+			"cashOnly": true,
+			"appointmentOnly": true,
+			"arriveEarlyMinutes": 5
+		}
+	},
+	"contact": {
+		"city": "Irving, TX"
+	},
+	"navigation": [
+		{ "label": "Home", "href": "/" },
+		{ "label": "Flower", "href": "/flower" },
+		{ "label": "Other", "href": "/other" }
+	],
+	"closures": [
+		{
+			"id": "2026-06-anniversary-trip",
+			"title": "Anniversary Vacation",
+			"startsAt": "2026-06-04T14:00:00-05:00",
+			"endsAt": "2026-06-13T08:00:00-05:00",
+			"message": "Out of town and unavailable until Monday, July 13 at 8 AM. Please stock up before Saturday, July 4 at 2 PM."
+		}
+	],
+	"socials": [
+		{
+			"label": "Main",
+			"platform": "instagram",
+			"handle": "@bayousthebiggest",
+			"url": "https://instagram.com/bayousthebiggest"
+		},
+		{
+			"label": "Visuals",
+			"platform": "instagram",
+			"handle": "@visionsfromthebayou",
+			"url": "https://instagram.com/visionsfromthebayou"
+		},
+		{
+			"label": "Backup",
+			"platform": "instagram",
+			"handle": "@bayouboybackup_",
+			"url": "https://instagram.com/bayouboybackup_"
+		}
+	]
+}

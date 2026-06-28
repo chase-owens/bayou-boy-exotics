@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@theme {
+	/* Layout */
+	--color-background: #2b1637; /* deep Mardi Gras purple */
+	--color-surface: #3b214b; /* cards */
+	--color-surface-alt: #4a2b5d;
+
+	/* Brand */
+	--color-primary: #2b1637;
+	--color-primary-foreground: #fdfcf8;
+
+	--color-secondary: #0f5c49; /* bayou green */
+	--color-secondary-foreground: #ffffff;
+
+	--color-accent: #d4af37; /* antique gold */
+	--color-highlight: #8e44ad; /* carnival purple */
+
+	/* Text */
+	--color-foreground: #f8f4eb;
+	--color-muted: #d0c8d9;
+
+	/* Borders */
+	--color-border: rgba(255, 255, 255, 0.08);
+
+	/* Status */
+	--color-success: #3fb950;
+	--color-success-background: #12341d;
+
+	--color-warning: #d4af37;
+	--color-warning-background: #453612;
+
+	--color-error: #ef4444;
+	--color-error-background: #431818;
+
+	--color-sidebar: #23112f;
+
+	--font-heading: 'Libre Baskerville', serif;
+	--font-body: 'Inter', system-ui, sans-serif;
+
+	--radius-vintage: 0.75rem;
+	--shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+@layer base {
+	html {
+		background: var(--color-background);
+	}
+
+	body {
+		@apply bg-background text-foreground font-body antialiased;
+		min-height: 100vh;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-heading text-foreground;
+	}
+
+	a {
+		color: var(--color-accent);
+	}
+
+	a:hover {
+		color: white;
+	}
+
+	::selection {
+		background: var(--color-accent);
+		color: var(--color-primary);
+	}
+}
+
+@layer components {
+	.btn-base {
+		@apply rounded-vintage shadow-soft px-4 py-3 text-center text-sm font-medium transition-colors sm:py-4;
+	}
+
+	.btn-border {
+		border: 2px solid var(--color-border);
+	}
+
+	.btn-option {
+		@apply rounded-vintage px-2 py-2 text-center text-sm font-medium transition-colors;
+	}
+
+	@layer base {
+		html {
+			background: var(--color-background);
+		}
+
+		body {
+			@apply bg-background text-foreground font-body antialiased;
+			min-height: 100vh;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			@apply font-heading text-foreground;
+		}
+
+		a {
+			color: var(--color-accent);
+		}
+
+		a:hover {
+			color: white;
+		}
+
+		::selection {
+			background: var(--color-accent);
+			color: var(--color-primary);
+		}
+	}
+
+	.btn-link-secondary {
+		@apply text-foreground hover:text-primary;
+	}
+
+	.card-carnival {
+		@apply rounded-vintage border-border bg-surface shadow-soft border;
+	}
+
+	.mardi-gradient {
+		background-image: linear-gradient(
+			135deg,
+			var(--color-primary),
+			var(--color-secondary) 58%,
+			var(--color-accent)
+		);
+	}
+}
