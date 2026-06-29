@@ -30,15 +30,17 @@
 	};
 </script>
 
-<section class="rounded-vintage border border-border bg-surface p-4 shadow-soft">
+<section class="  pt-4">
 	<div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
 		<div class="flex justify-between items-center">
 			<div>
-				<p class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">Availability</p>
+				<p class="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">Availability</p>
 
 				<h2 class="mt-2 text-2xl font-bold">Current Hours</h2>
 			</div>
-			<div class="p-2 border rounded-vintage border-border"><Clock class="h-8 text-accent" /></div>
+			<div class="p-2 border rounded-vintage border-border">
+				<Clock class="h-8 text-secondary" />
+			</div>
 		</div>
 
 		{#if hours.dailyBreaks?.length}
@@ -55,7 +57,7 @@
 
 	<div class="mt-5 grid sm:grid-cols-2 rounded-vintage border border-border overflow-hidden">
 		{#each hours.schedule as day}
-			<div class=" border border-border bg-background px-4 py-1">
+			<div class=" border border-border px-4 py-1">
 				<div class="flex items-center justify-between gap-4 text-sm">
 					<p class="font-semibold">{day.day}</p>
 					<p

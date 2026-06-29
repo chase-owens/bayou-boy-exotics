@@ -13,7 +13,7 @@
 	);
 </script>
 
-<section class="rounded-vintage border border-border bg-surface p-5 shadow-soft">
+<section class="rounded-vintage border border-border bg-black p-5 shadow-soft">
 	<p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent">meet times</p>
 
 	<div class="mb-5">

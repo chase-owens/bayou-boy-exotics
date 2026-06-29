@@ -5,8 +5,8 @@
 		"title": "Premium Flower",
 		"subtitle": "Fresh drops every week.",
 		"primaryAction": {
-			"label": "Browse Flower",
-			"href": "/flower"
+			"label": "Browse Menu",
+			"href": "/menu"
 		}
 	},
 	"announcements": [

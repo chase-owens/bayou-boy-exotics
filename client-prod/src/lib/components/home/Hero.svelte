@@ -18,12 +18,14 @@
 		// background-position: 68% 45%;
 	"
 	>
-		<div class="absolute flex flex-col gap-2 sm:gap-5 top-0 left-0 bottom-0 max-w-50 p-5">
+		<div
+			class="absolute flex flex-col gap-2 lg:gap-4 top-0 left-0 bottom-0 max-w-50 lg:max-w-2xl p-5"
+		>
 			<p class=" text-xs font-semibold uppercase tracking-[0.3em] text-accent">
 				{hero.eyebrow ?? 'Bayou Boy'}
 			</p>
 
-			<h1 class="text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl">
+			<h1 class="text-4xl font-bold leading-tight text-foreground lg:text-5xl">
 				{hero.title}
 			</h1>
 

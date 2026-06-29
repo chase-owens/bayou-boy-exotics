@@ -6,14 +6,21 @@
 			"startsAt": "2026-06-04T14:00:00-05:00",
 			"endsAt": "2026-06-13T08:00:00-05:00",
 			"message": "Out of town and unavailable until Monday, July 13 at 8 AM. Please stock up before Saturday, July 4 at 2 PM."
+		},
+		{
+			"id": "2026-06-anniversary-trip",
+			"title": "Anniversary Vacation",
+			"startsAt": "2026-07-04T14:00:00-05:00",
+			"endsAt": "2026-07-13T08:00:00-05:00",
+			"message": "Out of town and unavailable until Monday, July 13 at 8 AM. Please stock up before Saturday, July 4 at 2 PM."
 		}
 	],
 	"meetCancellations": [
 		{
 			"id": "2026-06-03-cancel-evening",
 			"date": "2026-06-03",
-			"times": ["18:30", "19:30"],
-			"reason": "Evening meets unavailable"
+			"times": ["17:30", "18:30"],
+			"reason": "Son's football practice"
 		}
 	]
 }

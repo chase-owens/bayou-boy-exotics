@@ -1,0 +1,225 @@
+{
+	"lastUpdated": "2026-06-28T12:00:00-05:00",
+	"categories": [
+		{ "id": "flower", "label": "Flower", "sortOrder": 1, "active": true },
+		{ "id": "carts", "label": "Carts", "sortOrder": 2, "active": true },
+		{ "id": "wax", "label": "Wax", "sortOrder": 3, "active": true },
+		{ "id": "pre-rolls", "label": "Pre-Rolls", "sortOrder": 4, "active": true },
+		{ "id": "mushrooms", "label": "Mushrooms", "sortOrder": 5, "active": true },
+		{ "id": "edibles", "label": "Edibles", "sortOrder": 6, "active": true }
+	],
+	"listings": [
+		{
+			"id": "the-funk",
+			"categoryId": "flower",
+			"name": "The Funk",
+			"description": "The Rolls Royce of greenery. This is the most in-deman stand there is - only for conisourers. ",
+			"brand": "Dubbz Gardenz",
+			"type": "indica",
+			"tags": ["Fresh Drop", "Super Steal"],
+			"images": ["/images/funk.png"],
+			"pricing": [
+				{ "id": "2g", "label": "2g", "price": 15, "units": 2, "unit": "g" },
+				{ "id": "3g", "label": "3g", "price": 25, "units": 3, "unit": "g" },
+				{ "id": "3-5g", "label": "3.5g", "price": 30, "units": 3.5, "unit": "g" },
+				{ "id": "7g", "label": "7g", "price": 50, "units": 7, "unit": "g" },
+				{ "id": "14g", "label": "14g", "price": 90, "units": 14, "unit": "g" },
+				{ "id": "28g", "label": "28g", "price": 170, "units": 28, "unit": "g" }
+			],
+			"inventory": { "tracked": false, "soldOut": false },
+			"active": true,
+			"featured": true,
+			"sortOrder": 1
+		},
+		{
+			"id": "gamma-runtz",
+			"categoryId": "flower",
+			"name": "Gamma Runtz",
+			"brand": "Hilltop Farms",
+			"type": "sativa",
+			"tags": ["Fresh Drop"],
+			"images": ["/images/gamma.png"],
+			"pricing": [
+				{ "id": "2g", "label": "2g", "price": 15, "units": 2, "unit": "g" },
+				{ "id": "3g", "label": "3g", "price": 25, "units": 3, "unit": "g" },
+				{ "id": "3-5g", "label": "3.5g", "price": 30, "units": 3.5, "unit": "g" },
+				{ "id": "7g", "label": "7g", "price": 55, "units": 7, "unit": "g" },
+				{ "id": "14g", "label": "14g", "price": 100, "units": 14, "unit": "g" },
+				{ "id": "28g", "label": "28g", "price": 190, "units": 28, "unit": "g" }
+			],
+			"inventory": { "tracked": false, "soldOut": false },
+			"active": true,
+			"featured": false,
+			"sortOrder": 2
+		},
+		{
+			"id": "permafrost",
+			"categoryId": "flower",
+			"name": "Permafrost",
+			"brand": "Hilltop Farms",
+			"type": "indica",
+			"tags": ["Fresh Drop"],
+			"images": ["/images/perma.png"],
+			"pricing": [
+				{ "id": "2g", "label": "2g", "price": 15, "units": 2, "unit": "g" },
+				{ "id": "3g", "label": "3g", "price": 25, "units": 3, "unit": "g" },
+				{ "id": "3-5g", "label": "3.5g", "price": 30, "units": 3.5, "unit": "g" },
+				{ "id": "7g", "label": "7g", "price": 55, "units": 7, "unit": "g" },
+				{ "id": "14g", "label": "14g", "price": 100, "units": 14, "unit": "g" },
+				{ "id": "28g", "label": "28g", "price": 190, "units": 28, "unit": "g" }
+			],
+			"inventory": { "tracked": false, "soldOut": false },
+			"active": true,
+			"featured": false,
+			"sortOrder": 3
+		},
+		{
+			"id": "super-sour-kush",
+			"categoryId": "flower",
+			"name": "Super Sour Kush",
+			"brand": "LA StreetRunnerz X Hittz Infinity",
+			"type": "indica",
+			"tags": ["Fresh Drop"],
+			"images": ["/images/hero5.png"],
+			"pricing": [
+				{ "id": "2g", "label": "2g", "price": 15, "units": 2, "unit": "g" },
+				{ "id": "3g", "label": "3g", "price": 25, "units": 3, "unit": "g" },
+				{ "id": "3-5g", "label": "3.5g", "price": 30, "units": 3.5, "unit": "g" },
+				{ "id": "7g", "label": "7g", "price": 55, "units": 7, "unit": "g" },
+				{ "id": "14g", "label": "14g", "price": 100, "units": 14, "unit": "g" },
+				{ "id": "28g", "label": "28g", "price": 190, "units": 28, "unit": "g" }
+			],
+			"inventory": { "tracked": false, "soldOut": false },
+			"active": true,
+			"featured": false,
+			"sortOrder": 4
+		},
+		{
+			"id": "ny-sour-treatz",
+			"categoryId": "flower",
+			"name": "NY Sour Treatz",
+			"brand": "LA StreetRunnerz X Hittz Infinity",
+			"type": "sativa-dominant-hybrid",
+			"tags": ["Fresh Drop"],
+			"images": ["/images/hero5.png"],
+			"pricing": [
+				{ "id": "2g", "label": "2g", "price": 15, "units": 2, "unit": "g" },
+				{ "id": "3g", "label": "3g", "price": 25, "units": 3, "unit": "g" },
+				{ "id": "3-5g", "label": "3.5g", "price": 30, "units": 3.5, "unit": "g" },
+				{ "id": "7g", "label": "7g", "price": 55, "units": 7, "unit": "g" },
+				{ "id": "14g", "label": "14g", "price": 100, "units": 14, "unit": "g" },
+				{ "id": "28g", "label": "28g", "price": 190, "units": 28, "unit": "g" }
+			],
+			"inventory": { "tracked": false, "soldOut": false },
+			"active": true,
+			"featured": false,
+			"sortOrder": 5
+		},
+		{
+			"id": "mac-1",
+			"categoryId": "flower",
+			"name": "The Original MAC #1",
+			"brand": "Cookies",
+			"type": "hybrid",
+			"description": "Miracle Alien Cookies. Berner's classic strains drop.",
+			"tags": ["Classic", "Premium"],
+			"images": ["/images/hero5.png"],
+			"pricing": [
+				{ "id": "2g", "label": "2g", "price": 20, "units": 2, "unit": "g" },
+				{ "id": "3-5g", "label": "3.5g", "price": 35, "units": 3.5, "unit": "g" },
+				{ "id": "7g", "label": "7g", "price": 60, "units": 7, "unit": "g" },
+				{ "id": "14g", "label": "14g", "price": 110, "units": 14, "unit": "g" },
+				{ "id": "28g", "label": "28g", "price": 200, "units": 28, "unit": "g" }
+			],
+			"inventory": { "tracked": false, "soldOut": false },
+			"active": true,
+			"featured": true,
+			"sortOrder": 6
+		},
+		{
+			"id": "albino-penis-envy",
+			"categoryId": "mushrooms",
+			"name": "Albino Penis Envy Mushrooms",
+			"description": "Bred in New Zealand.",
+			"tags": ["Super Steal"],
+			"images": ["/images/hero5.png"],
+			"pricing": [
+				{ "id": "2g", "label": "2g", "price": 15, "units": 2, "unit": "g" },
+				{ "id": "3g", "label": "3g", "price": 25, "units": 3, "unit": "g" },
+				{ "id": "3-5g", "label": "3.5g", "price": 30, "units": 3.5, "unit": "g" },
+				{ "id": "7g", "label": "7g", "price": 50, "units": 7, "unit": "g" },
+				{ "id": "14g", "label": "14g", "price": 90, "units": 14, "unit": "g" },
+				{ "id": "28g", "label": "28g", "price": 170, "units": 28, "unit": "g" }
+			],
+			"inventory": { "tracked": false, "soldOut": false },
+			"active": true,
+			"featured": true,
+			"sortOrder": 7
+		},
+		{
+			"id": "rainbow-ice-dabbin-dotz",
+			"categoryId": "wax",
+			"name": "Rainbow Ice Dabbin Dotz Crumble Live Resin Wax",
+			"description": "Comes with jars.",
+			"tags": ["Live Resin"],
+			"images": ["/images/rainbow-wax.png"],
+			"pricing": [
+				{ "id": "2g", "label": "2g", "price": 20, "units": 2, "unit": "g" },
+				{ "id": "3-5g", "label": "3.5g", "price": 35, "units": 3.5, "unit": "g" },
+				{ "id": "7g", "label": "7g", "price": 60, "units": 7, "unit": "g" },
+				{ "id": "14g", "label": "14g", "price": 110, "units": 14, "unit": "g" },
+				{ "id": "28g", "label": "28g", "price": 200, "units": 28, "unit": "g" }
+			],
+			"inventory": { "tracked": false, "soldOut": false },
+			"active": true,
+			"featured": false,
+			"sortOrder": 8
+		},
+		{
+			"id": "wise-co-hash-rosin-carts",
+			"categoryId": "carts",
+			"name": "WISE Co. Hash Rosin Disposable Carts",
+			"brand": "WISE Co.",
+			"description": "0.5 gram 90-120u hash rosin disposable carts. Flavor options include Sour G, Glue, Fish Scale, Garlic Belts, and Cherry on Top.",
+			"tags": ["Hash Rosin", "Disposable", "Premium"],
+			"images": ["/images/wise.png"],
+			"pricing": [{ "id": "single", "label": "Each", "price": 45, "units": 1, "unit": "cart" }],
+			"options": [
+				{ "id": "sour-g", "label": "Sour G", "active": true },
+				{ "id": "glue", "label": "Glue", "active": true },
+				{ "id": "fish-scale", "label": "Fish Scale", "active": true },
+				{ "id": "garlic-belts", "label": "Garlic Belts", "active": true },
+				{ "id": "cherry-on-top", "label": "Cherry on Top", "active": true }
+			],
+			"inventory": { "tracked": false, "soldOut": false },
+			"active": true,
+			"featured": true,
+			"sortOrder": 9
+		},
+		{
+			"id": "hittz-infinity-2g-carts",
+			"categoryId": "carts",
+			"name": "Hittz Infinity 2g Disposable Carts",
+			"brand": "Hittz Infinity",
+			"description": "All-in-one live resin + shatter resin 2 gram digital screen disposable carts. Options include NY Sour, Miami Mintz, Duvalin, Triple Berry, and Jungle Juice.",
+			"tags": ["2g", "Disposable", "Live Resin"],
+			"images": ["/images/hero5.png"],
+			"pricing": [
+				{ "id": "single", "label": "1 for", "price": 35, "units": 1, "unit": "cart" },
+				{ "id": "two-pack", "label": "2 for", "price": 60, "units": 2, "unit": "cart" }
+			],
+			"options": [
+				{ "id": "sour-ny", "label": "NY Sour", "active": true },
+				{ "id": "mm", "label": "Miami Mintz", "active": true },
+				{ "id": "dv", "label": "Duvalin", "active": true },
+				{ "id": "t-berry", "label": "Triple Berry", "active": true },
+				{ "id": "jj", "label": "Jungle Juice", "active": true }
+			],
+			"inventory": { "tracked": false, "soldOut": false },
+			"active": true,
+			"featured": false,
+			"sortOrder": 10
+		}
+	],
+	"promotions": []
+}
