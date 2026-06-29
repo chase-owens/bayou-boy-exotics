@@ -31,7 +31,7 @@
 </script>
 
 <section class="  pt-4">
-	<div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+	<div class="flex flex-col gap-2">
 		<div class="flex justify-between items-center">
 			<div>
 				<p class="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">Availability</p>

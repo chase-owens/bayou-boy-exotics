@@ -1,6 +1,10 @@
+import type { CartItem } from "$lib/stores/cart.svelte";
+
 export interface HomeContent {
   hero: Hero;
-  announcement?: Announcement;
+  announcements?: Announcement[];
+  raffle?: Raffle;
+  features: SuperSteal[];
 }
 
 export interface Hero {
@@ -10,6 +14,14 @@ export interface Hero {
   subtitle?: string;
   primaryAction?: Action;
   secondaryAction?: Action;
+}
+
+export interface Raffle {
+  title: string;
+  reward: string;
+  drawingAt: string;
+  requirements: string[];
+  enabled: boolean;
 }
 
 export interface Announcement {
@@ -24,3 +36,21 @@ export interface Action {
   label: string;
   href: string;
 }
+
+export type SuperSteal =
+  | {
+      enabled: true;
+      eyebrow: string;
+      headline: string;
+      summary: string;
+      image: string;
+      cartItem: CartItem;
+    }
+  | {
+      enabled: true;
+      eyebrow: string;
+      headline: string;
+      summary: string;
+      image: string;
+      listingId: string;
+    };

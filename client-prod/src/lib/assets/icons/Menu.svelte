@@ -1,0 +1,11 @@
+<script lang="ts">
+	type Props = {
+		class?: string;
+	};
+
+	let { class: className = '' }: Props = $props();
+</script>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" class={className}>
+	<path d="M64 384h384v-42.67H64Zm0-106.67h384v-42.66H64ZM64 128v42.67h384V128Z" />
+</svg>

@@ -6,13 +6,16 @@ export type CartSelection = {
 
 export type CartItem = {
 	id: string;
+	image: string;
 	listingId: string;
 	listingName: string;
 	priceOptionId: string;
 	priceLabel: string;
 	price: number;
-	units: number;
+	quantity?: number;
 	selections: CartSelection[];
+	total?: number;
+	units: number;
 };
 
 const createCart = () => {
@@ -44,7 +47,7 @@ const createCart = () => {
 			return items.length;
 		},
 		get total() {
-			return items.reduce((sum, item) => sum + item.price, 0);
+			return items.reduce((sum, item) => sum + (item.total ?? item.price), 0);
 		},
 		addItem,
 		removeItem,

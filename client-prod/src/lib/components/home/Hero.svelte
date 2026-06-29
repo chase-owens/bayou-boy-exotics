@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Hero } from '../../../../../shared/types/Home';
-	import Caret from '../../assets/icons/Caret.svelte';
+	import Arrow from '../../assets/icons/Arrow.svelte';
 
 	type HeroProps = {
 		hero: Hero;
@@ -37,13 +37,15 @@
 
 			<div class=" flex flex-col gap-4 sm:flex-row">
 				{#if hero.primaryAction}
-					<a
-						class="btn-base btn-primary bg-background/90 max-w-150px flex items-center gap-2"
-						href={hero.primaryAction.href}
-					>
-						{hero.primaryAction.label}
-						<Caret class="h-4" />
-					</a>
+					<div class="mt-1">
+						<a
+							href="/menu"
+							class="inline-flex items-center gap-3 rounded-xl border border-highlight bg-black/70 px-6 py-3 font-semibold text-accent backdrop-blur transition hover:border-accent/80 hover:bg-black/85 hover:text-white"
+						>
+							<span>Shop Now</span>
+							<Arrow class="h-4" />
+						</a>
+					</div>
 				{/if}
 
 				{#if hero.secondaryAction}

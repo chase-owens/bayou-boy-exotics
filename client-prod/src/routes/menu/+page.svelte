@@ -36,7 +36,7 @@
 </svelte:head>
 
 <div class="mx-auto flex w-full max-w-5xl flex-col gap-5 pb-10">
-	<section class="rounded-vintage border border-border bg-black p-5 shadow-soft">
+	<section class="rounded-vintage border border-border bg-black/85 p-5 shadow-soft">
 		<p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent">Menu</p>
 
 		<div class="mt-3 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -122,7 +122,7 @@
 					</div>
 				</div>
 				<div
-					class="-mx-4 grid grid-cols-2 lg:grid-cols-3 snap-x gap-4 overflow-x-auto px-4 pb-3 sm:mx-0 sm:px-0"
+					class="-mx-4 grid grid-cols-2 lg:grid-cols-3 snap-x gap-4 overflow-visible px-4 pb-3 sm:mx-0 sm:px-0"
 				>
 					{#each listings as listing}
 						<a

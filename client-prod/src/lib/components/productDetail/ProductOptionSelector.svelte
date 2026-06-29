@@ -2,26 +2,11 @@
 	import type { Listing } from '../../../../../shared/types/Listing';
 	import type { PriceOption } from '../../../../../shared/types/Pricing';
 	import { cart } from '$lib/stores/cart.svelte';
-
-	type CartSelection = {
-		optionId: string;
-		label: string;
-		quantity: number;
-	};
-
-	export type ProductCartItem = {
-		listingId: string;
-		listingName: string;
-		priceOptionId: string;
-		priceLabel: string;
-		price: number;
-		units: number;
-		selections: CartSelection[];
-	};
+	import type { CartItem } from '../../../../../shared/types/Cart';
 
 	type Props = {
 		listing: Listing;
-		onAddToCart?: (item: ProductCartItem) => void;
+		onAddToCart?: (item: CartItem) => void;
 	};
 
 	let { listing, onAddToCart }: Props = $props();
@@ -65,12 +50,24 @@
 					units: selections[option.id]
 				})) ?? [];
 
+		const totalUnits = hasOptions
+			? selectedOptions.reduce((acc, cur) => {
+					const currUnits = (acc += cur.units);
+					return acc;
+				}, 0)
+			: 1;
+
+		const quantity = totalUnits / selectedPriceOption.units;
+
 		cart.addItem({
+			image: listing.images[0],
 			listingId: listing.id,
 			listingName: listing.name,
 			priceOptionId: selectedPriceOption.id,
 			priceLabel: selectedPriceOption.label,
 			price: selectedPriceOption.price,
+			total: !hasOptions ? selectedPriceOption.price : selectedPriceOption.price * quantity,
+			quantity,
 			selections: selectedOptions,
 			units: selectedPriceOption.units
 		});

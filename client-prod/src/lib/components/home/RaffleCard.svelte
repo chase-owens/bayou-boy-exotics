@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Raffle } from '../../../../../shared/types/Home';
 	import Ticket from '../../assets/icons/Ticket.svelte';
+	import SectionHeader from '../layout/SectionHeader.svelte';
 
 	type Props = {
 		raffle: Raffle;
@@ -18,16 +19,8 @@
 		}).format(new Date(value));
 </script>
 
-<section class="rounded-vintage border border-accent/40 bg-surface p-4 shadow-soft">
-	<div class="flex justify-between items-center">
-		<div>
-			<p class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">Raffle</p>
-			<h2 class="mt-2 text-2xl font-bold">
-				{raffle.title}
-			</h2>
-		</div>
-		<div class="p-2 border rounded-vintage border-border"><Ticket class="h-8 text-accent" /></div>
-	</div>
+<section class="rounded-vintage border border-accent/40 bg-secondary p-4 shadow-soft">
+	<SectionHeader eyebrow="Raffle" title={raffle.title} variant="raffle" />
 
 	<div class="mt-4 rounded-vintage bg-background/60 p-3 text-sm">
 		<p class="text-xs uppercase tracking-widest text-muted">Reward</p>
