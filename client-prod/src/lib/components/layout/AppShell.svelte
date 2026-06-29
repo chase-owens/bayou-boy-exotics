@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import type { Hours } from '../../../../../shared/types/Root';
+	import HoursSection from '../ui/HoursSection.svelte';
 
 	type NavigationItem = {
 		label: string;
@@ -19,17 +21,19 @@
 		tagline?: string;
 	};
 
-	let {
+	const {
 		children,
 		branding = {
 			name: 'Bayou Exotics',
 			tagline: 'Exotic finds with Louisiana soul.'
 		},
+		hours,
 		navigation = [],
 		socials = []
 	}: {
 		children: Snippet;
 		branding?: Branding;
+		hours: Hours;
 		navigation?: NavigationItem[];
 		socials?: SocialLink[];
 	} = $props();
@@ -206,14 +210,15 @@
 		{@render children()}
 	</main>
 
-	<footer class="border-border bg-surface border-t">
+	<footer class="border-border bg-black border-t">
 		<div class="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1fr_auto] lg:px-8">
 			<div>
 				<p class="font-heading text-foreground text-xl">{branding.name ?? 'Bayou Exotics'}</p>
 				<p class="text-muted mt-1 text-sm">
 					{branding.tagline ?? 'Exotic finds with Louisiana soul.'}
 				</p>
-				<p class="text-muted mt-4 text-sm">© 2026 Bayou Exotics.</p>
+				<HoursSection {hours} />
+				<p class="text-muted mt-4 text-sm text-secondary">© 2026 Bayou Exotics.</p>
 			</div>
 
 			{#if socials.length}

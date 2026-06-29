@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Hero from '$lib/components/home/Hero.svelte';
-	import HoursSection from '$lib/components/home/HoursSection.svelte';
+	import HoursSection from '$lib/components/ui/HoursSection.svelte';
 	import LatestUpdate from '$lib/components/LatestUpdate.svelte';
 	import RaffleCard from '$lib/components/home/RaffleCard.svelte';
 	import AvailabilityCalendar from '$lib/components/home/AvailabilityCalendar.svelte';
@@ -33,9 +33,6 @@
 	{#if raffle.enabled}
 		<RaffleCard {raffle} />
 	{/if}
-	{#if home.announcement}<LatestUpdate announcement={home.announcement} />{/if}
-
-	<HoursSection hours={root.business.hours} />
 
 	<!-- <CategoryLinks categories={home.featuredCategories ?? []} /> -->
 </div>
