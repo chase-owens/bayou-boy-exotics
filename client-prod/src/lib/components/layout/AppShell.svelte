@@ -3,6 +3,8 @@
 	import type { Hours } from '../../../../../shared/types/Root';
 	import HoursSection from '../ui/HoursSection.svelte';
 
+	import { cart } from '$lib/stores/cart.svelte';
+
 	type NavigationItem = {
 		label: string;
 		href: string;
@@ -98,9 +100,9 @@
 				</span>
 			</a>
 
-			<div class="hidden w-12 justify-end sm:flex"></div>
+			<div class="hidden w-12 justify-end sm:flex">{cart.count}</div>
 
-			<div class="w-12 sm:hidden"></div>
+			<div class="w-12 sm:hidden">{cart.count}</div>
 		</div>
 	</header>
 
