@@ -215,19 +215,6 @@
 						</div>
 					</section>
 				{/if}
-
-				<section
-					class="mt-6 border hover:border-accent rounded-vintage bg-surface p-5 text-primary-foreground shadow-soft"
-				>
-					<p class="text-xs font-bold tracking-[0.3em] uppercase text-primary-foreground/75">
-						Coming Next
-					</p>
-					<h3 class="font-heading mt-2 text-2xl text-primary-foreground">Built to grow</h3>
-					<p class="mt-2 text-sm leading-6 text-primary-foreground/80">
-						Start with three routes now. Add categories, product detail pages, account flows,
-						orders, approvals, or admin links later without reworking the shell.
-					</p>
-				</section>
 			</div>
 		</aside>
 	{/if}
