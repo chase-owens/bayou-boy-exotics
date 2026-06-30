@@ -2,6 +2,7 @@
 	import Calendar from '$lib/assets/icons/Calendar.svelte';
 
 	import type { AvailabilityCalendarDay } from '$lib/utils/buildAvailabilityCalendar';
+	import SectionHeader from '../layout/SectionHeader.svelte';
 
 	type CalendarProps = {
 		days: AvailabilityCalendarDay[];
@@ -13,22 +14,8 @@
 	let { days, leadingBlanks, monthName, upcoming }: CalendarProps = $props();
 </script>
 
-<section class="rounded-vintage border border-border bg-surface p-5 shadow-soft">
-	<div class="mb-5 flex items-start justify-between gap-4">
-		<div>
-			<p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-				Availability Calendar
-			</p>
-
-			<h2 class="mt-2 text-3xl font-bold text-foreground">
-				{monthName}
-			</h2>
-		</div>
-
-		<div class="rounded-vintage border border-border bg-background/40 p-3 text-accent">
-			<Calendar class="size-6" />
-		</div>
-	</div>
+<section class="rounded-vintage border border-border bg-black/70 p-5 shadow-soft">
+	<SectionHeader eyebrow="Availability Calendar" title={monthName} variant="calendar" />
 
 	<div class="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
 		<div>
@@ -51,9 +38,9 @@
 					<div
 						class={[
 							'flex aspect-square items-center justify-center rounded-sm text-sm font-semibold',
-							day.status === 'closed' && 'bg-black/40 text-muted',
-							day.status === 'partial' && 'bg-accent/50 text-primary',
-							day.status === 'open' && 'text-foreground'
+							day.status === 'closed' && 'bg-highlight/80 text-muted',
+							day.status === 'partial' && 'bg-secondary/80',
+							day.status === 'open' && 'text-foreground border border-border'
 							// day.isToday && 'bg-highlight text-white'
 						]
 							.filter(Boolean)
@@ -68,19 +55,19 @@
 		<div class="border-border lg:border-l lg:pl-6">
 			<div class="space-y-3">
 				<div class="flex items-center gap-3 text-sm text-foreground">
-					<span class="size-4 rounded-full bg-black/70"></span>
+					<span class="size-4 rounded-full bg-highlight/70"></span>
 					<span>Closed All Day</span>
 				</div>
 
 				<div class="flex items-center gap-3 text-sm text-foreground">
-					<span class="size-4 rounded-full bg-accent"></span>
+					<span class="size-4 rounded-full bg-secondary"></span>
 					<span>Partial Day Closure</span>
 				</div>
 
-				<div class="flex items-center gap-3 text-sm text-foreground">
+				<!-- <div class="flex items-center gap-3 text-sm text-foreground">
 					<span class="size-4 rounded-full bg-highlight"></span>
 					<span>Open</span>
-				</div>
+				</div> -->
 			</div>
 
 			<div class="my-5 border-t border-border"></div>

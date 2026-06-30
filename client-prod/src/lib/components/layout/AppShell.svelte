@@ -1,7 +1,14 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Close from '$lib/assets/icons/Close.svelte';
+	import Menu from '$lib/assets/icons/Menu.svelte';
+	import Arrow from '$lib/assets/icons/Arrow.svelte';
 	import type { Hours } from '../../../../../shared/types/Root';
 	import HoursSection from '../ui/HoursSection.svelte';
+	import Bag from '../../assets/icons/Bag.svelte';
+
+	import { cart } from '$lib/stores/cart.svelte';
+	import SectionHeader from './SectionHeader.svelte';
 
 	type NavigationItem = {
 		label: string;
@@ -47,14 +54,14 @@
 			description: 'Featured drops, updates, and the Bayou story.'
 		},
 		{
-			label: 'Flower',
-			href: '/flower',
+			label: 'Shop',
+			href: '/menu',
 			description: 'Explore exotic flower selections and availability.'
 		},
 		{
-			label: 'Other',
-			href: '/other',
-			description: 'Accessories, add-ons, limited finds, and future categories.'
+			label: 'Cart',
+			href: '/cart',
+			description: 'Cart - Checkout.'
 		}
 	];
 
@@ -74,7 +81,7 @@
 <svelte:window onkeydown={handleKeydown} />
 
 <div class="bg-sidebar text-foreground min-h-screen">
-	<header class="bg-surface/95 border-border sticky top-0 z-30 border-b backdrop-blur">
+	<header class="bg-black/85 border-border sticky top-0 z-30 border-b backdrop-blur">
 		<div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 			<div class="w-12">
 				<button
@@ -85,7 +92,11 @@
 					onclick={() => (isMenuOpen = !isMenuOpen)}
 					class="border-border bg-background text-foreground hover:border-accent hover:bg-accent/15 inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border text-xl transition"
 				>
-					{isMenuOpen ? '×' : '☰'}
+					{#if isMenuOpen}
+						<Close class="size-6" />
+					{:else}
+						<Menu class="size-6" />
+					{/if}
 				</button>
 			</div>
 
@@ -98,9 +109,24 @@
 				</span>
 			</a>
 
-			<div class="hidden w-12 justify-end sm:flex"></div>
+			<div class="hidden w-12 justify-end sm:flex">
+				<a href="/cart"
+					><Bag class="h-10 text-secondary" />
+					{#if cart.count > 0}<span
+							class="absolute text-xs top-4 right-3 rounded-full bg-white text-black font-bold px-2 py-1"
+							>{cart.count}</span
+						>{/if}</a
+				>
+			</div>
 
-			<div class="w-12 sm:hidden"></div>
+			<div class="w-12 sm:hidden relative">
+				<a href="/cart"
+					><Bag class="h-10 text-secondary" />{#if cart.count > 0}<span
+							class="absolute text-xs top-0 -right-1 rounded-full bg-white text-black font-bold px-2 py-1"
+							>{cart.count}</span
+						>{/if}</a
+				>
+			</div>
 		</div>
 	</header>
 
@@ -130,7 +156,7 @@
 						aria-label="Close menu"
 						onclick={closeMenu}
 					>
-						×
+						<Close class="size-5" />
 					</button>
 				</div>
 			</div>
@@ -154,7 +180,7 @@
 										{/if}
 									</div>
 
-									<span class="text-accent mt-1 text-lg">→</span>
+									<span class="text-accent mt-1 text-lg"><Arrow class="size-6" /></span>
 								</div>
 							</a>
 						{/each}
@@ -162,9 +188,9 @@
 				</section>
 
 				{#if socials.length}
-					<section class="rounded-vintage border-border bg-surface border p-5 shadow-soft">
-						<p class="text-highlight mb-3 text-xs font-bold tracking-[0.3em] uppercase">Follow</p>
-						<h3 class="font-heading text-2xl">Instagram Pages</h3>
+					<section class="rounded-vintage border-border bg-black/70 border p-5 shadow-soft">
+						<SectionHeader eyebrow="Follow" title="Instagram Pages" variant="instagram" />
+
 						<p class="text-muted mt-2 text-sm leading-6">
 							Follow the Bayou pages for menu drops, updates, visuals, and backup announcements.
 						</p>
@@ -218,7 +244,7 @@
 					{branding.tagline ?? 'Exotic finds with Louisiana soul.'}
 				</p>
 				<HoursSection {hours} />
-				<p class="text-muted mt-4 text-sm text-secondary">© 2026 Bayou Exotics.</p>
+				<p class="text-muted mt-4 text-sm">© 2026 Bayou Exotics.</p>
 			</div>
 
 			{#if socials.length}

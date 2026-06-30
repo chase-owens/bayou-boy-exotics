@@ -1,26 +1,12 @@
 <script lang="ts">
 	import type { Listing } from '../../../../../shared/types/Listing';
 	import type { PriceOption } from '../../../../../shared/types/Pricing';
-
-	type CartSelection = {
-		optionId: string;
-		label: string;
-		quantity: number;
-	};
-
-	export type ProductCartItem = {
-		listingId: string;
-		listingName: string;
-		priceOptionId: string;
-		priceLabel: string;
-		price: number;
-		units: number;
-		selections: CartSelection[];
-	};
+	import { cart } from '$lib/stores/cart.svelte';
+	import type { CartItem } from '../../../../../shared/types/Cart';
 
 	type Props = {
 		listing: Listing;
-		onAddToCart?: (item: ProductCartItem) => void;
+		onAddToCart?: (item: CartItem) => void;
 	};
 
 	let { listing, onAddToCart }: Props = $props();
@@ -30,19 +16,14 @@
 
 	const hasOptions = $derived(Boolean(listing.options?.length));
 
-	let requiredTotal = $derived(selectedPriceOption.units);
+	let requiredMinimum = $derived(selectedPriceOption.units);
 
 	const selectedTotal = $derived(Object.values(selections).reduce((sum, units) => sum + units, 0));
 
-	const remaining = $derived(requiredTotal - selectedTotal);
-
-	const canAddToCart = $derived(
-		hasOptions ? selectedTotal === requiredTotal : Boolean(selectedPriceOption)
-	);
+	const isSelectedTotalAMultipleOfRequiredMinimum = $derived(selectedTotal % requiredMinimum === 0);
 
 	const setPriceOption = (option: PriceOption) => {
 		selectedPriceOption = option;
-		requiredTotal = option.units;
 	};
 
 	const incrementOption = (optionId: string) => {
@@ -58,7 +39,7 @@
 	};
 
 	const addToCart = () => {
-		if (!canAddToCart) return;
+		if (hasOptions && (!selectedTotal || !isSelectedTotalAMultipleOfRequiredMinimum)) return;
 
 		const selectedOptions =
 			listing.options
@@ -66,15 +47,27 @@
 				.map((option) => ({
 					optionId: option.id,
 					label: option.label,
-					quantity: selections[option.id]
+					units: selections[option.id]
 				})) ?? [];
 
-		onAddToCart?.({
+		const totalUnits = hasOptions
+			? selectedOptions.reduce((acc, cur) => {
+					const currUnits = (acc += cur.units);
+					return acc;
+				}, 0)
+			: 1;
+
+		const quantity = totalUnits / selectedPriceOption.units;
+
+		cart.addItem({
+			image: listing.images[0],
 			listingId: listing.id,
 			listingName: listing.name,
 			priceOptionId: selectedPriceOption.id,
 			priceLabel: selectedPriceOption.label,
 			price: selectedPriceOption.price,
+			total: !hasOptions ? selectedPriceOption.price : selectedPriceOption.price * quantity,
+			quantity,
 			selections: selectedOptions,
 			units: selectedPriceOption.units
 		});
@@ -110,8 +103,8 @@
 				</div>
 
 				<p class="text-sm font-bold text-accent">
-					{selectedTotal}{requiredTotal && selectedTotal <= requiredTotal
-						? `/${requiredTotal}`
+					{selectedTotal}{requiredMinimum && selectedTotal <= requiredMinimum
+						? `/${requiredMinimum}`
 						: ''}
 				</p>
 			</div>
@@ -161,9 +154,9 @@
 	<button
 		type="button"
 		class="cursor-pointer btn-base btn-primary mt-6 w-full disabled:cursor-not-allowed disabled:opacity-50 bg-black"
-		disabled={hasOptions && !selectedTotal}
+		disabled={!isSelectedTotalAMultipleOfRequiredMinimum || (hasOptions && !selectedTotal)}
 		onclick={addToCart}
 	>
-		Add {selectedTotal || selectedPriceOption.label} to Cart
+		{!hasOptions ? 'Add To Cart' : !!selectedTotal ? `Add ${selectedTotal} to Cart` : `Add Flavors`}
 	</button>
 </section>

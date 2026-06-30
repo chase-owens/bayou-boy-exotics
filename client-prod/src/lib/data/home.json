@@ -28,5 +28,24 @@
 			"Request to be entered"
 		],
 		"enabled": true
-	}
+	},
+	"features": [
+		{
+			"enabled": true,
+			"eyebrow": "Super Steal",
+			"headline": "Last 7 of Ganjamin",
+			"summary": "Limited run. Only available while it lasts.",
+			"image": "/images/gamma.png",
+			"cartItem": {
+				"image": "/images/ganjamin.png",
+				"listingId": "super-steal-ganjamin",
+				"listingName": "Last 7 of Ganjamin",
+				"priceOptionId": "super-steal",
+				"priceLabel": "7g",
+				"price": 10,
+				"units": 7,
+				"selections": []
+			}
+		}
+	]
 }

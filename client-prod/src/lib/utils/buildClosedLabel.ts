@@ -1,8 +1,8 @@
-import { addDays, format, isAfter, isSunday, isWithinInterval, set } from 'date-fns';
+import { format, isAfter, isSunday, isTomorrow, isWithinInterval, set } from 'date-fns';
 
 import type { Hours } from '../../../../shared/types/Root';
 import type { ClosurePeriod, MeetCancellation } from '../../../../shared/types/Availability';
-import { buildAvailableMeetingTimesForDate } from './buildAvailableMeetTimesForDate';
+import { findNextAvailableMeetDate } from './findNextAvailableMeetDate';
 
 export type AvailableMeetingTime = {
 	time: string;
@@ -21,13 +21,12 @@ export type MeetTimesDisplay = {
 	meets: AvailableMeetingTime[];
 };
 
-export const buildMeetTimesCard = ({
+export const buildClosedLabel = ({
 	hours,
 	closures,
 	meetCancellations = [],
 	now = new Date()
 }: Args) => {
-	const tomorrow = addDays(now, 1);
 	const dateKey = format(now, 'yyyy-MM-dd');
 	const dayName = format(now, 'EEEE');
 
@@ -68,6 +67,15 @@ export const buildMeetTimesCard = ({
 			label: format(buildDateWithTime(now, time), 'h:mm a')
 		}));
 
+	const reopensAt = findNextAvailableMeetDate({
+		hours,
+		closures,
+		meetCancellations,
+		now
+	});
+
+	const reopensAtLabel = reopensAt ? format(reopensAt, "EEE, MMM d 'at' h:mm a") : null;
+
 	const isClosed =
 		Boolean(regularDay?.closed) ||
 		isSunday(now) ||
@@ -75,38 +83,16 @@ export const buildMeetTimesCard = ({
 		isTodayClosure ||
 		!availableMeetingTimes.length;
 
-	const todayMeetTimes = buildAvailableMeetingTimesForDate({
-		date: now,
-		hours,
-		closures,
-		meetCancellations,
-		now
-	});
-
-	const tomorrowMeetTimes = buildAvailableMeetingTimesForDate({
-		date: tomorrow,
-		hours,
-		closures,
-		meetCancellations,
-		now
-	});
-
-	let meetTimesDisplay: MeetTimesDisplay | null = null;
-
-	if (!isClosed && todayMeetTimes.length) {
-		meetTimesDisplay = {
-			dayLabel: 'today',
-			meets: todayMeetTimes
-		};
-	} else if (tomorrowMeetTimes.length) {
-		meetTimesDisplay = {
-			dayLabel: 'tomorrow',
-			meets: tomorrowMeetTimes
-		};
-	}
+	const closedMessage = isClosed
+		? reopensAt
+			? isTomorrow(reopensAt)
+				? `Closed for the evening. First meet time tomorrow is ${format(reopensAt, 'h:mm a')}.`
+				: `Closed until: ${reopensAtLabel}`
+			: 'Closed until further notice.'
+		: '';
 
 	return {
-		meetTimesDisplay
+		closedMessage
 	};
 };
 
