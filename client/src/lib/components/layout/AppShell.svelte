@@ -50,12 +50,12 @@
 					aria-controls="bayou-menu-drawer"
 					aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
 					onclick={() => (isMenuOpen = !isMenuOpen)}
-					class="border-border bg-background text-foreground hover:border-accent hover:bg-accent/15 inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border text-xl transition"
+					class="border-accent bg-background text-foreground hover:border-accent hover:bg-accent/15 inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border text-xl transition"
 				>
 					{#if isMenuOpen}
 						<Close class="size-6" />
 					{:else}
-						<Menu class="size-6" />
+						<Menu class="size-6 " />
 					{/if}
 				</button>
 			</div>
@@ -71,7 +71,7 @@
 
 			<div class="hidden w-12 justify-end sm:flex">
 				<a href="/cart"
-					><Bag class="h-10 text-accent" />
+					><Bag class="h-10 text-accent opacity-80" />
 					{#if cart.count > 0}<span
 							class="absolute text-xs top-4 right-3 rounded-full bg-white text-black font-bold px-2 py-1"
 							>{cart.count}</span
@@ -81,7 +81,7 @@
 
 			<div class="w-12 sm:hidden relative">
 				<a href="/cart"
-					><Bag class="h-10 text-accent" />{#if cart.count > 0}<span
+					><Bag class="h-10 text-accent opacity-80" />{#if cart.count > 0}<span
 							class="absolute text-xs top-0 -right-1 rounded-full bg-white text-black font-bold px-2 py-1"
 							>{cart.count}</span
 						>{/if}</a
