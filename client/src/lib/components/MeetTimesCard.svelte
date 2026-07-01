@@ -19,7 +19,7 @@
 	);
 </script>
 
-<section class="rounded-vintage border border-border bg-black/70 p-5 shadow-soft">
+<section class="rounded-vintage bg-black/70 p-5 shadow-soft">
 	<SectionHeader eyebrow="meet times" {title} variant="clock" />
 	{#if meetTimesDisplay?.meets.length}
 		<div class="grid grid-cols-2 gap-3 sm:grid-cols-3">

@@ -11,12 +11,17 @@
 
 	let { listing, onAddToCart }: Props = $props();
 
-	let selectedPriceOption = $state<PriceOption>(listing.pricing[0]);
+	let selectedPriceOption = $state<PriceOption>();
+
+	$effect(() => {
+		selectedPriceOption = listing.pricing[0];
+	});
+
 	let selections = $state<Record<string, number>>({});
 
 	const hasOptions = $derived(Boolean(listing.options?.length));
 
-	let requiredMinimum = $derived(selectedPriceOption.units);
+	let requiredMinimum = $derived(selectedPriceOption?.units ?? 1);
 
 	const selectedTotal = $derived(Object.values(selections).reduce((sum, units) => sum + units, 0));
 
@@ -39,7 +44,11 @@
 	};
 
 	const addToCart = () => {
-		if (hasOptions && (!selectedTotal || !isSelectedTotalAMultipleOfRequiredMinimum)) return;
+		if (
+			(hasOptions && (!selectedTotal || !isSelectedTotalAMultipleOfRequiredMinimum)) ||
+			!selectedPriceOption
+		)
+			return;
 
 		const selectedOptions =
 			listing.options
@@ -83,7 +92,7 @@
 				type="button"
 				class={[
 					'flex items-center justify-between rounded-vintage border px-4 py-3 text-left transition cursor-pointer',
-					selectedPriceOption.id === option.id
+					selectedPriceOption?.id === option.id
 						? 'border-highlight bg-black/60'
 						: 'border-border bg-background/40 hover:border-accent'
 				].join(' ')}
