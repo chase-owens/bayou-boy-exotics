@@ -1,22 +1,4 @@
-export type CartSelection = {
-	optionId: string;
-	label: string;
-	units: number;
-};
-
-export type CartItem = {
-	id: string;
-	image: string;
-	listingId: string;
-	listingName: string;
-	priceOptionId: string;
-	priceLabel: string;
-	price: number;
-	quantity?: number;
-	selections: CartSelection[];
-	total?: number;
-	units: number;
-};
+import type { CartItem } from '../../../../shared/types/Cart';
 
 const createCart = () => {
 	let items = $state<CartItem[]>([]);

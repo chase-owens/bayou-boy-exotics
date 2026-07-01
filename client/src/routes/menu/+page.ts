@@ -1,14 +1,22 @@
-// import { error } from '@sveltejs/kit';
-
-import menuContent from '$lib/data/menu.json';
-import type { MenuContent } from '../../../../shared/types/Menu';
 import type { PageLoad } from '../$types';
-const fallbackMenu = menuContent as unknown as MenuContent;
+import type { HomeContent } from '../../../../shared/types/Home';
+import type { MenuContent } from '../../../../shared/types/Menu';
 
-export const load: PageLoad = async () => {
+export const load: PageLoad = async ({ parent }) => {
+	const { menu, home }: { menu: MenuContent; home: HomeContent } = await parent();
+	console.log('🚀 ~ load ~ menu, home :', menu, home);
+
+	const activeCategories = menu.categories
+		.filter((category) => category.active)
+		.sort((a, b) => a.sortOrder - b.sortOrder);
+
+	const activeListings = menu.listings
+		.filter((listing) => listing.active)
+		.sort((a, b) => a.sortOrder - b.sortOrder);
+
 	if (import.meta.env.VITE_IS_MOCK === 'true') {
-		return { menu: fallbackMenu };
+		return { activeCategories, activeListings, menu };
 	}
 
-	return { menu: fallbackMenu };
+	return { activeCategories, activeListings, menu, features: home.features };
 };

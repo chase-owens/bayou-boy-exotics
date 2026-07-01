@@ -1,10 +1,9 @@
 <script lang="ts">
-	import Calendar from '$lib/assets/icons/Calendar.svelte';
-
 	import type { AvailabilityCalendarDay } from '$lib/utils/buildAvailabilityCalendar';
+	import getRandomBrandImage from '$lib/utils/getRandomBrandImage';
 	import SectionHeader from '../layout/SectionHeader.svelte';
 
-	type CalendarProps = {
+	export type CalendarProps = {
 		days: AvailabilityCalendarDay[];
 		leadingBlanks: number;
 		monthName: string;
@@ -14,7 +13,13 @@
 	let { days, leadingBlanks, monthName, upcoming }: CalendarProps = $props();
 </script>
 
-<section class="rounded-vintage border border-border bg-black/70 p-5 shadow-soft">
+<section class="relative rounded-vintage border border-purple-400/70 bg-black/70 p-5 shadow-soft">
+	<img
+		src={getRandomBrandImage()}
+		alt=""
+		aria-hidden="true"
+		class="absolute inset-0 h-full w-full object-cover opacity-20"
+	/>
 	<SectionHeader eyebrow="Availability Calendar" title={monthName} variant="calendar" />
 
 	<div class="grid gap-6 lg:grid-cols-[1fr_0.9fr]">

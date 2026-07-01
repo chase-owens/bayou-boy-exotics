@@ -1,17 +1,11 @@
 import { error } from '@sveltejs/kit';
 
-import menuContent from '$lib/data/menu.json';
-import type { MenuContent } from '../../../../../shared/types/Menu';
-
 import type { PageLoad } from './$types';
+import type { MenuContent } from '../../../../../shared/types/Menu';
+import type { Listing } from '../../../../../shared/types/Listing';
 
-const fallbackMenu = menuContent as unknown as MenuContent;
-
-export const load: PageLoad = async ({ params, fetch }) => {
-	const menu =
-		import.meta.env.VITE_IS_MOCK === 'true'
-			? fallbackMenu
-			: ((await (await fetch('/data/menu.json')).json()) as MenuContent);
+export const load: PageLoad = async ({ params, parent }) => {
+	const { menu }: { menu: MenuContent } = await parent();
 
 	const listing = menu.listings.find((item) => item.id === params.listingId && item.active);
 
@@ -25,11 +19,12 @@ export const load: PageLoad = async ({ params, fetch }) => {
 		.filter(
 			(item) => item.active && item.categoryId === listing.categoryId && item.id !== listing.id
 		)
-		.slice(0, 4);
+		.slice(0, 4) as Listing[];
 
 	return {
-		listing,
-		category,
-		relatedListings
+		listing: listing as Listing,
+		categoryLabel: category?.label ?? ('' as string),
+		relatedListings,
+		primaryImage: listing.images?.[0] ?? ('' as string)
 	};
 };

@@ -11,7 +11,7 @@
 		| 'clock'
 		| 'raffle'
 		| 'instagram'
-		| 'menu'
+		| 'logo'
 		| 'cart'
 		| 'gift'
 		| 'instagram';
@@ -20,9 +20,12 @@
 		eyebrow: string;
 		title: string;
 		variant?: HeaderVariant;
+		tintIconBg?: boolean;
 	};
 
-	const { eyebrow, title, variant }: HeaderProps = $props();
+	const { eyebrow, tintIconBg = false, title, variant }: HeaderProps = $props();
+
+	const backgroundStyle = $derived(!tintIconBg ? 'bg-background/40' : 'bg-black/60');
 </script>
 
 <div class="mb-5 flex items-start justify-between gap-4">
@@ -36,7 +39,7 @@
 		</h2>
 	</div>
 
-	<div class="rounded-vintage border border-border bg-background/40 p-3 text-accent">
+	<div class={`rounded-vintage border border-border  p-3 text-accent ${backgroundStyle}`}>
 		{#if variant === 'calendar'}
 			<Calendar class="size-6" />
 		{:else if variant === 'clock'}
@@ -47,6 +50,12 @@
 			<Instagram class="size-6" />
 		{:else if variant === 'gift'}
 			<Gift class="size-6" />
+		{:else if variant === 'logo'}
+			<img
+				class="h-42 w-142 object-cover sm:w-lg lg:h-full"
+				src="/images/logo_light.jpg"
+				alt="bayou boy logo"
+			/>
 		{/if}
 	</div>
 </div>

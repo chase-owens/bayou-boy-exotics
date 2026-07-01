@@ -1,8 +1,10 @@
-import { addDays, format, isAfter, isSunday, isWithinInterval, set } from 'date-fns';
+import { addDays, format, isAfter, isSunday, isTomorrow, isWithinInterval } from 'date-fns';
 
 import type { Hours } from '../../../../shared/types/Root';
 import type { ClosurePeriod, MeetCancellation } from '../../../../shared/types/Availability';
 import { buildAvailableMeetingTimesForDate } from './buildAvailableMeetTimesForDate';
+import { findNextAvailableMeetDate } from './findNextAvailableMeetDate';
+import { buildDateWithTime } from './buildDateWithTime';
 
 export type AvailableMeetingTime = {
 	time: string;
@@ -68,12 +70,29 @@ export const buildMeetTimesCard = ({
 			label: format(buildDateWithTime(now, time), 'h:mm a')
 		}));
 
+	const reopensAt = findNextAvailableMeetDate({
+		hours,
+		closures,
+		meetCancellations,
+		now
+	});
+
+	const reopensAtLabel = reopensAt ? format(reopensAt, "EEE, MMM d 'at' h:mm a") : null;
+
 	const isClosed =
 		Boolean(regularDay?.closed) ||
 		isSunday(now) ||
 		isAfterClose ||
 		isTodayClosure ||
 		!availableMeetingTimes.length;
+
+	const closedMessage = isClosed
+		? reopensAt
+			? isTomorrow(reopensAt)
+				? `Closed for the evening. First meet time tomorrow is ${format(reopensAt, 'h:mm a')}.`
+				: `Closed until: ${reopensAtLabel}`
+			: 'Closed until further notice.'
+		: '';
 
 	const todayMeetTimes = buildAvailableMeetingTimesForDate({
 		date: now,
@@ -105,18 +124,5 @@ export const buildMeetTimesCard = ({
 		};
 	}
 
-	return {
-		meetTimesDisplay
-	};
-};
-
-const buildDateWithTime = (date: Date, time: string) => {
-	const [hours, minutes] = time.split(':').map(Number);
-
-	return set(date, {
-		hours,
-		minutes,
-		seconds: 0,
-		milliseconds: 0
-	});
+	return { closedMessage, meetTimesDisplay };
 };

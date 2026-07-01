@@ -3,69 +3,29 @@
 	import Close from '$lib/assets/icons/Close.svelte';
 	import Menu from '$lib/assets/icons/Menu.svelte';
 	import Arrow from '$lib/assets/icons/Arrow.svelte';
-	import type { Hours } from '../../../../../shared/types/Root';
+	import type { RootContent } from '../../../../../shared/types/Root';
 	import HoursSection from '../ui/HoursSection.svelte';
 	import Bag from '../../assets/icons/Bag.svelte';
 
 	import { cart } from '$lib/stores/cart.svelte';
 	import SectionHeader from './SectionHeader.svelte';
 
-	type NavigationItem = {
-		label: string;
-		href: string;
-		description?: string;
-	};
-
-	type SocialLink = {
-		label: string;
-		platform?: string;
-		handle: string;
-		url: string;
-	};
-
-	type Branding = {
-		name?: string;
-		tagline?: string;
-	};
-
 	const {
 		children,
-		branding = {
-			name: 'Bayou Exotics',
-			tagline: 'Exotic finds with Louisiana soul.'
-		},
-		hours,
-		navigation = [],
-		socials = []
+		root
 	}: {
 		children: Snippet;
-		branding?: Branding;
-		hours: Hours;
-		navigation?: NavigationItem[];
-		socials?: SocialLink[];
+		root: RootContent;
 	} = $props();
 
+	const {
+		branding,
+		navigation,
+		socials,
+		business: { hours }
+	} = $derived(root);
+
 	let isMenuOpen = $state(false);
-
-	const fallbackNavItems: NavigationItem[] = [
-		{
-			label: 'Home',
-			href: '/',
-			description: 'Featured drops, updates, and the Bayou story.'
-		},
-		{
-			label: 'Shop',
-			href: '/menu',
-			description: 'Explore exotic flower selections and availability.'
-		},
-		{
-			label: 'Cart',
-			href: '/cart',
-			description: 'Cart - Checkout.'
-		}
-	];
-
-	const navItems = $derived(navigation.length ? navigation : fallbackNavItems);
 
 	function closeMenu() {
 		isMenuOpen = false;
@@ -81,7 +41,7 @@
 <svelte:window onkeydown={handleKeydown} />
 
 <div class="bg-sidebar text-foreground min-h-screen">
-	<header class="bg-black/85 border-border sticky top-0 z-30 border-b backdrop-blur">
+	<header class="bg-black/65 backdrop-blur-xl border-transparent sticky top-0 z-30 border-b">
 		<div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 			<div class="w-12">
 				<button
@@ -102,7 +62,7 @@
 
 			<a href="/" class="text-center leading-none">
 				<span class="text-highlight block text-[0.65rem] font-bold tracking-[0.35em] uppercase">
-					Bayou
+					Bayou Boy
 				</span>
 				<span class="font-heading text-foreground text-[1.65rem] tracking-[-0.03em]">
 					Exotics
@@ -111,7 +71,7 @@
 
 			<div class="hidden w-12 justify-end sm:flex">
 				<a href="/cart"
-					><Bag class="h-10 text-secondary" />
+					><Bag class="h-10 text-accent" />
 					{#if cart.count > 0}<span
 							class="absolute text-xs top-4 right-3 rounded-full bg-white text-black font-bold px-2 py-1"
 							>{cart.count}</span
@@ -121,7 +81,7 @@
 
 			<div class="w-12 sm:hidden relative">
 				<a href="/cart"
-					><Bag class="h-10 text-secondary" />{#if cart.count > 0}<span
+					><Bag class="h-10 text-accent" />{#if cart.count > 0}<span
 							class="absolute text-xs top-0 -right-1 rounded-full bg-white text-black font-bold px-2 py-1"
 							>{cart.count}</span
 						>{/if}</a
@@ -166,7 +126,7 @@
 					<p class="text-highlight mb-3 text-xs font-bold tracking-[0.3em] uppercase">Explore</p>
 
 					<div class="grid gap-3">
-						{#each navItems as item}
+						{#each navigation as item}
 							<a
 								href={item.href}
 								class="rounded-vintage border border-border bg-primary shadow-soft hover:border-accent p-4 transition"
@@ -213,13 +173,17 @@
 								</a>
 							{/each}
 						</div>
+
+						<div class="mt-4 grid gap-3">
+							<img class="h-full w-full opacity-50" src="/images/logo_coon.png" alt="" />
+						</div>
 					</section>
 				{/if}
 			</div>
 		</aside>
 	{/if}
 
-	<main class="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+	<main class="mx-auto w-full max-w-7xl pb-6">
 		{@render children()}
 	</main>
 

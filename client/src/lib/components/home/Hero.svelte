@@ -9,15 +9,10 @@
 	let { hero }: HeroProps = $props();
 </script>
 
-<section class="overflow-hidden rounded-vintage border border-border bg-surface shadow-soft mb-0">
-	<div
-		class="relative h-72 rounded-vintage bg-cover bg-no-repeat"
-		style="
-		background-image: url('{hero.image}');
-		// background-size: 115%;
-		// background-position: 68% 45%;
-	"
-	>
+<section class="overflow-hidden bg-surface shadow-soft mb-0">
+	<div class="relative h-72 bg-cover bg-no-repeat" style="background-image: url('{hero.image}');">
+		<!-- <div class="absolute inset-0 bg-linear-to-r from-black/95 via-black/60 to-black/10"></div> -->
+		<div class="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent"></div>
 		<div
 			class="absolute flex flex-col gap-2 lg:gap-4 top-0 left-0 bottom-0 max-w-50 lg:max-w-2xl p-5"
 		>

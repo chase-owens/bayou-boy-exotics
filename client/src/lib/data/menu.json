@@ -57,6 +57,7 @@
 			"categoryId": "flower",
 			"name": "Permafrost",
 			"brand": "Hilltop Farms",
+			"description": "Super Exotic",
 			"type": "indica",
 			"tags": ["Fresh Drop"],
 			"images": ["/images/perma.png"],

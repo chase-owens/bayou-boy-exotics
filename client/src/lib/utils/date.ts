@@ -1,4 +1,12 @@
-import { format, parseISO, isWithinInterval, getDay, getDaysInMonth, isSameDay } from 'date-fns';
+import {
+	format,
+	parseISO,
+	isWithinInterval,
+	getDay,
+	getDaysInMonth,
+	isSameDay,
+	set
+} from 'date-fns';
 
 export const formatShortDate = (date: string) => format(parseISO(date), 'MMM d');
 
@@ -12,4 +20,15 @@ export const isBetweenDates = (date: Date, start: string, end: string) =>
 		end: parseISO(end)
 	});
 
-export { getDay, getDaysInMonth, isSameDay };
+const buildDateWithTime = (date: Date, time: string) => {
+	const [hours, minutes] = time.split(':').map(Number);
+
+	return set(date, {
+		hours,
+		minutes,
+		seconds: 0,
+		milliseconds: 0
+	});
+};
+
+export { buildDateWithTime, getDay, getDaysInMonth, isSameDay };
