@@ -1,7 +1,7 @@
 type CartSelection = {
   optionId: string;
   label: string;
-  quantity: number;
+  units: number;
 };
 
 export interface CartItemTemplate {
@@ -18,4 +18,5 @@ export interface CartItemTemplate {
 export type CartItem = {
   quantity?: number;
   total?: number;
+  id: string;
 } & CartItemTemplate;

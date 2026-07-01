@@ -1,4 +1,4 @@
-import type { CartItem } from "$lib/stores/cart.svelte";
+import type { CartItemTemplate } from "./Cart";
 
 export interface HomeContent {
   hero: Hero;
@@ -44,7 +44,7 @@ export type SuperSteal =
       headline: string;
       summary: string;
       image: string;
-      cartItem: CartItem;
+      cartItem: CartItemTemplate;
     }
   | {
       enabled: true;

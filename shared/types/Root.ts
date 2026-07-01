@@ -63,6 +63,7 @@ export type DayOfWeek =
   | "Sunday";
 
 export interface NavigationItem {
+  description?: string;
   label: string;
   href: string;
   icon?: string;

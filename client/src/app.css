@@ -13,7 +13,9 @@
 	--color-primary: #2b1637;
 	--color-primary-foreground: #fdfcf8;
 
-	--color-secondary: #0f5c49; /* bayou green */
+	--color-secondary: #0a4a3d;
+	--color-secondary-soft: #123c35;
+	--color-secondary-bright: #16a085;
 	--color-secondary-foreground: #ffffff;
 
 	--color-accent: #d4af37; /* antique gold */
@@ -51,7 +53,7 @@
 	}
 
 	body {
-		@apply bg-background text-foreground font-body antialiased;
+		@apply bg-background font-body text-foreground antialiased;
 		min-height: 100vh;
 	}
 
@@ -80,7 +82,7 @@
 
 @layer components {
 	.btn-base {
-		@apply rounded-vintage shadow-soft px-4 py-3 text-center text-sm font-medium transition-colors sm:py-4;
+		@apply rounded-vintage px-4 py-3 text-center text-sm font-medium shadow-soft transition-colors sm:py-4;
 	}
 
 	.btn-border {
@@ -97,7 +99,7 @@
 		}
 
 		body {
-			@apply bg-background text-foreground font-body antialiased;
+			@apply bg-background font-body text-foreground antialiased;
 			min-height: 100vh;
 		}
 
@@ -129,7 +131,7 @@
 	}
 
 	.card-carnival {
-		@apply rounded-vintage border-border bg-surface shadow-soft border;
+		@apply rounded-vintage border border-border bg-surface shadow-soft;
 	}
 
 	.mardi-gradient {
@@ -140,4 +142,10 @@
 			var(--color-accent)
 		);
 	}
+}
+
+main {
+	background: linear-gradient(to right, rgb(25 13 34), rgb(38 20 48));
+
+	box-shadow: 0 0 18px rgba(226, 186, 43, 0.12);
 }

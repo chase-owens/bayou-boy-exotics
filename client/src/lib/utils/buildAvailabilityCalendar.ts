@@ -1,18 +1,12 @@
-// src/lib/features/availability/buildAvailabilityCalendar.ts
 import { getDay, getDaysInMonth, isSameDay } from 'date-fns';
 
 import type { Hours } from '../../../../shared/types/Root';
 
-const buildUpcomingLabel = (startsAt: string, endsAt: string) =>
-	`${formatShortDate(startsAt)} – ${formatShortDate(endsAt)}`;
-
-function toDateKey(date: Date) {
-	return date.toISOString().split('T')[0];
-}
-
-import { formatMonth, formatShortDate, formatWeekday, isBetweenDates } from '$lib/utils/date';
+import { formatMonth, formatShortDate } from '$lib/utils/date';
 
 import type { ClosurePeriod, MeetCancellation } from '../../../../shared/types/Availability';
+import type { CalendarProps } from '$lib/components/home/AvailabilityCalendar.svelte';
+import { getDateStatus } from './getDateStatus';
 
 export type CalendarDayStatus = 'closed' | 'partial' | 'open';
 
@@ -35,7 +29,7 @@ export const buildAvailabilityCalendar = ({
 	closures,
 	meetCancellations = [],
 	today = new Date()
-}: Args) => {
+}: Args): CalendarProps => {
 	const year = today.getFullYear();
 	const month = today.getMonth();
 
@@ -62,7 +56,7 @@ export const buildAvailabilityCalendar = ({
 	const upcoming = closures
 		.filter((closure) => new Date(closure.endsAt) >= today)
 		.map(({ endsAt, startsAt, title }) => ({
-			label: buildUpcomingLabel(startsAt, endsAt),
+			label: `${formatShortDate(startsAt)} – ${formatShortDate(endsAt)}`,
 			value: title
 		}));
 
@@ -72,43 +66,4 @@ export const buildAvailabilityCalendar = ({
 		days,
 		upcoming
 	};
-};
-
-const getDateStatus = ({
-	date,
-	hours,
-	closures,
-	meetCancellations
-}: {
-	date: Date;
-	hours: Hours;
-	closures: ClosurePeriod[];
-	meetCancellations: MeetCancellation[];
-}): CalendarDayStatus => {
-	const dateKey = toDateKey(date);
-	const dayName = formatWeekday(date);
-
-	const regularDay = hours.schedule.find((day) => day.day === dayName);
-
-	if (regularDay?.closed) {
-		return 'closed';
-	}
-
-	const isClosedOverride = closures.some((closure) =>
-		isBetweenDates(date, closure.startsAt, closure.endsAt)
-	);
-
-	if (isClosedOverride) {
-		return 'closed';
-	}
-
-	const hasCancelledMeetTimes = meetCancellations.some(
-		(cancel) => cancel.date === dateKey && cancel.times.length > 0
-	);
-
-	if (hasCancelledMeetTimes) {
-		return 'partial';
-	}
-
-	return 'open';
 };

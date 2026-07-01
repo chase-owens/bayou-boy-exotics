@@ -1,28 +1,29 @@
 <script lang="ts">
 	import type { MeetTimesDisplay } from '$lib/utils/buildMeetTimesCard';
-	import Watch from '../assets/icons/Watch.svelte';
 	import SectionHeader from './layout/SectionHeader.svelte';
 
 	type MeetTimeProps = {
-		meetTimesDisplay: MeetTimesDisplay;
+		meetTimesDisplay: MeetTimesDisplay | null;
 		selectedMeetTime?: string | null;
 		onChange?: (meetTime: string) => void;
 	};
 
-	let { meetTimesDisplay, onChange, selectedMeetTime }: MeetTimeProps = $props();
-	const { dayLabel, meets } = $derived(meetTimesDisplay);
+	const { meetTimesDisplay, onChange, selectedMeetTime }: MeetTimeProps = $props();
 
 	const title = $derived(
-		dayLabel === 'today' ? "Today's remaining meet times" : "Tomorrow's meet times"
+		meetTimesDisplay === null
+			? 'No meets today or tomorrow'
+			: meetTimesDisplay.dayLabel === 'today'
+				? "Today's remaining meet times"
+				: "Tomorrow's meet times"
 	);
 </script>
 
 <section class="rounded-vintage border border-border bg-black/70 p-5 shadow-soft">
 	<SectionHeader eyebrow="meet times" {title} variant="clock" />
-
-	{#if meets.length}
+	{#if meetTimesDisplay?.meets.length}
 		<div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
-			{#each meetTimesDisplay?.meets ?? [] as meet}
+			{#each meetTimesDisplay.meets as meet}
 				<button
 					type="button"
 					class={[
@@ -39,7 +40,7 @@
 		</div>
 	{:else}
 		<div class="rounded-vintage border border-border bg-background/40 p-4">
-			<p class="text-sm text-muted">No remaining meet times today.</p>
+			<p class="text-sm text-muted">Check Back Soon</p>
 		</div>
 	{/if}
 </section>

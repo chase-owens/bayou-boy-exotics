@@ -74,7 +74,7 @@
 	};
 </script>
 
-<section class="rounded-vintage border border-accent/30 bg-surface p-5 shadow-soft">
+<section class="rounded-vintage bg-surface p-5 shadow-soft">
 	<p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent">Select Option</p>
 
 	<div class="mt-5 grid gap-3">
@@ -84,7 +84,7 @@
 				class={[
 					'flex items-center justify-between rounded-vintage border px-4 py-3 text-left transition cursor-pointer',
 					selectedPriceOption.id === option.id
-						? 'border-accent bg-background/70'
+						? 'border-highlight bg-black/60'
 						: 'border-border bg-background/40 hover:border-accent'
 				].join(' ')}
 				onclick={() => setPriceOption(option)}
