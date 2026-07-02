@@ -1,0 +1,63 @@
+# ==========================
+# Dependencies
+# ==========================
+**/node_modules/
+
+# ==========================
+# Build outputs
+# ==========================
+
+**/dist/
+**/build/
+coverage/
+
+# SvelteKit
+**/.svelte-kit/
+
+# CDK
+**/cdk.out/
+
+# Vite
+admin/src/assets/vite.svg
+
+# ==========================
+# Environment
+# ==========================
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Lambda build artifacts
+**/*.zip
+
+# Temporary files
+*.tmp
+*.swp
+
+
+# ==========================
+# Logs
+# ==========================
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ==========================
+# macOS
+# ==========================
+.DS_Store
+**/.DS_Store
+
+# ==========================
+# IDE
+# ==========================
+.vscode/
+**/.vscode/
+.idea/
+
+# ==========================
+# TypeScript
+# ==========================
+*.tsbuildinfo

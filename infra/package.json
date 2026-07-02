@@ -1,0 +1,22 @@
+{
+  "name": "infra",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Chase Owens <chasejonathanowens@gmail.com>",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "aws-cdk-lib": "^2.260.0",
+    "constructs": "^10.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "aws-cdk": "^2.1129.0",
+    "ts-node": "^10.9.2"
+  }
+}
