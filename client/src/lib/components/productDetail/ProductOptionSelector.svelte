@@ -3,22 +3,56 @@
 	import type { PriceOption } from '../../../../../shared/types/Pricing';
 	import { cart } from '$lib/stores/cart.svelte';
 	import type { CartItem } from '../../../../../shared/types/Cart';
+	import Sparkles from '$lib/assets/icons/Sparkles.svelte';
 
 	type Props = {
 		listing: Listing;
-		onAddToCart?: (item: CartItem) => void;
+		priceOptionId: string | null;
 	};
 
-	let { listing, onAddToCart }: Props = $props();
+	let { listing, priceOptionId }: Props = $props();
+
+	const toSelectionRecord = (item: CartItem) =>
+		Object.fromEntries(item.selections.map((selection) => [selection.optionId, selection.units]));
+
+	const hydrateFromCartItem = (priceOptionId: string) => {
+		const item = cart.getItem(listing.id, priceOptionId);
+		if (!item) return;
+
+		selectionsByPriceOption = {
+			...selectionsByPriceOption,
+			[priceOptionId]: toSelectionRecord(item)
+		};
+	};
 
 	let selectedPriceOption = $state<PriceOption>();
+	let selectionsByPriceOption = $state<Record<string, Record<string, number>>>({});
+	const existingCartItem = $derived(
+		selectedPriceOption ? cart.getItem(listing.id, selectedPriceOption.id) : undefined
+	);
+
+	const canEdit = $derived(existingCartItem?.selections.length);
+
+	let hasInitialized = $state(false);
 
 	$effect(() => {
-		selectedPriceOption = listing.pricing[0];
+		if (hasInitialized) return;
+
+		const initialOption =
+			listing.pricing.find((option) => option.id === priceOptionId) ?? listing.pricing[0];
+
+		selectedPriceOption = initialOption;
+
+		if (initialOption) {
+			hydrateFromCartItem(initialOption.id);
+		}
+
+		hasInitialized = true;
 	});
 
-	let selections = $state<Record<string, number>>({});
-
+	const selections = $derived(
+		selectedPriceOption ? (selectionsByPriceOption[selectedPriceOption.id] ?? {}) : {}
+	);
 	const hasOptions = $derived(Boolean(listing.options?.length));
 
 	let requiredMinimum = $derived(selectedPriceOption?.units ?? 1);
@@ -27,28 +61,75 @@
 
 	const isSelectedTotalAMultipleOfRequiredMinimum = $derived(selectedTotal % requiredMinimum === 0);
 
+	const currentSelections = $derived(
+		Object.entries(selections)
+			.filter(([, units]) => units > 0)
+			.map(([optionId, units]) => ({ optionId, units }))
+	);
+
+	const normalized = (items: { optionId: string; units: number }[]) =>
+		[...items]
+			.filter((item) => item.units > 0)
+			.sort((a, b) => a.optionId.localeCompare(b.optionId))
+			.map((item) => `${item.optionId}:${item.units}`)
+			.join('|');
+
+	const hasConfigChanged = $derived(
+		existingCartItem
+			? normalized(existingCartItem.selections) !== normalized(currentSelections)
+			: false
+	);
+
 	const setPriceOption = (option: PriceOption) => {
 		selectedPriceOption = option;
+
+		// If user has not drafted anything for this price option yet,
+		// hydrate from bag so returning to "2 for" shows the cart config.
+		if (!selectionsByPriceOption[option.id]) {
+			hydrateFromCartItem(option.id);
+		}
 	};
 
 	const incrementOption = (optionId: string) => {
-		selections[optionId] = (selections[optionId] ?? 0) + 1;
+		if (!selectedPriceOption) return;
+
+		const priceOptionId = selectedPriceOption.id;
+		const current = selectionsByPriceOption[priceOptionId] ?? {};
+
+		selectionsByPriceOption = {
+			...selectionsByPriceOption,
+			[priceOptionId]: {
+				...current,
+				[optionId]: (current[optionId] ?? 0) + 1
+			}
+		};
 	};
 
 	const decrementOption = (optionId: string) => {
-		const current = selections[optionId] ?? 0;
+		if (!selectedPriceOption) return;
 
-		if (current <= 0) return;
+		const priceOptionId = selectedPriceOption.id;
+		const current = selectionsByPriceOption[priceOptionId] ?? {};
+		const count = current[optionId] ?? 0;
 
-		selections[optionId] = current - 1;
+		if (count <= 0) return;
+
+		selectionsByPriceOption = {
+			...selectionsByPriceOption,
+			[priceOptionId]: {
+				...current,
+				[optionId]: count - 1
+			}
+		};
 	};
 
 	const addToCart = () => {
 		if (
 			(hasOptions && (!selectedTotal || !isSelectedTotalAMultipleOfRequiredMinimum)) ||
 			!selectedPriceOption
-		)
+		) {
 			return;
+		}
 
 		const selectedOptions =
 			listing.options
@@ -68,7 +149,7 @@
 
 		const quantity = totalUnits / selectedPriceOption.units;
 
-		cart.addItem({
+		const item = {
 			image: listing.images[0],
 			listingId: listing.id,
 			listingName: listing.name,
@@ -79,8 +160,35 @@
 			quantity,
 			selections: selectedOptions,
 			units: selectedPriceOption.units
-		});
+		};
+		if (existingCartItem) {
+			if (!hasConfigChanged) return;
+
+			cart.updateItem(existingCartItem.id, item);
+		} else {
+			cart.addItem(item);
+		}
 	};
+
+	const isInBag = $derived(
+		selectedPriceOption ? cart.hasItem(listing.id, selectedPriceOption?.id) : false
+	);
+
+	const buttonLabel = $derived(
+		existingCartItem
+			? hasConfigChanged
+				? 'Update Bag'
+				: 'In Your Bag'
+			: cart.status === 'adding'
+				? 'Adding...'
+				: cart.status === 'success'
+					? 'Added to Bag'
+					: hasOptions
+						? selectedTotal && isSelectedTotalAMultipleOfRequiredMinimum
+							? `Add ${selectedTotal} to Cart`
+							: 'Add Flavors'
+						: 'Add To Cart'
+	);
 </script>
 
 <section class="rounded-vintage bg-surface p-5 shadow-soft">
@@ -162,10 +270,21 @@
 
 	<button
 		type="button"
-		class="cursor-pointer btn-base btn-primary mt-6 w-full disabled:cursor-not-allowed disabled:opacity-50 bg-black"
-		disabled={!isSelectedTotalAMultipleOfRequiredMinimum || (hasOptions && !selectedTotal)}
+		disabled={(existingCartItem && !hasConfigChanged) || cart.status === 'adding'}
+		class={`flex justify-center mt-6  w-full items-center gap-3 rounded-xl border px-6 py-3 cursor-pointer
+		font-semibold backdrop-blur transition-all duration-300
+		${
+			cart.status === 'success'
+				? 'border-black bg-secondary text-white'
+				: 'border-highlight bg-black/70 text-accent hover:border-accent/80 hover:bg-black/85 hover:text-white'
+		}
+		${cart.status === 'adding' ? 'cursor-wait opacity-80' : ''}
+	`}
 		onclick={addToCart}
 	>
-		{!hasOptions ? 'Add To Cart' : !!selectedTotal ? `Add ${selectedTotal} to Cart` : `Add Flavors`}
+		{#if existingCartItem}
+			<Sparkles class="size-4" />
+		{/if}
+		<span class="text-xl">{buttonLabel}</span>
 	</button>
 </section>

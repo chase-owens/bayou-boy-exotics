@@ -9,6 +9,7 @@
 
 	import { cart } from '$lib/stores/cart.svelte';
 	import SectionHeader from './SectionHeader.svelte';
+	import Briefcase from '$lib/assets/icons/Briefcase.svelte';
 
 	const {
 		children,
@@ -71,7 +72,7 @@
 
 			<div class="hidden w-12 justify-end sm:flex">
 				<a href="/cart"
-					><Bag class="h-10 text-accent opacity-80" />
+					><Briefcase class="h-10 text-accent opacity-80" />
 					{#if cart.count > 0}<span
 							class="absolute text-xs top-4 right-3 rounded-full bg-white text-black font-bold px-2 py-1"
 							>{cart.count}</span
@@ -81,7 +82,7 @@
 
 			<div class="w-12 sm:hidden relative">
 				<a href="/cart"
-					><Bag class="h-10 text-accent opacity-80" />{#if cart.count > 0}<span
+					><Briefcase class="h-10 text-accent opacity-80" />{#if cart.count > 0}<span
 							class="absolute text-xs top-0 -right-1 rounded-full bg-white text-black font-bold px-2 py-1"
 							>{cart.count}</span
 						>{/if}</a

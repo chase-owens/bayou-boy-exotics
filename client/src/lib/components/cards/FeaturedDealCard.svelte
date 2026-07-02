@@ -4,6 +4,7 @@
 	import { cart } from '$lib/stores/cart.svelte';
 	import Arrow from '$lib/assets/icons/Arrow.svelte';
 	import getRandomBrandImage from '$lib/utils/getRandomBrandImage';
+	import Sparkles from '$lib/assets/icons/Sparkles.svelte';
 
 	type Props = {
 		feature: SuperSteal;
@@ -11,7 +12,23 @@
 
 	let { feature }: Props = $props();
 
-	const buttonLabel = $derived('cartItem' in feature ? 'Reserve' : 'View Deal');
+	const isInBag = $derived(
+		'cartItem' in feature
+			? cart.hasItem(feature.cartItem.listingId, feature.cartItem.priceOptionId)
+			: false
+	);
+
+	const buttonLabel = $derived(
+		isInBag
+			? `In Your Bag`
+			: 'cartItem' in feature
+				? cart.status === 'adding'
+					? 'Adding...'
+					: cart.status === 'success'
+						? 'Added to Bag'
+						: 'Reserve'
+				: 'View Deal'
+	);
 
 	const price = $derived('cartItem' in feature ? feature.cartItem.price : null);
 
@@ -55,11 +72,29 @@
 
 			<button
 				type="button"
-				class="inline-flex items-center gap-3 rounded-xl border border-highlight bg-black/70 px-6 py-3 font-semibold text-accent backdrop-blur transition hover:border-accent/80 hover:bg-black/85 hover:text-white w-fit mt-6"
+				disabled={cart.status === 'adding' || isInBag}
+				class={`mt-6  w-fit items-center gap-3 rounded-xl border px-6 py-3 cursor-pointer
+		font-semibold backdrop-blur transition-all duration-300 flex justify-between
+		${
+			cart.status === 'success'
+				? 'border-highlight bg-secondary text-white'
+				: 'border-highlight bg-black/70 text-accent hover:border-accent/80 hover:bg-black/85 hover:text-white'
+		}
+		${cart.status === 'adding' ? 'cursor-wait opacity-80' : ''}
+	`}
 				onclick={handleClick}
-			>
-				{buttonLabel}
-				<span class="text-xl"><Arrow class="size-4" /></span>
+				>{#if isInBag}
+					<Sparkles class="size-4" />{/if}
+				<div class="flex flex-col gap-1 items-start">
+					<span>{buttonLabel}</span>
+					{#if isInBag}
+						<span>Secure a Meet Time to Lock it in!</span>{/if}
+				</div>
+				<span class="text-xl">
+					{#if !isInBag}
+						<Arrow class="size-4" />
+					{/if}</span
+				>
 			</button>
 		</div>
 

@@ -4,8 +4,16 @@
 	import Diamond from '$lib/assets/icons/Diamond.svelte';
 	import Trash from '$lib/assets/icons/Trash.svelte';
 	import getRandomBrandImage from '$lib/utils/getRandomBrandImage';
+	import Edit from '$lib/assets/icons/Edit.svelte';
+	import { goto } from '$app/navigation';
 
 	const { item }: { item: CartItem } = $props();
+
+	const canEdit = $derived(!!item.selections.length);
+
+	const editItem = () => {
+		goto(`/menu/${item.listingId}?editOption=${item.priceOptionId}`);
+	};
 </script>
 
 <article
@@ -40,7 +48,7 @@
 			</h2>
 
 			<p class="mt-3 text-sm text-white/70">
-				{item.priceLabel}
+				{item.priceLabel}<span class="pl-1">{item.price}</span>
 				<span class="mx-2 text-highlight">•</span>
 				Exotic Hybrid
 			</p>
@@ -74,7 +82,7 @@
 		</div>
 	{/if}
 
-	<div class="relative px-5 pb-2">
+	<div class="relative px-5 pb-2 flex gap-6">
 		<button
 			type="button"
 			class="inline-flex items-center gap-3 text-sm font-bold text-white/85 transition hover:text-purple-300"
@@ -83,5 +91,12 @@
 			<Trash class="size-6 text-highlight" />
 			Remove
 		</button>
+		{#if canEdit}<button
+				class="inline-flex items-center gap-3 text-sm font-bold text-white/85 transition hover:text-purple-300"
+				onclick={editItem}
+			>
+				<Edit class="size-6 text-highlight" />
+				Edit
+			</button>{/if}
 	</div>
 </article>
