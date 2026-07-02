@@ -31,8 +31,6 @@
 				label: selectedMeet.label
 			}
 		};
-
-		console.log('request payload', payload);
 	};
 </script>
 

@@ -181,7 +181,7 @@
 			"categoryId": "carts",
 			"name": "WISE Co. Hash Rosin Disposable Carts",
 			"brand": "WISE Co.",
-			"description": "0.5 gram 90-120u hash rosin disposable carts. Flavor options include Sour G, Glue, Fish Scale, Garlic Belts, and Cherry on Top.",
+			"description": "0.5 gram 90-120u hash rosin disposable carts.",
 			"tags": ["Hash Rosin", "Disposable", "Premium"],
 			"images": ["/images/wise.png"],
 			"pricing": [{ "id": "single", "label": "Each", "price": 45, "units": 1, "unit": "cart" }],
@@ -202,7 +202,7 @@
 			"categoryId": "carts",
 			"name": "Hittz Infinity 2g Disposable Carts",
 			"brand": "Hittz Infinity",
-			"description": "All-in-one live resin + shatter resin 2 gram digital screen disposable carts. Options include NY Sour, Miami Mintz, Duvalin, Triple Berry, and Jungle Juice.",
+			"description": "All-in-one live resin + shatter resin 2 gram digital screen disposable carts.",
 			"tags": ["2g", "Disposable", "Live Resin"],
 			"images": ["/images/hero5.png"],
 			"pricing": [

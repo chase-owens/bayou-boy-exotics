@@ -4,7 +4,6 @@ import type { MenuContent } from '../../../../shared/types/Menu';
 
 export const load: PageLoad = async ({ parent }) => {
 	const { menu, home }: { menu: MenuContent; home: HomeContent } = await parent();
-	console.log('🚀 ~ load ~ menu, home :', menu, home);
 
 	const activeCategories = menu.categories
 		.filter((category) => category.active)

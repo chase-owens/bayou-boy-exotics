@@ -12,9 +12,15 @@
 		listing,
 		categoryLabel,
 		relatedListings,
+		priceOptionId,
 		primaryImage
-	}: { listing: Listing; categoryLabel: string; relatedListings: Listing[]; primaryImage: string } =
-		$derived(data);
+	}: {
+		listing: Listing;
+		categoryLabel: string;
+		relatedListings: Listing[];
+		priceOptionId: string | null;
+		primaryImage: string;
+	} = $derived(data);
 </script>
 
 <div class="px-4 pt-4 sm:px-6 lg:px-8">
@@ -61,7 +67,7 @@
 				{/if}
 			</div>
 
-			<ProductOptionSelector {listing} />
+			<ProductOptionSelector {listing} {priceOptionId} />
 		</section>
 
 		{#if relatedListings.length}
