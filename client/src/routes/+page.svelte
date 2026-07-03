@@ -11,6 +11,22 @@
 	const { calendarProps, closedMessage, home, meetTimesDisplay } = $derived(data);
 </script>
 
+<svelte:head>
+	<title>Bayou Boy Exotics</title>
+
+	<meta name="description" content="Premium Products | Premium Service" />
+
+	<meta property="og:title" content="Bayou Boy Exotics" />
+	<meta property="og:description" content="Premium Products | Premium Service" />
+	<meta property="og:image" content="https://d2uhik5lt0ieo8.cloudfront.net/images/menu-hero.png" />
+	<meta property="og:type" content="website" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Bayou Boy Exotics" />
+	<meta name="twitter:description" content="Premium Products | Premium Service" />
+	<meta name="twitter:image" content="https://d2uhik5lt0ieo8.cloudfront.net/images/menu-hero.png" />
+</svelte:head>
+
 <Hero hero={home.hero} />
 <div class="flex flex-col gap-8 px-4 pt-8 sm:px-6 lg:px-8">
 	<MeetTimesCard {meetTimesDisplay} />

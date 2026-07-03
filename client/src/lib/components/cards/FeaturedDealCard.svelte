@@ -51,7 +51,7 @@
 		aria-hidden="true"
 		class="absolute inset-0 h-full w-full object-cover opacity-55"
 	/>
-	<div class="absolute inset-0 bg-linear-to-r from-black/60 via-black/40 to-black/20"></div>
+	<div class="absolute inset-0 bg-linear-to-r from-black/40 via-black/20 to-black/10"></div>
 	<div
 		class="absolute inset-y-0 right-0 w-2/3 bg-linear-to-l from-purple-950/30 to-transparent"
 	></div>

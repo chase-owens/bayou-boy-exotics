@@ -14,14 +14,14 @@
 	<img
 		src="/images/menu-hero.png"
 		alt=""
-		class="absolute inset-0 h-full w-full object-cover opacity-41"
+		class="absolute inset-0 h-full w-full object-cover opacity-67"
 	/>
 
 	<!-- <div class="absolute inset-0 bg-linear-to-r from-black via-black/20 to-black/10"></div> -->
 
 	<div class="relative grid gap-8 p-6 lg:grid-cols-[1fr_260px] lg:items-center">
 		<div>
-			<p class="text-xs font-black uppercase tracking-[0.4em] text-accent">Shop</p>
+			<p class="text-xs font-black uppercase tracking-[0.4em] text-accent mt-30">Shop</p>
 
 			<h1 class="mt-3 font-serif text-5xl leading-tight font-bold">
 				Fresh Drops.
@@ -33,7 +33,7 @@
 				Premium flower, carts, concentrates, mushrooms, and exclusive Bayou drops.
 			</p>
 
-			<div class="mt-8 flex flex-wrap gap-6">
+			<!-- <div class="mt-8 flex flex-wrap gap-6">
 				<div class="flex items-center gap-3">
 					<div class="rounded-xl border border-purple-500/40 bg-black/40 p-3">
 						<Cube class="h-5 w-5 text-accent" />
@@ -68,7 +68,7 @@
 						<div class="text-sm text-muted">Premium Since</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </section>

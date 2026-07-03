@@ -18,7 +18,7 @@
 		src={getRandomBrandImage()}
 		alt=""
 		aria-hidden="true"
-		class="absolute inset-0 h-full w-full object-cover opacity-20"
+		class="absolute inset-0 h-full w-full object-cover opacity-32"
 	/>
 	<SectionHeader eyebrow="Availability Calendar" title={monthName} variant="calendar" />
 

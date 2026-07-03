@@ -10,7 +10,7 @@
 			alt="Premium Bayou Exotics Flower"
 		/>
 
-		<div class="absolute inset-0 bg-linear-to-r from-black/90 via-black/55 to-transparent"></div>
+		<div class="absolute inset-0 bg-linear-to-r from-black/60 via-black/30 to-transparent"></div>
 
 		<div class="absolute inset-0 flex items-end">
 			<div class="max-w-md p-6 sm:p-8">
