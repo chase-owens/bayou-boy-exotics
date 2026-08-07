@@ -31,4 +31,4 @@ const buildDateWithTime = (date: Date, time: string) => {
 	});
 };
 
-export { buildDateWithTime, getDay, getDaysInMonth, isSameDay };
+export { buildDateWithTime, getDay, getDaysInMonth, isSameDay, isWithinInterval };

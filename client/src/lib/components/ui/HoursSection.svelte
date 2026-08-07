@@ -75,33 +75,4 @@
 			</div>
 		{/each}
 	</div>
-
-	<!-- {#if hours.temporaryOverrides?.length}
-		<div class="mt-6 border-t border-border pt-5">
-			<h3 class="text-lg font-semibold">Upcoming Closures / Changes</h3>
-
-			<div class="mt-3 space-y-3">
-				{#each hours.temporaryOverrides as override}
-					<div class="rounded-vintage bg-background/50 p-4">
-						<p class="font-medium">
-							{override.note ?? 'Schedule change'}
-						</p>
-
-						{#if override.startsAt && override.endsAt}
-							<p class="mt-1 text-sm text-muted">
-								{new Date(override.startsAt).toLocaleString()} – {new Date(override.endsAt).toLocaleString()}
-							</p>
-						{:else if override.date}
-							<p class="mt-1 text-sm text-muted">
-								{override.date}
-								{#if override.opensAt && override.closesAt}
-									: {formatTime(override.opensAt)} – {formatTime(override.closesAt)}
-								{/if}
-							</p>
-						{/if}
-					</div>
-				{/each}
-			</div>
-		</div>
-	{/if} -->
 </section>

@@ -1,7 +1,6 @@
 import type { Category } from "./Category";
 import type { Listing } from "./Listing";
 import type { Promotion } from "./Promotion";
-
 export interface MenuContent {
   currentMenu: CurrentMenu;
   categories: Category[];
