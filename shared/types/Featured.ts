@@ -19,5 +19,6 @@ export type SuperSteal =
       headline: string;
       summary: string;
       image: string;
+      price: number;
       listingId: string;
     };

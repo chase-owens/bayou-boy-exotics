@@ -33,17 +33,162 @@
 		{
 			"enabled": true,
 			"eyebrow": "Super Steal",
-			"headline": "Last 7 of Ganjamin",
-			"summary": "Limited run. Only available while it lasts.",
+			"headline": "28 single grams mushrooms",
+			"summary": "",
 			"image": "/images/gamma.png",
 			"cartItem": {
 				"image": "/images/gamma.png",
-				"listingId": "super-steal-ganjamin",
-				"listingName": "Last 7 of Ganjamin",
-				"priceOptionId": "super-steal",
-				"priceLabel": "7g",
-				"price": 10,
-				"units": 7,
+				"listingId": "super-steal-mushrooms",
+				"listingName": "28 single grams mushrooms",
+				"priceOptionId": "super-steal-shrooms",
+				"priceLabel": "28g",
+				"price": 100,
+				"units": 28,
+				"selections": []
+			}
+		},
+		{
+			"enabled": true,
+			"eyebrow": "Super Steal",
+			"headline": "28 single grams Plum Mochi",
+			"summary": "",
+			"image": "/images/gamma.png",
+			"cartItem": {
+				"image": "/images/gamma.png",
+				"listingId": "super-steal-plum-mochi",
+				"listingName": "28 single grams Plum Mochi",
+				"priceOptionId": "super-steal-plum-mochi",
+				"priceLabel": "28g",
+				"price": 150,
+				"units": 28,
+				"selections": []
+			}
+		},
+		{
+			"enabled": true,
+			"eyebrow": "Super Steal",
+			"headline": "28 single grams Wax",
+			"summary": "",
+			"image": "/images/gamma.png",
+			"cartItem": {
+				"image": "/images/gamma.png",
+				"listingId": "super-steal-wax",
+				"listingName": "28 single grams Wax",
+				"priceOptionId": "super-steal-wax",
+				"priceLabel": "28g",
+				"price": 160,
+				"units": 28,
+				"selections": []
+			}
+		},
+		{
+			"enabled": true,
+			"eyebrow": "Super Steal",
+			"headline": "10 Hitz Carts",
+			"summary": "",
+			"image": "/images/gamma.png",
+			"listingId": "hitz-carts",
+			"price": 180
+		},
+		{
+			"enabled": true,
+			"eyebrow": "Super Steal",
+			"headline": "Last 2 pre rolls",
+			"summary": "",
+			"image": "/images/gamma.png",
+			"cartItem": {
+				"image": "/images/gamma.png",
+				"listingId": "super-steal-pre-roll",
+				"listingName": "Last 2 pre rolls",
+				"priceOptionId": "super-steal-pre-roll",
+				"priceLabel": "10 carts",
+				"price": 30,
+				"units": 2,
+				"selections": []
+			}
+		},
+		{
+			"enabled": true,
+			"eyebrow": "Super Steal",
+			"headline": "Last 18 Blueberry Rainbow",
+			"summary": "",
+			"image": "/images/gamma.png",
+			"cartItem": {
+				"image": "/images/gamma.png",
+				"listingId": "super-steal-rainbow",
+				"listingName": "Last 18 Blueberry Rainbow",
+				"priceOptionId": "super-steal-rainbow",
+				"priceLabel": "18g",
+				"price": 100,
+				"units": 18,
+				"selections": []
+			}
+		},
+		{
+			"enabled": true,
+			"eyebrow": "Super Steal",
+			"headline": "2 zips Plum Mochi",
+			"summary": "",
+			"image": "/images/gamma.png",
+			"cartItem": {
+				"image": "/images/gamma.png",
+				"listingId": "super-steal-mochi-2",
+				"listingName": "2 zips Plum Mochi",
+				"priceOptionId": "super-steal-mochi-2",
+				"priceLabel": "2oz",
+				"price": 250,
+				"units": 2,
+				"selections": []
+			}
+		},
+		{
+			"enabled": true,
+			"eyebrow": "Super Steal",
+			"headline": "2 zips Mothers Milk ",
+			"summary": "",
+			"image": "/images/gamma.png",
+			"cartItem": {
+				"image": "/images/gamma.png",
+				"listingId": "super-steal-milk",
+				"listingName": "2 zips Mothers Milk ",
+				"priceOptionId": "super-steal-milk",
+				"priceLabel": "2oz",
+				"price": 275,
+				"units": 2,
+				"selections": []
+			}
+		},
+		{
+			"enabled": true,
+			"eyebrow": "Super Steal",
+			"headline": "2 zips OG cookies ",
+			"summary": "",
+			"image": "/images/gamma.png",
+			"cartItem": {
+				"image": "/images/gamma.png",
+				"listingId": "super-steal-cookies",
+				"listingName": "2 zips OG cookies ",
+				"priceOptionId": "super-steal-cookies",
+				"priceLabel": "2oz",
+				"price": 275,
+				"units": 2,
+				"selections": []
+			}
+		},
+		{
+			"enabled": true,
+			"eyebrow": "Super Steal",
+			"headline": "2 zips Supa Fya ",
+			"summary": "",
+			"image": "/images/gamma.png",
+			"cartItem": {
+				"image": "/images/gamma.png",
+				"listingId": "super-steal-fya",
+				"listingName": "2 zips Supa Fya ",
+				"priceOptionId": "super-steal-fya",
+				"priceLabel": "2oz",
+				"price": 325,
+				"units": 2,
 				"selections": []
 			}
 		}

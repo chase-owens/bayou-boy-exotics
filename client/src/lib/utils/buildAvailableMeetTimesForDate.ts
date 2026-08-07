@@ -24,8 +24,8 @@ export const buildAvailableMeetingTimesForDate = ({
 	if (!regularDay || regularDay.closed) return [];
 
 	const isClosedByClosure = closures.some((closure) => {
-		const startDateKey = closure.startsAt.slice(0, 10);
-		const endDateKey = closure.endsAt.slice(0, 10);
+		const startDateKey = closure.startsAt;
+		const endDateKey = closure.endsAt;
 
 		return dateKey >= startDateKey && dateKey <= endDateKey;
 	});

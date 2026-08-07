@@ -177,20 +177,25 @@
 			"sortOrder": 8
 		},
 		{
-			"id": "wise-co-hash-rosin-carts",
+			"id": "hitz-carts",
 			"categoryId": "carts",
-			"name": "WISE Co. Hash Rosin Disposable Carts",
-			"brand": "WISE Co.",
-			"description": "0.5 gram 90-120u hash rosin disposable carts.",
+			"name": "HITZ Infinity All in one Live resin + Shatter resin",
+			"brand": "Hitz",
+			"description": "2 gram digital screen disposable carts",
 			"tags": ["Hash Rosin", "Disposable", "Premium"],
 			"images": ["/images/wise.png"],
-			"pricing": [{ "id": "single", "label": "Each", "price": 45, "units": 1, "unit": "cart" }],
+			"pricing": [
+				{ "id": "single", "label": "Each", "price": 35, "units": 1, "unit": "cart" },
+				{ "id": "two-pack", "label": "2 for", "price": 60, "units": 2, "unit": "cart" },
+				{ "id": "tem-pack", "label": "10 for", "price": 180, "units": 10, "unit": "cart" }
+			],
 			"options": [
-				{ "id": "sour-g", "label": "Sour G", "active": true },
-				{ "id": "glue", "label": "Glue", "active": true },
-				{ "id": "fish-scale", "label": "Fish Scale", "active": true },
-				{ "id": "garlic-belts", "label": "Garlic Belts", "active": true },
-				{ "id": "cherry-on-top", "label": "Cherry on Top", "active": true }
+				{ "id": "sour-g", "label": "Blueberry Jam", "active": true },
+				{ "id": "glue", "label": "ALV Punch", "active": true },
+				{ "id": "fish-scale", "label": "Rainbow Zoap", "active": true },
+				{ "id": "garlic-belts", "label": "Gummy Splash", "active": true },
+				{ "id": "cherry-on-top", "label": "Holy Grape", "active": true },
+				{ "id": "starw-ice", "label": "Strawberry Ice", "active": true }
 			],
 			"inventory": { "tracked": false, "soldOut": false },
 			"active": true,

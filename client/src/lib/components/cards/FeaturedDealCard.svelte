@@ -3,7 +3,6 @@
 	import type { SuperSteal } from '../../../../../shared/types/Home';
 	import { cart } from '$lib/stores/cart.svelte';
 	import Arrow from '$lib/assets/icons/Arrow.svelte';
-	import getRandomBrandImage from '$lib/utils/getRandomBrandImage';
 	import Sparkles from '$lib/assets/icons/Sparkles.svelte';
 
 	type Props = {
@@ -11,6 +10,9 @@
 	};
 
 	let { feature }: Props = $props();
+	let didUserClickAddToCart = $state(false);
+
+	const isCartFeature = $derived('cartItem' in feature);
 
 	const isInBag = $derived(
 		'cartItem' in feature
@@ -18,22 +20,26 @@
 			: false
 	);
 
-	const buttonLabel = $derived(
-		isInBag
-			? `In Your Bag`
-			: 'cartItem' in feature
-				? cart.status === 'adding'
-					? 'Adding...'
-					: cart.status === 'success'
-						? 'Added to Bag'
-						: 'Reserve'
-				: 'View Deal'
+	const price = $derived(
+		'cartItem' in feature ? feature.cartItem.price : 'price' in feature ? feature.price : null
 	);
 
-	const price = $derived('cartItem' in feature ? feature.cartItem.price : null);
+	const buttonLabel = $derived(
+		isInBag
+			? 'In Your Bag'
+			: isCartFeature
+				? cart.status === 'adding' && didUserClickAddToCart
+					? 'Adding...'
+					: cart.status === 'success' && didUserClickAddToCart
+						? 'Added'
+						: 'Reserve'
+				: 'Select Flavors'
+	);
 
 	const handleClick = () => {
+		didUserClickAddToCart = true;
 		if ('cartItem' in feature) {
+			if (isInBag) return;
 			cart.addItem(feature.cartItem);
 			return;
 		}
@@ -43,71 +49,52 @@
 </script>
 
 <section
-	class="relative overflow-hidden rounded-vintage border border-purple-400/60 bg-black shadow-soft"
+	class="flex flex-col gap-3 justify-between group relative overflow-hidden rounded-vintage border border-highlight/50 bg-black/70 px-4 py-4 shadow-soft transition hover:border-accent/80 sm:px-5"
 >
-	<img
-		src={getRandomBrandImage()}
-		alt=""
-		aria-hidden="true"
-		class="absolute inset-0 h-full w-full object-cover opacity-55"
-	/>
-	<div class="absolute inset-0 bg-linear-to-r from-black/40 via-black/20 to-black/10"></div>
-	<div
-		class="absolute inset-y-0 right-0 w-2/3 bg-linear-to-l from-purple-950/30 to-transparent"
-	></div>
+	{#if price}
+		<span
+			class="rounded-full border border-accent/70 bg-black px-2.5 py-1 text-sm font-bold text-accent w-fit"
+		>
+			${price}
+		</span>
+	{/if}
 
-	<div class="relative grid gap-4 p-8 sm:min-h-96 sm:grid-cols-[1fr_auto]">
-		<div class="flex max-w-md flex-col justify-center">
-			<p class="text-xs font-black uppercase tracking-[0.38em] text-accent">
-				{feature.eyebrow}
-			</p>
+	<h3 class="mt-2 line-clamp-2 font-serif text-2xl font-bold leading-tight text-white">
+		{feature.headline}
+	</h3>
 
-			<h2 class="mt-3 font-serif text-4xl font-bold leading-tight text-white drop-shadow">
-				{feature.headline}
-			</h2>
+	{#if feature.summary}
+		<p class="mt-1 line-clamp-1 text-sm text-muted">
+			{feature.summary}
+		</p>
+	{/if}
 
-			<p class="mt-2 text-base leading-6 text-white/75">
-				{feature.summary}
-			</p>
+	<button
+		type="button"
+		disabled={cart.status === 'adding' || isInBag}
+		onclick={handleClick}
+		class={`shrink-0 rounded-xl border px-4 py-2.5 text-sm font-bold transition w-fit
+				${
+					isInBag
+						? 'border-secondary bg-secondary text-white'
+						: didUserClickAddToCart && cart.status === 'success'
+							? 'border-secondary bg-secondary text-white'
+							: 'border-highlight bg-black text-accent hover:border-accent hover:text-white'
+				}
+				${didUserClickAddToCart && cart.status === 'adding' ? 'cursor-wait opacity-80' : ''}
+				${isInBag ? 'cursor-default' : 'cursor-pointer'}
+			`}
+	>
+		<span class="flex items-center gap-2 whitespace-nowrap">
+			{#if isInBag}
+				<Sparkles class="size-4" />
+			{/if}
 
-			<button
-				type="button"
-				disabled={cart.status === 'adding' || isInBag}
-				class={`mt-6  w-fit items-center gap-3 rounded-xl border px-6 py-3 cursor-pointer
-		font-semibold backdrop-blur transition-all duration-300 flex justify-between
-		${
-			cart.status === 'success'
-				? 'border-highlight bg-secondary text-white'
-				: 'border-highlight bg-black/70 text-accent hover:border-accent/80 hover:bg-black/85 hover:text-white'
-		}
-		${cart.status === 'adding' ? 'cursor-wait opacity-80' : ''}
-	`}
-				onclick={handleClick}
-				>{#if isInBag}
-					<Sparkles class="size-4" />{/if}
-				<div class="flex flex-col gap-1 items-start">
-					<span>{buttonLabel}</span>
-					{#if isInBag}
-						<span>Secure a Meet Time to Lock it in!</span>{/if}
-				</div>
-				<span class="text-xl">
-					{#if !isInBag}
-						<Arrow class="size-4" />
-					{/if}</span
-				>
-			</button>
-		</div>
+			{buttonLabel}
 
-		{#if price}
-			<div class="absolute top-3 right-3">
-				<div
-					class="flex h-16 w-16 flex-col items-center justify-center rounded-full border-3 border-accent bg-black/80 text-center shadow-[0_0_35px_rgba(234,179,8,.25)]"
-				>
-					<span class="font-serif text-xl font-bold leading-none text-accent">
-						${price}
-					</span>
-				</div>
-			</div>
-		{/if}
-	</div>
+			{#if !isInBag}
+				<Arrow class="size-4" />
+			{/if}
+		</span>
+	</button>
 </section>
