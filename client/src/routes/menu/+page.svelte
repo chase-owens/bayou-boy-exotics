@@ -39,12 +39,12 @@
 		<section
 			class="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-3 sm:px-0 lg:grid-cols-6"
 		>
-			{#each activeCategories as category}
+			{#each activeCategories as category (`tabs=${category.id}`)}
 				<CategoryCard {activeListings} {category} />
 			{/each}
 		</section>
 
-		{#each activeCategories as category}
+		{#each activeCategories as category (`list=${category.id}`)}
 			{@const listings = getListingsByCategory(category.id)}
 
 			{#if listings.length}
@@ -53,7 +53,7 @@
 
 					<div class="flex items-end justify-between gap-4">
 						<div>
-							<p class="text-sm font-black uppercase tracking-[0.35em] text-accent">
+							<p class="text-sm font-black tracking-[0.35em] text-accent uppercase">
 								{category.label}
 							</p>
 
@@ -64,7 +64,7 @@
 					</div>
 
 					<div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
-						{#each listings as listing}
+						{#each listings as listing (`${category.id}-${listing.id}`)}
 							<ProductCard {listing} />
 						{/each}
 					</div>

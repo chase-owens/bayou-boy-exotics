@@ -7,14 +7,7 @@
 	import Gift from '$lib/assets/icons/Gift.svelte';
 
 	type HeaderVariant =
-		| 'calendar'
-		| 'clock'
-		| 'raffle'
-		| 'instagram'
-		| 'logo'
-		| 'cart'
-		| 'gift'
-		| 'instagram';
+		'calendar' | 'clock' | 'raffle' | 'instagram' | 'logo' | 'cart' | 'gift' | 'instagram';
 
 	type HeaderProps = {
 		eyebrow: string;
@@ -30,7 +23,7 @@
 
 <div class="mb-5 flex items-start justify-between gap-4">
 	<div>
-		<p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
+		<p class="text-xs font-semibold tracking-[0.3em] text-accent uppercase">
 			{eyebrow}
 		</p>
 

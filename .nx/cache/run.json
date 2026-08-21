@@ -1,0 +1,21 @@
+{
+  "run": {
+    "command": "nx run-many -t check",
+    "startTime": "2026-08-21T23:00:51.787Z",
+    "endTime": "2026-08-21T23:00:53.741Z",
+    "inner": false
+  },
+  "tasks": [
+    {
+      "taskId": "@bayou/client:check",
+      "target": "check",
+      "projectName": "@bayou/client",
+      "hash": "74005549833451505",
+      "startTime": "2026-08-21T23:00:51.818Z",
+      "endTime": "2026-08-21T23:00:53.740Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 0
+    }
+  ]
+}

@@ -24,7 +24,7 @@
 
 	<div class="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
 		<div>
-			<div class="mb-3 grid grid-cols-7 text-center text-[0.65rem] font-bold uppercase text-muted">
+			<div class="mb-3 grid grid-cols-7 text-center text-[0.65rem] font-bold text-muted uppercase">
 				<span>Sun</span>
 				<span>Mon</span>
 				<span>Tue</span>
@@ -35,17 +35,17 @@
 			</div>
 
 			<div class="grid grid-cols-7 gap-2 text-center">
-				{#each Array(leadingBlanks) as _}
+				{#each Array(leadingBlanks) as _, index (`avail-${_}-${index}`)}
 					<div></div>
 				{/each}
 
-				{#each days as day}
+				{#each days as day (day)}
 					<div
 						class={[
 							'flex aspect-square items-center justify-center rounded-sm text-sm font-semibold',
 							day.status === 'closed' && 'bg-highlight/80 text-muted',
 							day.status === 'partial' && 'bg-secondary/80',
-							day.status === 'open' && 'text-foreground border border-border'
+							day.status === 'open' && 'border border-border text-foreground'
 							// day.isToday && 'bg-highlight text-white'
 						]
 							.filter(Boolean)
@@ -80,7 +80,7 @@
 			<h3 class="mb-4 text-lg font-semibold text-foreground">Coming Up</h3>
 
 			<div class="space-y-3">
-				{#each upcoming as item}
+				{#each upcoming as item (item.value)}
 					<div class="grid grid-cols-[90px_1fr] gap-4 text-sm">
 						<p class="font-semibold text-foreground">{item.label}</p>
 						<p class="text-muted">{item.value}</p>

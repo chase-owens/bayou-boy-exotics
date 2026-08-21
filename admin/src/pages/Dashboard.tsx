@@ -17,7 +17,7 @@ export default function Dashboard() {
         title={
           isAfternoon ? "Good afternoon, Bayou Boy" : "Good morning, Bayou Boy"
         }
-        description="Here’s what’s happening with Bayou Boy Exotics."
+        description="Here's what's happening with Bayou Boy Exotics."
       />
 
       <div className="grid gap-5 lg:grid-cols-3">
@@ -48,7 +48,7 @@ export default function Dashboard() {
         </AdminCard>
 
         <AdminCard>
-          <p className="admin-eyebrow">Today’s Menu</p>
+          <p className="admin-eyebrow">Today's Menu</p>
           <h2 className="mt-2 text-2xl">Ready to Publish?</h2>
         </AdminCard>
       </div>

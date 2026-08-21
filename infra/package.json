@@ -1,9 +1,11 @@
 {
-  "name": "infra",
+  "name": "@bayou/infra",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "synth": "cdk synth",
+    "deploy": "cdk deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

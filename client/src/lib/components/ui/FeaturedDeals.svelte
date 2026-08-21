@@ -24,8 +24,8 @@
 		/>
 		<p class="-mt-3 text-sm text-white/55">Limited drops while inventory lasts.</p>
 
-		<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-			{#each activeFeatures as feature}
+		<div class="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+			{#each activeFeatures as feature (`section-${feature.headline}-${feature.image}`)}
 				<FeaturedDealCard {feature} />
 			{/each}
 		</div>

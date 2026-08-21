@@ -1,0 +1,25 @@
+> nx run @bayou/client:lint
+
+> npm run lint
+
+[1mnpm[22m [33mwarn[39m [94mconfig[39m ignoring workspace config at /Users/chasehendrix/Projects/bayou-boy-exotics/client/.npmrc
+
+> @bayou/client@0.0.1 lint
+> prettier --check . && eslint .
+
+Checking formatting...
+.gitignore[2K[1G.npmrc[2K[1G.prettierignore[2K[1G.prettierrc[2K[1G.vscode/extensions.json[2K[1G.vscode/settings.json[2K[1Geslint.config.js[2K[1Gpackage.json[2K[1GREADME.md[2K[1Gsrc/app.css[2K[1Gsrc/app.d.ts[2K[1Gsrc/app.html[2K[1Gsrc/lib/assets/favicon.svg[2K[1Gsrc/lib/assets/icons/Arrow.svelte[2K[1Gsrc/lib/assets/icons/Bag.svelte[2K[1Gsrc/lib/assets/icons/Briefcase.svelte[2K[1Gsrc/lib/assets/icons/Calendar.svelte[2K[1Gsrc/lib/assets/icons/Caret.svelte[2K[1Gsrc/lib/assets/icons/Cart.svelte[2K[1Gsrc/lib/assets/icons/Clock.svelte[2K[1Gsrc/lib/assets/icons/Close.svelte[2K[1Gsrc/lib/assets/icons/Cube.svelte[2K[1Gsrc/lib/assets/icons/Diamond.svelte[2K[1Gsrc/lib/assets/icons/Drip.svelte[2K[1Gsrc/lib/assets/icons/Edit.svelte[2K[1Gsrc/lib/assets/icons/Gift.svelte[2K[1Gsrc/lib/assets/icons/Glasses.svelte[2K[1Gsrc/lib/assets/icons/IceCream.svelte[2K[1Gsrc/lib/assets/icons/Instagram.svelte[2K[1Gsrc/lib/assets/icons/Leaf.svelte[2K[1Gsrc/lib/assets/icons/Menu.svelte[2K[1Gsrc/lib/assets/icons/Rocket.svelte[2K[1Gsrc/lib/assets/icons/Smile.svelte[2K[1Gsrc/lib/assets/icons/Sparkles.svelte[2K[1Gsrc/lib/assets/icons/Ticket.svelte[2K[1Gsrc/lib/assets/icons/Trash.svelte[2K[1Gsrc/lib/assets/icons/Warning.svelte[2K[1Gsrc/lib/assets/icons/Watch.svelte[2K[1Gsrc/lib/assets/icons/Wax.svelte[2K[1Gsrc/lib/components/cards/CategoryCard.svelte[2K[1Gsrc/lib/components/cards/FeaturedDealCard.svelte[2K[1Gsrc/lib/components/cards/ProductCard.svelte[2K[1Gsrc/lib/components/cards/SoldOutCard.svelte[2K[1Gsrc/lib/components/cart/CartItem.svelte[2K[1Gsrc/lib/components/cart/CartMeetSummary.svelte[2K[1Gsrc/lib/components/home/AvailabilityCalendar.svelte[2K[1Gsrc/lib/components/home/Hero.svelte[2K[1Gsrc/lib/components/home/RaffleCard.svelte[2K[1Gsrc/lib/components/home/ShopCta.svelte[2K[1Gsrc/lib/components/LatestUpdate.svelte[2K[1Gsrc/lib/components/layout/AppShell.svelte[2K[1Gsrc/lib/components/layout/SectionHeader.svelte[2K[1Gsrc/lib/components/MeetTimesCard.svelte[2K[1Gsrc/lib/components/menu/Header.svelte[2K[1Gsrc/lib/components/productDetail/Header.svelte[2K[1Gsrc/lib/components/productDetail/ProductOptionSelector.svelte[2K[1Gsrc/lib/components/ui/FeaturedDeals.svelte[2K[1Gsrc/lib/components/ui/HoursSection.svelte[2K[1Gsrc/lib/components/ui/StatusBanner.svelte[2K[1Gsrc/lib/data/availability.json[2K[1Gsrc/lib/data/home.json[2K[1Gsrc/lib/data/menu.json[2K[1Gsrc/lib/data/root.json[2K[1Gsrc/lib/index.ts[2K[1Gsrc/lib/stores/cart.svelte.ts[2K[1Gsrc/lib/utils/buildAvailabilityCalendar.ts[2K[1Gsrc/lib/utils/buildAvailableMeetTimesForDate.ts[2K[1Gsrc/lib/utils/buildDateWithTime.ts[2K[1Gsrc/lib/utils/buildMeetTimesCard.ts[2K[1Gsrc/lib/utils/date.ts[2K[1Gsrc/lib/utils/findNextAvailableMeetDate.ts[2K[1Gsrc/lib/utils/getDateStatus.ts[2K[1Gsrc/lib/utils/getRandomBrandImage.ts[2K[1Gsrc/routes/+layout.svelte[2K[1Gsrc/routes/+layout.ts[2K[1Gsrc/routes/+page.svelte[2K[1Gsrc/routes/+page.ts[2K[1Gsrc/routes/cart/+page.svelte[2K[1Gsrc/routes/cart/+page.ts[2K[1Gsrc/routes/menu/[listingId]/+page.svelte[2K[1Gsrc/routes/menu/[listingId]/+page.ts[2K[1Gsrc/routes/menu/+page.svelte[2K[1Gsrc/routes/menu/+page.ts[2K[1Gtsconfig.json[2K[1Gvite.config.ts[2K[1GAll matched files use Prettier code style!
+[0m
+[4m/Users/chasehendrix/Projects/bayou-boy-exotics/client/src/lib/components/layout/AppShell.svelte[24m
+  [2m224:9[22m  [31merror[39m  Unexpected href link without resolve()  [2msvelte/no-navigation-without-resolve[22m
+
+[31m[1m✖ 1 problem (1 error, 0 warnings)[22m[39m
+[0m
+⠙[1G[0K[1mnpm[22m [31merror[39m Lifecycle script `lint` failed with error:
+⠙[1G[0K[1mnpm[22m [31merror[39m [94mcode[39m [33m1[39m
+⠙[1G[0K[1mnpm[22m [31merror[39m [94mpath[39m /Users/chasehendrix/Projects/bayou-boy-exotics/client
+⠙[1G[0K[1mnpm[22m [31merror[39m [94mworkspace[39m @bayou/client@0.0.1
+⠙[1G[0K[1mnpm[22m [31merror[39m [94mlocation[39m /Users/chasehendrix/Projects/bayou-boy-exotics/client
+⠙[1G[0K[1mnpm[22m [31merror[39m command failed
+⠙[1G[0K[1mnpm[22m [31merror[39m [94mcommand[39m sh -c prettier --check . && eslint .
+⠙[1G[0K

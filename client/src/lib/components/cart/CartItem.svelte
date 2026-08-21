@@ -6,13 +6,14 @@
 	import getRandomBrandImage from '$lib/utils/getRandomBrandImage';
 	import Edit from '$lib/assets/icons/Edit.svelte';
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 
 	const { item }: { item: CartItem } = $props();
 
 	const canEdit = $derived(!!item.selections.length);
 
 	const editItem = () => {
-		goto(`/menu/${item.listingId}?editOption=${item.priceOptionId}`);
+		goto(resolve(`/menu/${item.listingId}?editOption=${item.priceOptionId}`));
 	};
 </script>
 
@@ -37,13 +38,13 @@
 
 		<div class="min-w-0">
 			<p
-				class="mb-3 inline-flex items-center gap-2 rounded-md border border-purple-300/60 bg-black/45 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-yellow-300"
+				class="mb-3 inline-flex items-center gap-2 rounded-md border border-purple-300/60 bg-black/45 px-3 py-1 text-xs font-bold tracking-[0.2em] text-yellow-300 uppercase"
 			>
 				<Diamond class="size-5" />
 				Premium
 			</p>
 
-			<h2 class="font-serif font-bold leading-none text-white drop-shadow">
+			<h2 class="font-serif leading-none font-bold text-white drop-shadow">
 				{item.listingName}
 			</h2>
 
@@ -54,13 +55,13 @@
 			</p>
 
 			{#if item.quantity && item.quantity > 1}
-				<p class="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+				<p class="mt-2 text-xs font-semibold tracking-[0.2em] text-accent uppercase">
 					{item.quantity} packs
 				</p>
 			{/if}
 		</div>
 
-		<p class="absolute right-5 top-5 text-3xl font-black text-yellow-400 sm:static sm:self-start">
+		<p class="absolute top-5 right-5 text-3xl font-black text-yellow-400 sm:static sm:self-start">
 			${item.total ?? item.price}
 		</p>
 	</div>
@@ -69,10 +70,10 @@
 		<div
 			class="relative mx-5 mb-4 rounded-2xl border border-purple-400/25 bg-black/35 p-3 backdrop-blur-sm"
 		>
-			<p class="text-xs font-semibold uppercase tracking-[0.25em] text-yellow-300">Selections</p>
+			<p class="text-xs font-semibold tracking-[0.25em] text-yellow-300 uppercase">Selections</p>
 
 			<div class="mt-3 grid gap-2">
-				{#each item.selections as selection}
+				{#each item.selections as selection (selection.optionId)}
 					<div class="flex justify-between text-sm">
 						<span class="text-white/85">{selection.label}</span>
 						<span class="font-semibold text-yellow-300">x{selection.units}</span>
@@ -82,7 +83,7 @@
 		</div>
 	{/if}
 
-	<div class="relative px-5 pb-2 flex gap-6">
+	<div class="relative flex gap-6 px-5 pb-2">
 		<button
 			type="button"
 			class="inline-flex items-center gap-3 text-sm font-bold text-white/85 transition hover:text-purple-300"

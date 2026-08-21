@@ -20,29 +20,29 @@
 
 		<div class="absolute inset-0 bg-linear-to-br from-black/85 via-black/60 to-black/40"></div>
 
-		<div class="absolute top-0 left-0 right-0 p-5 max-w-80">
+		<div class="absolute top-0 right-0 left-0 max-w-80 p-5">
 			<div class="mb-3 flex flex-wrap gap-2">
 				{#if categoryLabel}
-					<span class="rounded-full bg-accent px-3 py-1 text-xs font-bold uppercase text-primary">
+					<span class="rounded-full bg-accent px-3 py-1 text-xs font-bold text-primary uppercase">
 						{categoryLabel}
 					</span>
 				{/if}
 
 				{#if listing.type}
 					<span
-						class="rounded-full bg-background/80 px-3 py-1 text-xs font-bold capitalize text-accent backdrop-blur"
+						class="rounded-full bg-background/80 px-3 py-1 text-xs font-bold text-accent capitalize backdrop-blur"
 					>
 						{listing.type.replaceAll('-', ' ')}
 					</span>
 				{/if}
 			</div>
 
-			<h1 class="text-4xl font-bold leading-tight text-white sm:text-6xl">
+			<h1 class="text-4xl leading-tight font-bold text-white sm:text-6xl">
 				{listing.name}
 			</h1>
 
 			{#if listing.brand || listing.vendor}
-				<p class="mt-0.5 text-sm font-semibold uppercase tracking-[0.25em] text-white/70">
+				<p class="mt-0.5 text-sm font-semibold tracking-[0.25em] text-white/70 uppercase">
 					{listing.brand ?? listing.vendor}
 				</p>
 			{/if}

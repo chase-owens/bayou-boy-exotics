@@ -1,13 +1,14 @@
 <script lang="ts">
-	import Cube from '$lib/assets/icons/Cube.svelte';
-	import Calendar from '$lib/assets/icons/Calendar.svelte';
-	import Diamond from '$lib/assets/icons/Diamond.svelte';
+	// import Cube from '$lib/assets/icons/Cube.svelte';
+	// import Calendar from '$lib/assets/icons/Calendar.svelte';
+	// import Diamond from '$lib/assets/icons/Diamond.svelte';
 
 	type HeaderProps = {
 		listingsCount: number;
 	};
 
 	const { listingsCount }: HeaderProps = $props();
+	console.log('🚀 ~ listingsCount:', listingsCount);
 </script>
 
 <section class="relative overflow-hidden bg-black shadow-soft">
@@ -21,7 +22,7 @@
 
 	<div class="relative grid gap-8 p-6 lg:grid-cols-[1fr_260px] lg:items-center">
 		<div>
-			<p class="text-xs font-black uppercase tracking-[0.4em] text-accent mt-30">Shop</p>
+			<p class="mt-30 text-xs font-black tracking-[0.4em] text-accent uppercase">Shop</p>
 
 			<h1 class="mt-3 font-serif text-5xl leading-tight font-bold">
 				Fresh Drops.

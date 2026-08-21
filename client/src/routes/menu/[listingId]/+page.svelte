@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import Arrow from '$lib/assets/icons/Arrow.svelte';
 	import ProductCard from '$lib/components/cards/ProductCard.svelte';
 	import Header from '$lib/components/productDetail/Header.svelte';
@@ -26,10 +27,10 @@
 <div class="px-4 pt-4 sm:px-6 lg:px-8">
 	<div class="mx-auto flex w-full max-w-5xl flex-col gap-5 pb-24">
 		<a
-			class="text-sm font-semibold text-accent items-center flex gap-2 transition group-hover:text-highlight"
-			href="/menu"
+			class="flex items-center gap-2 text-sm font-semibold text-accent transition group-hover:text-highlight"
+			href={resolve('/menu')}
 		>
-			<Arrow class="size-4 rotate-180 inline" />
+			<Arrow class="inline size-4 rotate-180" />
 			<p>Back to Menu</p>
 		</a>
 
@@ -39,7 +40,7 @@
 			<div class="space-y-5">
 				{#if listing.tags?.length}
 					<div class="flex flex-wrap gap-2">
-						{#each listing.tags as tag}
+						{#each listing.tags as tag (tag)}
 							<span
 								class="rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold text-muted"
 							>
@@ -51,10 +52,10 @@
 
 				{#if listing.images?.length > 1}
 					<section class="space-y-3">
-						<p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent">Photos</p>
+						<p class="text-xs font-semibold tracking-[0.3em] text-accent uppercase">Photos</p>
 
 						<div class="grid grid-cols-3 gap-3">
-							{#each listing.images.slice(1) as image}
+							{#each listing.images.slice(1) as image (image)}
 								<img
 									class="aspect-square rounded-vintage border border-border object-cover"
 									src={image}
@@ -73,18 +74,21 @@
 		{#if relatedListings.length}
 			<section class="space-y-4">
 				<div class="flex items-center justify-between">
-					<p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
+					<p class="text-xs font-semibold tracking-[0.3em] text-accent uppercase">
 						More {categoryLabel}
 					</p>
 
-					<a class="text-sm font-semibold text-accent flex gap-2 items-center" href="/menu">
+					<a
+						class="flex items-center gap-2 text-sm font-semibold text-accent"
+						href={resolve('/menu')}
+					>
 						<p>View Menu</p>
 						<Arrow class="size-4" />
 					</a>
 				</div>
 
 				<div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-					{#each relatedListings as listing}
+					{#each relatedListings as listing (listing.id)}
 						<ProductCard {listing} />
 					{/each}
 				</div>
