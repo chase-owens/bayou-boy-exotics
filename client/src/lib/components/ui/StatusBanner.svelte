@@ -38,7 +38,7 @@
 		</div>
 
 		<div class="min-w-0 flex-1">
-			<p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
+			<p class="text-xs font-semibold tracking-[0.3em] text-accent uppercase">
 				{title}
 			</p>
 

@@ -143,6 +143,7 @@
 		const totalUnits = hasOptions
 			? selectedOptions.reduce((acc, cur) => {
 					const currUnits = (acc += cur.units);
+					console.log('🚀 ~ addToCart ~ currUnits:', currUnits);
 					return acc;
 				}, 0)
 			: 1;
@@ -173,6 +174,7 @@
 	const isInBag = $derived(
 		selectedPriceOption ? cart.hasItem(listing.id, selectedPriceOption?.id) : false
 	);
+	console.log('🚀 ~ isInBag:', isInBag, canEdit);
 
 	const buttonLabel = $derived(
 		existingCartItem
@@ -192,14 +194,14 @@
 </script>
 
 <section class="rounded-vintage bg-surface p-5 shadow-soft">
-	<p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent">Select Option</p>
+	<p class="text-xs font-semibold tracking-[0.3em] text-accent uppercase">Select Option</p>
 
 	<div class="mt-5 grid gap-3">
-		{#each listing.pricing as option}
+		{#each listing.pricing as option (`product-option-prices-${option.id}`)}
 			<button
 				type="button"
 				class={[
-					'flex items-center justify-between rounded-vintage border px-4 py-3 text-left transition cursor-pointer',
+					'flex cursor-pointer items-center justify-between rounded-vintage border px-4 py-3 text-left transition',
 					selectedPriceOption?.id === option.id
 						? 'border-highlight bg-black/60'
 						: 'border-border bg-background/40 hover:border-accent'
@@ -216,7 +218,7 @@
 		<div class="mt-6">
 			<div class="flex items-end justify-between gap-4">
 				<div>
-					<p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent">Select Flavors</p>
+					<p class="text-xs font-semibold tracking-[0.3em] text-accent uppercase">Select Flavors</p>
 				</div>
 
 				<p class="text-sm font-bold text-accent">
@@ -227,7 +229,7 @@
 			</div>
 
 			<div class="mt-4 grid gap-3">
-				{#each listing.options ?? [] as option}
+				{#each listing.options ?? [] as option (`product-option-listing-options-${option.id}`)}
 					<div
 						class="flex items-center justify-between rounded-vintage border border-border bg-background/40 px-4 py-3"
 					>
@@ -242,7 +244,7 @@
 						<div class="flex items-center gap-3">
 							<button
 								type="button"
-								class="cursor-pointer size-8 rounded-full border border-border text-foreground disabled:opacity-40"
+								class="size-8 cursor-pointer rounded-full border border-border text-foreground disabled:opacity-40"
 								disabled={(selections[option.id] ?? 0) === 0 || option.soldOut}
 								onclick={() => decrementOption(option.id)}
 							>
@@ -255,7 +257,7 @@
 
 							<button
 								type="button"
-								class="cursor-pointer size-8 rounded-full border border-border text-foreground disabled:opacity-40"
+								class="size-8 cursor-pointer rounded-full border border-border text-foreground disabled:opacity-40"
 								disabled={option.soldOut}
 								onclick={() => incrementOption(option.id)}
 							>
@@ -271,7 +273,7 @@
 	<button
 		type="button"
 		disabled={(existingCartItem && !hasConfigChanged) || cart.status === 'adding'}
-		class={`flex justify-center mt-6  w-full items-center gap-3 rounded-xl border px-6 py-3 cursor-pointer
+		class={`mt-6 flex w-full  cursor-pointer items-center justify-center gap-3 rounded-xl border px-6 py-3
 		font-semibold backdrop-blur transition-all duration-300
 		${
 			cart.status === 'success'

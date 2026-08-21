@@ -137,4 +137,71 @@
   .admin-nav-item-active {
     @apply bg-surface-alt text-white shadow-soft;
   }
+
+  .admin-field {
+    @apply space-y-2;
+  }
+
+  .admin-label {
+    @apply block text-sm font-semibold text-muted-dark;
+  }
+
+  .admin-input,
+  .admin-select,
+  .admin-textarea {
+    @apply w-full rounded-vintage border border-border bg-white px-3 py-2.5
+      text-sm text-foreground shadow-sm outline-none transition;
+  }
+
+  .admin-input::placeholder,
+  .admin-textarea::placeholder {
+    color: var(--color-muted);
+  }
+
+  .admin-input:focus,
+  .admin-select:focus,
+  .admin-textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(43, 84, 126, 0.12);
+  }
+
+  .admin-textarea {
+    @apply min-h-28 resize-y;
+  }
+
+  .admin-select {
+    @apply appearance-none pr-10;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--color-muted-dark) 50%),
+      linear-gradient(135deg, var(--color-muted-dark) 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) calc(50% - 2px),
+      calc(100% - 13px) calc(50% - 2px);
+    background-size:
+      5px 5px,
+      5px 5px;
+    background-repeat: no-repeat;
+  }
+
+  .admin-help {
+    @apply text-xs text-muted;
+  }
+
+  .admin-error-text {
+    @apply text-xs font-medium text-error;
+  }
+
+  .admin-input-error,
+  .admin-select-error,
+  .admin-textarea-error {
+    @apply border-error bg-error-background/40;
+  }
+
+  .admin-form-card {
+    @apply rounded-vintage border border-border bg-white p-5 shadow-soft;
+  }
+
+  .admin-section-title {
+    @apply font-heading text-lg font-bold text-foreground;
+  }
 }

@@ -5,7 +5,7 @@ export default function MeetTimes() {
     <PageHeader
       eyebrow="MeetTimes"
       title="meets"
-      description="Manage menu inventory."
+      description="Manage meet times."
     />
   );
 }

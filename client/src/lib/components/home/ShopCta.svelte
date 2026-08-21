@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import Arrow from '$lib/assets/icons/Arrow.svelte';
 </script>
 
@@ -14,9 +15,9 @@
 
 		<div class="absolute inset-0 flex items-end">
 			<div class="max-w-md p-6 sm:p-8">
-				<p class="text-xs font-bold uppercase tracking-[0.35em] text-accent">Shop Bayou Exotics</p>
+				<p class="text-xs font-bold tracking-[0.35em] text-accent uppercase">Shop Bayou Exotics</p>
 
-				<h2 class="mt-3 text-4xl font-bold leading-tight text-white sm:text-5xl">
+				<h2 class="mt-3 text-4xl leading-tight font-bold text-white sm:text-5xl">
 					Premium flower.<br />
 					Every drop.
 				</h2>
@@ -27,7 +28,7 @@
 
 				<div class="mt-5">
 					<a
-						href="/menu"
+						href={resolve('/menu')}
 						class="inline-flex items-center gap-3 rounded-xl border border-highlight bg-black/70 px-6 py-3 font-semibold text-accent backdrop-blur transition hover:border-accent/80 hover:bg-black/85 hover:text-white"
 					>
 						<span>Shop Now</span>

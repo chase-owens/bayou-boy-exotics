@@ -18,9 +18,9 @@
 
 	<div class="relative grid gap-4 p-8 sm:min-h-96 sm:grid-cols-[1fr_auto]">
 		<div class="flex max-w-md flex-col justify-center">
-			<p class="text-xs font-black uppercase tracking-[0.38em] text-accent">sold out</p>
+			<p class="text-xs font-black tracking-[0.38em] text-accent uppercase">sold out</p>
 
-			<h2 class="mt-3 font-serif text-4xl font-bold leading-tight text-white drop-shadow">
+			<h2 class="mt-3 font-serif text-4xl leading-tight font-bold text-white drop-shadow">
 				New menu drops this Friday
 			</h2>
 

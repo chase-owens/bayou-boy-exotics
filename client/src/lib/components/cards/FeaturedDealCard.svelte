@@ -4,6 +4,7 @@
 	import { cart } from '$lib/stores/cart.svelte';
 	import Arrow from '$lib/assets/icons/Arrow.svelte';
 	import Sparkles from '$lib/assets/icons/Sparkles.svelte';
+	import { resolve } from '$app/paths';
 
 	type Props = {
 		feature: SuperSteal;
@@ -44,22 +45,22 @@
 			return;
 		}
 
-		goto(`/menu/${feature.listingId}`);
+		goto(resolve(`/menu/${feature.listingId}`));
 	};
 </script>
 
 <section
-	class="flex flex-col gap-3 justify-between group relative overflow-hidden rounded-vintage border border-highlight/50 bg-black/70 px-4 py-4 shadow-soft transition hover:border-accent/80 sm:px-5"
+	class="group relative flex flex-col justify-between gap-3 overflow-hidden rounded-vintage border border-highlight/50 bg-black/70 px-4 py-4 shadow-soft transition hover:border-accent/80 sm:px-5"
 >
 	{#if price}
 		<span
-			class="rounded-full border border-accent/70 bg-black px-2.5 py-1 text-sm font-bold text-accent w-fit"
+			class="w-fit rounded-full border border-accent/70 bg-black px-2.5 py-1 text-sm font-bold text-accent"
 		>
 			${price}
 		</span>
 	{/if}
 
-	<h3 class="mt-2 line-clamp-2 font-serif text-2xl font-bold leading-tight text-white">
+	<h3 class="mt-2 line-clamp-2 font-serif text-2xl leading-tight font-bold text-white">
 		{feature.headline}
 	</h3>
 
@@ -73,7 +74,7 @@
 		type="button"
 		disabled={cart.status === 'adding' || isInBag}
 		onclick={handleClick}
-		class={`shrink-0 rounded-xl border px-4 py-2.5 text-sm font-bold transition w-fit
+		class={`w-fit shrink-0 rounded-xl border px-4 py-2.5 text-sm font-bold transition
 				${
 					isInBag
 						? 'border-secondary bg-secondary text-white'

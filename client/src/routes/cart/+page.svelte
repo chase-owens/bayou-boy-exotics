@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import CartItem from '$lib/components/cart/CartItem.svelte';
 	import CartMeetSummary from '$lib/components/cart/CartMeetSummary.svelte';
 	import MeetTimesCard from '$lib/components/MeetTimesCard.svelte';
@@ -31,19 +32,20 @@
 				label: selectedMeet.label
 			}
 		};
+		console.log('🚀 ~ handleSubmit ~ payload:', payload);
 	};
 </script>
 
-<section class="px-4 pt-4 sm:px-6 lg:px-8 mx-auto flex w-full max-w-3xl flex-col gap-5 pb-10">
+<section class="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 pt-4 pb-10 sm:px-6 lg:px-8">
 	<div>
-		<p class="text-xs font-semibold uppercase tracking-[0.3em] text-accent">Cart</p>
+		<p class="text-xs font-semibold tracking-[0.3em] text-accent uppercase">Cart</p>
 		<h1 class="mt-2 text-4xl font-bold text-foreground">Your Request</h1>
 		<p class="mt-2 text-sm text-muted">Review your items before choosing a meet time.</p>
 	</div>
 
 	{#if hasItems}
 		<div class="space-y-4">
-			{#each cart.items as item}
+			{#each cart.items as item (`cart-item-${item.id}-${item.priceOptionId}`)}
 				<CartItem {item} />
 			{/each}
 		</div>
@@ -60,7 +62,7 @@
 			<h2 class="text-2xl font-bold text-foreground">Your cart is empty</h2>
 			<p class="mt-2 text-sm text-muted">Add products from the menu to start a request.</p>
 
-			<a class="btn-base btn-primary mt-5 inline-block" href="/menu"> View Menu </a>
+			<a class="btn-base btn-primary mt-5 inline-block" href={resolve('/menu')}> View Menu </a>
 		</section>
 	{/if}
 </section>

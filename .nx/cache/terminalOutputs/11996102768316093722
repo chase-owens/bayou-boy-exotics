@@ -1,0 +1,17 @@
+> nx run @bayou/admin:build
+
+> npm run build
+
+
+> @bayou/admin@0.0.0 build
+> tsc -b && vite build
+
+[36mvite v8.1.0 [32mbuilding client environment for production...[36m[39m
+[2K[32m✓[0m 302 modules transformed.
+[2Krendering chunks (1)...[2Kcomputing gzip size...
+[2K[2mdist/[0m[32mindex.html                 [0m[1;2m  0.46 kB[0m[2m │ gzip:  0.29 kB[0m
+[2mdist/[0m[2massets/[0m[35mindex-lwkdKrdG.css  [0m[1;2m 22.99 kB[0m[2m │ gzip:  4.36 kB[0m
+[2mdist/[0m[2massets/[0m[36mindex-DdmrRFry.js   [0m[1;2m292.47 kB[0m[2m │ gzip: 93.55 kB[0m
+
+[32m✓ built in 145ms[39m
+⠙[1G[0K

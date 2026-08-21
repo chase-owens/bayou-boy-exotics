@@ -20,7 +20,7 @@
 </script>
 
 <a
-	class="min-w-37.5 rounded-vintage border border-border bg-surface p-4 flex flex-col items-center gap-1 shadow-soft transition hover:border-accent hover:bg-background/40 sm:min-w-0"
+	class="flex min-w-37.5 flex-col items-center gap-1 rounded-vintage border border-border bg-surface p-4 shadow-soft transition hover:border-accent hover:bg-background/40 sm:min-w-0"
 	href={`#${category.id}`}
 >
 	{#if category.id === 'flower'}

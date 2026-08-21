@@ -1,0 +1,26 @@
+{
+  "name": "bayou-boy-exotics",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "admin",
+    "client",
+    "infra",
+    "lambdas",
+    "shared"
+  ],
+  "scripts": {
+    "build": "nx run-many -t build",
+    "check": "nx run-many -t check",
+    "lint": "nx run-many -t lint",
+    "format": "nx run-many -t format",
+    "dev:admin": "npm run dev --workspace=admin",
+    "dev:client": "npm run dev --workspace=client",
+    "deploy": "npm run deploy --workspace=infra",
+    "synth": "npm run synth --workspace=infra",
+    "validate": "npm run lint && npm run build && npm run check && npm run synth"
+  },
+  "devDependencies": {
+    "nx": "^23.1.1"
+  }
+}

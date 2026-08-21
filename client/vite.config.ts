@@ -18,5 +18,13 @@ export default defineConfig({
 			// See https://svelte.dev/docs/kit/adapters for more information about adapters.
 			adapter: adapter({ pages: 'build', assets: 'build', fallback: 'index.html' })
 		})
-	]
+	],
+	server: {
+		proxy: {
+			'/data': {
+				target: 'https://d2uhik5lt0ieo8.cloudfront.net',
+				changeOrigin: true
+			}
+		}
+	}
 });

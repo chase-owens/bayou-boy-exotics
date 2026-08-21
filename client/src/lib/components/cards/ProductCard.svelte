@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Listing } from '../../../../../shared/types/Listing';
 	import Arrow from '$lib/assets/icons/Arrow.svelte';
+	import { resolve } from '$app/paths';
 	const { listing }: { listing: Listing } = $props();
 
 	const lowestPrice = (pricing: { price: number }[]) => {
@@ -11,7 +12,7 @@
 
 <a
 	class="group overflow-hidden rounded-vintage border border-purple-400/30 bg-black shadow-soft transition hover:-translate-y-1 hover:border-accent/80 hover:shadow-[0_0_30px_rgba(126,34,206,.25)]"
-	href={`/menu/${listing.id}`}
+	href={resolve(`/menu/${listing.id}`)}
 >
 	<div class="relative h-44 overflow-hidden bg-black sm:h-52">
 		{#if listing.images?.[0]}
@@ -31,7 +32,7 @@
 
 		{#if listing.type}
 			<span
-				class="absolute bottom-3 left-3 rounded-full border border-purple-400/25 bg-surface/95 px-3 py-1 text-xs font-bold lowercase text-accent shadow-soft backdrop-blur"
+				class="absolute bottom-3 left-3 rounded-full border border-purple-400/25 bg-surface/95 px-3 py-1 text-xs font-bold text-accent lowercase shadow-soft backdrop-blur"
 			>
 				{listing.type}
 			</span>
@@ -40,13 +41,13 @@
 
 	<div class="space-y-2 bg-black p-4">
 		<h3
-			class="line-clamp-2 font-heading text-2xl font-bold leading-tight text-white transition group-hover:text-accent"
+			class="line-clamp-2 font-heading text-2xl leading-tight font-bold text-white transition group-hover:text-accent"
 		>
 			{listing.name}
 		</h3>
 
 		{#if listing.brand || listing.vendor}
-			<p class="line-clamp-2 text-xs font-semibold uppercase tracking-[0.28em] text-white/65">
+			<p class="line-clamp-2 text-xs font-semibold tracking-[0.28em] text-white/65 uppercase">
 				{listing.brand ?? listing.vendor}
 			</p>
 		{/if}

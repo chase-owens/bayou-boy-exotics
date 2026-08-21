@@ -23,7 +23,7 @@
 	<SectionHeader eyebrow="meet times" {title} variant="clock" />
 	{#if meetTimesDisplay?.meets.length}
 		<div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
-			{#each meetTimesDisplay.meets as meet}
+			{#each meetTimesDisplay.meets as meet (meet.time)}
 				<button
 					type="button"
 					class={[

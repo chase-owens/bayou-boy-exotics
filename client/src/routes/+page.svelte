@@ -5,10 +5,14 @@
 	import MeetTimesCard from '$lib/components/MeetTimesCard.svelte';
 	import FeaturedDeals from '$lib/components/ui/FeaturedDeals.svelte';
 	import ShopCta from '$lib/components/home/ShopCta.svelte';
+	import { isFuture, parseISO } from 'date-fns';
+
+	const isRaffleActive = (drawAt: string) => isFuture(parseISO(drawAt));
 
 	let { data } = $props();
 
 	const { calendarProps, closedMessage, home, meetTimesDisplay } = $derived(data);
+	console.log('🚀 ~ closedMessage:', closedMessage);
 </script>
 
 <svelte:head>
@@ -32,7 +36,7 @@
 	<MeetTimesCard {meetTimesDisplay} />
 	<FeaturedDeals features={home.features} tintHeaderIcon />
 	<AvailabilityCalendar {...calendarProps} />
-	{#if home.raffle.enabled}
+	{#if home.raffle?.enabled && isRaffleActive(home.raffle.drawingAt)}
 		<RaffleCard raffle={home.raffle} />
 	{/if}
 	<ShopCta />

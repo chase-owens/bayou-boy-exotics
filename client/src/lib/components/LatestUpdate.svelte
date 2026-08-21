@@ -25,7 +25,7 @@
 <section class="rounded-vintage border border-border bg-surface p-6 shadow-soft">
 	<div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
 		<div>
-			<p class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+			<p class="text-xs font-semibold tracking-[0.25em] text-accent uppercase">
 				{priorityLabel[announcement.priority] ?? 'Update'}
 			</p>
 
@@ -43,7 +43,7 @@
 		{announcement.summary}
 	</p>
 
-	<p class="mt-3 whitespace-pre-line leading-7 text-muted">
+	<p class="mt-3 leading-7 whitespace-pre-line text-muted">
 		{announcement.body}
 	</p>
 </section>

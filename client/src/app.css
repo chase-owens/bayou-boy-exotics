@@ -142,6 +142,11 @@
 			var(--color-accent)
 		);
 	}
+
+	.hero-divider {
+		border-bottom: 4px solid var(--color-highlight);
+		box-shadow: 0 5px 18px color-mix(in srgb, var(--color-highlight) 22%, transparent);
+	}
 }
 
 main {

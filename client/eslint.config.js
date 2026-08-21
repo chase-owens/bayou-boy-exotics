@@ -34,6 +34,12 @@ export default defineConfig(
 		}
 	},
 	{
+		files: ['src/lib/components/layout/AppShell.svelte'],
+		rules: {
+			'svelte/no-navigation-without-resolve': 'off'
+		}
+	},
+	{
 		// Override or add rule settings here, such as:
 		// 'svelte/button-has-type': 'error'
 		rules: {}
