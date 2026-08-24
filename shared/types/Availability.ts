@@ -8,7 +8,7 @@ export interface ClosurePeriod {
   title: string;
   startsAt: string;
   endsAt: string;
-  reason?: string;
+  message?: string;
 }
 
 export interface MeetCancellation {

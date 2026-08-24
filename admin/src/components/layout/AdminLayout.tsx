@@ -6,8 +6,19 @@ export default function AdminLayout() {
     <div className="admin-shell grid min-h-screen grid-cols-[280px_1fr]">
       <Sidebar />
 
-      <main className="p-8">
-        <Outlet />
+      <main
+        className="
+          relative
+          bg-[url('/images/bb-sketch.png')]
+          bg-contain
+          bg-right-bottom
+          bg-no-repeat
+          p-8
+        "
+      >
+        <div className="relative z-10">
+          <Outlet />
+        </div>
       </main>
     </div>
   );

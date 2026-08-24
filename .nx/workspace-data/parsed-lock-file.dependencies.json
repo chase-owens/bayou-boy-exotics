@@ -4445,6 +4445,26 @@
     "type": "static"
   },
   {
+    "source": "npm:react-day-picker",
+    "target": "npm:@types/react",
+    "type": "static"
+  },
+  {
+    "source": "npm:react-day-picker",
+    "target": "npm:react",
+    "type": "static"
+  },
+  {
+    "source": "npm:react-day-picker",
+    "target": "npm:@date-fns/tz",
+    "type": "static"
+  },
+  {
+    "source": "npm:react-day-picker",
+    "target": "npm:date-fns",
+    "type": "static"
+  },
+  {
     "source": "npm:react-dom",
     "target": "npm:react",
     "type": "static"
@@ -5217,6 +5237,21 @@
   {
     "source": "npm:zod-validation-error",
     "target": "npm:zod",
+    "type": "static"
+  },
+  {
+    "source": "npm:zustand",
+    "target": "npm:@types/react",
+    "type": "static"
+  },
+  {
+    "source": "npm:zustand",
+    "target": "npm:immer",
+    "type": "static"
+  },
+  {
+    "source": "npm:zustand",
+    "target": "npm:react",
     "type": "static"
   }
 ]

@@ -1,0 +1,37 @@
+npm warn config ignoring workspace config at /Users/chasehendrix/Projects/bayou-boy-exotics/client/.npmrc
+
+> @bayou/client@0.0.1 check
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: /Users/chasehendrix/Projects/bayou-boy-exotics/client
+Getting Svelte diagnostics...
+
+/Users/chasehendrix/Projects/bayou-boy-exotics/client/[32msrc/lib/components/menu/Header.svelte[39m:11:37
+[33mWarn[39m: This reference only captures the initial value of `listingsCount`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m	const { listingsCount }: HeaderProps = $props();
+	console.log('🚀 ~ listingsCount:', [35mlistingsCount[36m);
+</script>[39m
+
+/Users/chasehendrix/Projects/bayou-boy-exotics/client/[32msrc/lib/components/productDetail/ProductOptionSelector.svelte[39m:177:31
+[33mWarn[39m: This reference only captures the initial value of `isInBag`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m	);
+	console.log('🚀 ~ isInBag:', [35misInBag[36m, canEdit);[39m
+
+/Users/chasehendrix/Projects/bayou-boy-exotics/client/[32msrc/lib/components/productDetail/ProductOptionSelector.svelte[39m:177:40
+[33mWarn[39m: This reference only captures the initial value of `canEdit`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m	);
+	console.log('🚀 ~ isInBag:', isInBag, [35mcanEdit[36m);[39m
+
+/Users/chasehendrix/Projects/bayou-boy-exotics/client/[32msrc/routes/+page.svelte[39m:15:37
+[33mWarn[39m: This reference only captures the initial value of `closedMessage`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m	const { calendarProps, closedMessage, home, meetTimesDisplay } = $derived(data);
+	console.log('🚀 ~ closedMessage:', [35mclosedMessage[36m);
+</script>[39m
+
+====================================
+[33msvelte-check found 0 errors and 4 warnings in 3 files
+[39m

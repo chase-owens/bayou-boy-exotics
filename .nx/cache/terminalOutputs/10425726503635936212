@@ -1,0 +1,9 @@
+> nx run @bayou/lambdas:build
+
+> npm run build
+
+
+> @bayou/lambdas@1.0.0 build
+> tsc -p tsconfig.build.json
+
+⠙[1G[0K
