@@ -39,6 +39,10 @@ export type DraftContextValue = {
   dirtyFiles: DraftFileKey[];
   hasChanges: boolean;
 
+  isPublishing: boolean;
+  publishedFiles: DraftFileKey[];
+  publishSucceeded: boolean;
+
   reloadPublished: () => Promise<void>;
   publishChanges: () => Promise<void>;
 

@@ -1,14 +1,81 @@
+import { useEffect, useMemo, useState } from "react";
+import { fetchAuthSession } from "aws-amplify/auth";
 import { getHours } from "date-fns";
+import { Gift, Package, Users } from "lucide-react";
+
 import PageHeader from "../components/layout/PageHeader";
 import AdminCard from "../components/ui/AdminCard";
 import StatCard from "../components/ui/StatCard";
-import { Gift, Package, Users } from "lucide-react";
+import { useDraft } from "../context/draft/useDraft";
+
+type AccessRequest = {
+  userId: string;
+  status: "pending" | "approved" | "denied";
+};
+
+const API_URL = import.meta.env.VITE_API_URL;
+
+const fetchPendingRequestCount = async (): Promise<number> => {
+  const session = await fetchAuthSession();
+  const token = session.tokens?.idToken?.toString();
+
+  if (!token) {
+    throw new Error("Unable to load admin session.");
+  }
+
+  const response = await fetch(`${API_URL}admin/access-requests`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Unable to load pending requests.");
+  }
+
+  const requests = (await response.json()) as AccessRequest[];
+
+  return requests.filter((request) => request.status === "pending").length;
+};
 
 export default function Dashboard() {
-  const date = new Date();
-  const hour = getHours(date);
+  const { menu, home, isLoading: isContentLoading } = useDraft();
 
+  const [pendingRequestCount, setPendingRequestCount] = useState(0);
+  const [isPendingLoading, setIsPendingLoading] = useState(true);
+
+  const hour = getHours(new Date());
   const isAfternoon = hour >= 12 && hour < 18;
+
+  const productsLive = useMemo(
+    () => menu?.listings.filter((listing) => listing.active).length ?? 0,
+    [menu?.listings],
+  );
+
+  const featuredDeals = useMemo(
+    () => home?.features.filter((feature) => feature.enabled).length ?? 0,
+    [home?.features],
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+
+    void fetchPendingRequestCount()
+      .then((count) => {
+        if (!cancelled) {
+          setPendingRequestCount(count);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setIsPendingLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <>
@@ -23,21 +90,29 @@ export default function Dashboard() {
       <div className="grid gap-5 lg:grid-cols-3">
         <StatCard
           label="Pending Requests"
-          value={4}
+          value={pendingRequestCount}
           icon={Users}
           actionLabel="View all"
+          to="/users"
+          isLoading={isPendingLoading}
         />
+
         <StatCard
           label="Products Live"
-          value={26}
+          value={productsLive}
           icon={Package}
           actionLabel="Manage"
+          to="/products"
+          isLoading={isContentLoading}
         />
+
         <StatCard
           label="Featured Deals"
-          value={2}
+          value={featuredDeals}
           icon={Gift}
           actionLabel="Manage"
+          to="/featured-deals"
+          isLoading={isContentLoading}
         />
       </div>
 

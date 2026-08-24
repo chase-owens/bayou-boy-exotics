@@ -290,6 +290,10 @@ export default function MeetTimes() {
               />
 
               <div className="mt-5 border-t border-white/10 pt-4">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-white/60">
+                  Scheduled Time Off
+                </p>
+
                 <div className="divide-y divide-white/10">
                   {(availability?.closures ?? []).map((closure) => (
                     <div
@@ -424,6 +428,10 @@ export default function MeetTimes() {
 
               {(availability?.meetCancellations ?? []).length > 0 && (
                 <div className="mt-5 border-t border-white/10 pt-4">
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-white/60">
+                    Cancelled Meet Times
+                  </p>
+
                   <div className="divide-y divide-white/10">
                     {(availability?.meetCancellations ?? []).map(
                       (cancellation) => (

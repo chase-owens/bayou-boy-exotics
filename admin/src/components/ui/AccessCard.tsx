@@ -1,8 +1,15 @@
 import { useMemo, useState } from "react";
-import { ChevronDown, ChevronUp, Search } from "lucide-react";
+import { ChevronDown, ChevronUp, LoaderCircle, Search } from "lucide-react";
 
 import AccessUserRow from "./AccessUserRow";
-import type { AccessRequest } from "../../pages/Users";
+import StatusBanner from "./StatusBanner";
+
+import type { AccessAction, AccessRequest } from "../../pages/Users";
+
+type Banner = {
+  status: "success" | "error" | "warning" | "info";
+  message: string;
+};
 
 type Props = {
   title: string;
@@ -10,7 +17,8 @@ type Props = {
   variant: "pending" | "approved" | "denied";
   defaultExpanded?: boolean;
   isLoading: boolean;
-  onChange: () => Promise<void>;
+  banner?: Banner | null;
+  onChange: (action: AccessAction, name: string) => Promise<void>;
 };
 
 export default function AccessCard({
@@ -19,6 +27,7 @@ export default function AccessCard({
   variant,
   defaultExpanded = false,
   isLoading,
+  banner,
   onChange,
 }: Props) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
@@ -47,8 +56,12 @@ export default function AccessCard({
           <p className="admin-eyebrow">{title}</p>
 
           <div className="mt-2 flex items-end gap-3">
-            <span className="text-4xl font-bold text-foreground">
-              {users.length}
+            <span className="flex min-w-8 items-center text-4xl font-bold text-foreground">
+              {isLoading ? (
+                <LoaderCircle className="size-7 animate-spin text-accent" />
+              ) : (
+                users.length
+              )}
             </span>
 
             <span className="pb-1 text-sm text-white">
@@ -69,9 +82,13 @@ export default function AccessCard({
       </button>
 
       {isExpanded && (
-        <div className="border-t border-white/10 px-6 pb-6">
+        <div className="space-y-5 border-t border-white/10 px-6 py-5">
+          {banner && (
+            <StatusBanner status={banner.status}>{banner.message}</StatusBanner>
+          )}
+
           {variant !== "pending" && (
-            <div className="relative my-5">
+            <div className="relative">
               <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted" />
 
               <input
@@ -84,9 +101,9 @@ export default function AccessCard({
           )}
 
           {isLoading ? (
-            <p className="py-5 text-sm text-white/70">Loading...</p>
+            <p className="text-sm text-white/70">Loading...</p>
           ) : filteredUsers.length === 0 ? (
-            <p className="py-5 text-sm text-white/70">No users found.</p>
+            <p className="text-sm text-white/70">No users found.</p>
           ) : (
             <div className="divide-y divide-white/10">
               {filteredUsers.map((user) => (
