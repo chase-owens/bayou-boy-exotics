@@ -33,6 +33,9 @@
   --color-error: #dc2626;
   --color-error-background: #fee2e2;
 
+  --color-info: #2563eb;
+  --color-info-background: #dbeafe;
+
   --font-heading: "Libre Baskerville", serif;
   --font-body: "Inter", system-ui, sans-serif;
 
@@ -91,6 +94,14 @@
     font: inherit;
   }
 
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
   ::selection {
     background: var(--color-accent);
     color: var(--color-primary);
@@ -106,6 +117,25 @@
     @apply border-r border-border bg-background/95 shadow-soft;
   }
 
+  .admin-status-banner {
+    @apply flex items-center gap-2 rounded-vintage border px-3 py-2.5 text-sm font-semibold;
+  }
+
+  .admin-status-success {
+    @apply border-success/30 bg-success-background text-success;
+  }
+
+  .admin-status-error {
+    @apply border-error/30 bg-error-background text-error;
+  }
+
+  .admin-status-warning {
+    @apply border-warning/30 bg-warning-background text-warning;
+  }
+
+  .admin-status-info {
+    @apply border-info/30 bg-info-background text-info;
+  }
   .admin-card {
     @apply rounded-vintage border border-border bg-surface/80 shadow-soft backdrop-blur;
   }
@@ -134,7 +164,10 @@
     font-semibold text-highlight
     shadow-soft
     transition-all duration-200
-    hover:scale-105;
+    hover:scale-105
+    disabled:opacity-70
+    disabled:shadow-none
+    disabled:hover:scale-100;
   }
 
   .admin-button-secondary {

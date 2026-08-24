@@ -16,9 +16,42 @@ export type AccessRequest = {
   deniedAt?: string;
 };
 
+export type AccessCardType = "pending" | "bayou-boys" | "rejects";
+
+export type AccessAction = "approved" | "denied";
+
+export type Banner = {
+  status: "success" | "error" | "warning" | "info";
+  message: string;
+};
+
+type Banners = Partial<Record<AccessCardType, Banner>>;
+
 const API_URL = import.meta.env.VITE_API_URL;
 
+const fetchUsers = async (): Promise<AccessRequest[]> => {
+  const session = await fetchAuthSession();
+  const token = session.tokens?.idToken?.toString();
+
+  if (!token) {
+    throw new Error("Unable to load admin session.");
+  }
+
+  const response = await fetch(`${API_URL}admin/access-requests`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Unable to load users.");
+  }
+
+  return response.json() as Promise<AccessRequest[]>;
+};
+
 export default function Users() {
+  const [banners, setBanners] = useState<Banners>({});
   const [requests, setRequests] = useState<AccessRequest[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -28,26 +61,7 @@ export default function Users() {
     setError("");
 
     try {
-      const session = await fetchAuthSession();
-      const token = session.tokens?.idToken?.toString();
-
-      if (!token) {
-        throw new Error("Unable to load admin session.");
-      }
-
-      const response = await fetch(`${API_URL}admin/access-requests`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Unable to load users.");
-      }
-
-      const data = (await response.json()) as AccessRequest[];
-
-      setRequests(data);
+      setRequests(await fetchUsers());
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to load users.");
     } finally {
@@ -55,47 +69,50 @@ export default function Users() {
     }
   }, []);
 
+  const handleUserAction = useCallback(
+    async (source: AccessCardType, action: AccessAction, name: string) => {
+      await loadUsers();
+
+      const message =
+        action === "approved"
+          ? `${name} approved successfully`
+          : `${name} denied successfully`;
+
+      setBanners({
+        [source]: {
+          status: "success",
+          message,
+        },
+      });
+
+      window.setTimeout(() => {
+        setBanners({});
+      }, 6000);
+    },
+    [loadUsers],
+  );
+
   useEffect(() => {
     let cancelled = false;
 
-    const hydrate = async () => {
-      try {
-        const session = await fetchAuthSession();
-        const token = session.tokens?.idToken?.toString();
-
-        if (!token) {
-          throw new Error("Unable to load admin session.");
-        }
-
-        const response = await fetch(`${API_URL}admin/access-requests`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Unable to load users.");
-        }
-
-        const data = (await response.json()) as AccessRequest[];
-
+    void fetchUsers()
+      .then((data) => {
         if (!cancelled) {
           setRequests(data);
         }
-      } catch (err) {
+      })
+      .catch((err) => {
         if (!cancelled) {
           setError(
             err instanceof Error ? err.message : "Unable to load users.",
           );
         }
-      } finally {
+      })
+      .finally(() => {
         if (!cancelled) {
           setIsLoading(false);
         }
-      }
-    };
-
-    void hydrate();
+      });
 
     return () => {
       cancelled = true;
@@ -134,7 +151,8 @@ export default function Users() {
           variant="pending"
           defaultExpanded
           isLoading={isLoading}
-          onChange={loadUsers}
+          banner={banners.pending}
+          onChange={(action, name) => handleUserAction("pending", action, name)}
         />
 
         <AccessCard
@@ -142,7 +160,10 @@ export default function Users() {
           users={approved}
           variant="approved"
           isLoading={isLoading}
-          onChange={loadUsers}
+          banner={banners["bayou-boys"]}
+          onChange={(action, name) =>
+            handleUserAction("bayou-boys", action, name)
+          }
         />
 
         <AccessCard
@@ -150,7 +171,8 @@ export default function Users() {
           users={denied}
           variant="denied"
           isLoading={isLoading}
-          onChange={loadUsers}
+          banner={banners.rejects}
+          onChange={(action, name) => handleUserAction("rejects", action, name)}
         />
       </div>
 

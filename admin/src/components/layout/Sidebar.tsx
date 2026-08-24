@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { adminNavItems } from "../../config/adminNav";
 import { useAuth } from "../../auth/useAuth";
-import { UserRound, LogOut } from "lucide-react";
+import { UserRound, LogOut, Check, LoaderCircle } from "lucide-react";
 import { useDraft } from "../../context/draft/useDraft";
 
 const fileLabels = {
@@ -15,7 +15,14 @@ export default function Sidebar() {
   const { pathname } = useLocation();
   const auth = useAuth();
 
-  const { hasChanges, dirtyFiles, publishChanges } = useDraft();
+  const {
+    hasChanges,
+    dirtyFiles,
+    isPublishing,
+    publishChanges,
+    publishedFiles,
+    publishSucceeded,
+  } = useDraft();
 
   const visibleNavItems = adminNavItems.filter(
     (item) => !item.isAdminOnly || auth.user?.role === "admin",
@@ -49,21 +56,52 @@ export default function Sidebar() {
 
       <div className="mt-auto border-t border-border pt-5">
         <div className="space-y-4">
-          {hasChanges && (
-            <div>
-              <button
-                type="button"
-                onClick={() => void publishChanges()}
-                className="admin-button-primary flex w-full items-center justify-center"
-              >
-                Publish Changes
-              </button>
+          <div>
+            <button
+              type="button"
+              onClick={() => void publishChanges()}
+              disabled={!hasChanges || isPublishing || publishSucceeded}
+              className={[
+                "admin-button-primary flex w-full items-center justify-center gap-2",
+                publishSucceeded && "border-success text-success",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+            >
+              {isPublishing ? (
+                <>
+                  <LoaderCircle className="size-4 animate-spin" />
+                  Publishing...
+                </>
+              ) : publishSucceeded ? (
+                <>
+                  <Check className="size-4" />
+                  Publish Success
+                </>
+              ) : !hasChanges ? (
+                <>
+                  <Check className="size-4" />
+                  Everything Published
+                </>
+              ) : (
+                "Publish Changes"
+              )}
+            </button>
 
-              <p className="mt-2 text-center text-xs text-muted">
-                {dirtyFiles.map((file) => fileLabels[file]).join(", ")}
+            {(hasChanges || publishSucceeded) && (
+              <p
+                className={[
+                  "mt-2 text-center text-xs",
+                  publishSucceeded ? "text-success" : "text-muted",
+                ].join(" ")}
+              >
+                {(publishSucceeded ? publishedFiles : dirtyFiles)
+                  .map((file) => fileLabels[file])
+                  .join(", ")}
+                {publishSucceeded && " published"}
               </p>
-            </div>
-          )}
+            )}
+          </div>
           <div className="flex items-center gap-3">
             <div className="flex size-10 items-center justify-center rounded-full bg-surface text-white">
               <UserRound className="size-5" />

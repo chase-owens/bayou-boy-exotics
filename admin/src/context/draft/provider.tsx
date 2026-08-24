@@ -69,7 +69,10 @@ type Props = {
 };
 
 export function DraftProvider({ children }: Props) {
+  const [isPublishing, setIsPublishing] = useState(false);
   const [published, setPublished] = useState<PublishedContent>({});
+  const [publishSucceeded, setPublishSucceeded] = useState(false);
+  const [publishedFiles, setPublishedFiles] = useState<DraftFileKey[]>([]);
   const [drafts, setDrafts] = useState<DraftContent>({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -140,51 +143,76 @@ export function DraftProvider({ children }: Props) {
   const publishChanges = useCallback(async () => {
     if (dirtyFiles.length === 0) return;
 
-    const session = await fetchAuthSession();
-    const token = session.tokens?.idToken?.toString();
+    const filesToPublish = [...dirtyFiles];
 
-    if (!token) {
-      throw new Error("Admin authentication is required");
-    }
+    setIsPublishing(true);
+    setPublishSucceeded(false);
+    setError(null);
 
-    await Promise.all(
-      dirtyFiles.map(async (file) => {
-        const draft = drafts[file];
+    try {
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
 
-        if (!draft) return;
+      if (!token) {
+        throw new Error("Admin authentication is required");
+      }
 
-        const response = await fetch(`${API_URL}admin/content/${file}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(draft),
+      await Promise.all(
+        filesToPublish.map(async (file) => {
+          const draft = drafts[file];
+
+          if (!draft) return;
+
+          const response = await fetch(`${API_URL}admin/content/${file}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(draft),
+          });
+
+          if (!response.ok) {
+            throw new Error(`Failed to publish ${file}`);
+          }
+        }),
+      );
+
+      setPublished((current) => {
+        const next = { ...current };
+
+        filesToPublish.forEach((file) => {
+          const draft = drafts[file];
+
+          if (draft) {
+            Object.assign(next, {
+              [file]: draft,
+            });
+          }
         });
 
-        if (!response.ok) {
-          throw new Error(`Failed to publish ${file}`);
-        }
-      }),
-    );
-
-    setPublished((current) => {
-      const next = { ...current };
-
-      dirtyFiles.forEach((file) => {
-        const draft = drafts[file];
-
-        if (draft) {
-          Object.assign(next, {
-            [file]: draft,
-          });
-        }
+        return next;
       });
 
-      return next;
-    });
+      setPublishedFiles(filesToPublish);
+      setPublishSucceeded(true);
+      setDrafts({});
 
-    setDrafts({});
+      window.setTimeout(() => {
+        setPublishSucceeded(false);
+        setPublishedFiles([]);
+      }, 6000);
+    } catch (caughtError) {
+      setError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "Failed to publish changes",
+      );
+
+      throw caughtError;
+    } finally {
+      setIsPublishing(false);
+    }
   }, [dirtyFiles, drafts]);
 
   const setAvailabilityDraft = useCallback((value: AvailabilityContent) => {
@@ -407,6 +435,10 @@ export function DraftProvider({ children }: Props) {
       isLoading,
       error,
 
+      isPublishing,
+      publishSucceeded,
+      publishedFiles,
+
       dirtyFiles,
       hasChanges: dirtyFiles.length > 0,
 
@@ -446,6 +478,9 @@ export function DraftProvider({ children }: Props) {
       root,
       isLoading,
       error,
+      isPublishing,
+      publishSucceeded,
+      publishedFiles,
       dirtyFiles,
       reloadPublished,
       publishChanges,

@@ -1,19 +1,28 @@
 import { useState } from "react";
 import { fetchAuthSession } from "aws-amplify/auth";
 
-import type { AccessRequest } from "../../pages/Users";
+import type { AccessAction, AccessRequest } from "../../pages/Users";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+type UpdateAction = "approve" | "deny";
+
 type Props = {
   user: AccessRequest;
-  onChange: () => Promise<void>;
+  onChange: (action: AccessAction, name: string) => Promise<void>;
 };
 
 export default function AccessUserRow({ user, onChange }: Props) {
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const updateStatus = async (action: "approve" | "deny") => {
+  const handleChange = async (action: UpdateAction) => {
+    const accessAction: AccessAction =
+      action === "approve" ? "approved" : "denied";
+
+    await onChange(accessAction, user.name);
+  };
+
+  const updateStatus = async (action: UpdateAction) => {
     setIsUpdating(true);
 
     try {
@@ -34,7 +43,7 @@ export default function AccessUserRow({ user, onChange }: Props) {
         throw new Error(`Unable to ${action} access.`);
       }
 
-      await onChange();
+      await handleChange(action);
     } finally {
       setIsUpdating(false);
     }
@@ -51,40 +60,44 @@ export default function AccessUserRow({ user, onChange }: Props) {
         {user.status === "pending" && (
           <>
             <button
+              type="button"
               disabled={isUpdating}
               onClick={() => updateStatus("approve")}
               className="rounded-vintage border border-accent px-4 py-2 text-sm font-semibold text-accent"
             >
-              Approve
+              {isUpdating ? "Updating..." : "Approve"}
             </button>
 
             <button
+              type="button"
               disabled={isUpdating}
               onClick={() => updateStatus("deny")}
               className="rounded-vintage border border-highlight px-4 py-2 text-sm font-semibold text-highlight"
             >
-              Deny
+              {isUpdating ? "Updating..." : "Deny "}
             </button>
           </>
         )}
 
         {user.status === "approved" && (
           <button
+            type="button"
             disabled={isUpdating}
             onClick={() => updateStatus("deny")}
             className="rounded-vintage border border-highlight px-4 py-2 text-sm font-semibold text-highlight"
           >
-            Deny Access
+            {isUpdating ? "Updating..." : "Deny Access"}
           </button>
         )}
 
         {user.status === "denied" && (
           <button
+            type="button"
             disabled={isUpdating}
             onClick={() => updateStatus("approve")}
             className="rounded-vintage border border-accent px-4 py-2 text-sm font-semibold text-accent"
           >
-            Approve Access
+            {isUpdating ? "Updating..." : "Approve Access"}
           </button>
         )}
       </div>
