@@ -729,6 +729,15 @@
         "hash": "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw=="
       }
     },
+    "npm:@date-fns/tz": {
+      "type": "npm",
+      "name": "npm:@date-fns/tz",
+      "data": {
+        "version": "1.5.0",
+        "packageName": "@date-fns/tz",
+        "hash": "sha512-lwYN/vDPeNRULcepoE/LO2Pgx+7/RV+S9ARfbc9lr2DtGkOD7pAiruHvbR1RX3Qyf6ja47EWJDMsNK5vK08DJg=="
+      }
+    },
     "npm:@emnapi/core": {
       "type": "npm",
       "name": "npm:@emnapi/core",
@@ -4023,6 +4032,15 @@
         "hash": "sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw=="
       }
     },
+    "npm:react-day-picker": {
+      "type": "npm",
+      "name": "npm:react-day-picker",
+      "data": {
+        "version": "10.0.1",
+        "packageName": "react-day-picker",
+        "hash": "sha512-eNh6BlwcYInWaJtRv18mXQ06Ys/H6rdTZAnTaSdOYJuTpwP1JMCHNd1FDRadA+gbeinq+psdULN5Xnowy9mV8w=="
+      }
+    },
     "npm:react-dom": {
       "type": "npm",
       "name": "npm:react-dom",
@@ -4616,6 +4634,15 @@
         "packageName": "zod-validation-error",
         "hash": "sha512-Q6/nZLe6jxuU80qb/4uJ4t5v2VEZ44lzQjPDhYJNztRQ4wyWc6VF3D3Kb/fAuPetZQnhS3hnajCf9CsWesghLQ=="
       }
+    },
+    "npm:zustand": {
+      "type": "npm",
+      "name": "npm:zustand",
+      "data": {
+        "version": "5.0.15",
+        "packageName": "zustand",
+        "hash": "sha512-MpSEjRiBkA9crSYeOUH32rJC7SVqAbm0Fqcqge/bUi2PPoLcBWKOsG+C8mevmpr8TwXHBVkChbbJiyvkE+i/3A=="
+      }
     }
   },
   "keyMap": {
@@ -4696,6 +4723,7 @@
     "node_modules/@babel/types": "npm:@babel/types",
     "node_modules/@cspotcode/source-map-support": "npm:@cspotcode/source-map-support",
     "node_modules/@cspotcode/source-map-support/node_modules/@jridgewell/trace-mapping": "npm:@jridgewell/trace-mapping@0.3.9",
+    "node_modules/@date-fns/tz": "npm:@date-fns/tz",
     "node_modules/@emnapi/core": "npm:@emnapi/core",
     "node_modules/@emnapi/runtime": "npm:@emnapi/runtime",
     "node_modules/@emnapi/wasi-threads": "npm:@emnapi/wasi-threads",
@@ -5058,6 +5086,7 @@
     "node_modules/proxy-from-env": "npm:proxy-from-env",
     "node_modules/punycode": "npm:punycode",
     "node_modules/react": "npm:react",
+    "node_modules/react-day-picker": "npm:react-day-picker",
     "node_modules/react-dom": "npm:react-dom",
     "node_modules/react-router": "npm:react-router",
     "node_modules/react-router-dom": "npm:react-router-dom",
@@ -5144,6 +5173,7 @@
     "node_modules/yocto-queue": "npm:yocto-queue",
     "node_modules/zimmerframe": "npm:zimmerframe",
     "node_modules/zod": "npm:zod",
-    "node_modules/zod-validation-error": "npm:zod-validation-error"
+    "node_modules/zod-validation-error": "npm:zod-validation-error",
+    "node_modules/zustand": "npm:zustand"
   }
 }

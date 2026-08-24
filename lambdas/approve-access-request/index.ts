@@ -4,6 +4,11 @@ const dynamodb = new DynamoDBClient({});
 
 const TABLE_NAME = process.env.ACCESS_REQUESTS_TABLE_NAME;
 
+const headers = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*",
+};
+
 export const handler = async (event: {
   pathParameters?: {
     userId?: string;
@@ -12,6 +17,7 @@ export const handler = async (event: {
   if (!TABLE_NAME) {
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({
         message: "ACCESS_REQUESTS_TABLE_NAME is required",
       }),
@@ -23,6 +29,7 @@ export const handler = async (event: {
   if (!userId) {
     return {
       statusCode: 400,
+      headers,
       body: JSON.stringify({
         message: "userId is required",
       }),
@@ -64,9 +71,7 @@ export const handler = async (event: {
 
   return {
     statusCode: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify({
       userId,
       status: "approved",

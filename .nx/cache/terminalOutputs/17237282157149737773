@@ -1,0 +1,9 @@
+> nx run @bayou/admin:lint
+
+> npm run lint
+
+
+> @bayou/admin@0.0.0 lint
+> eslint .
+
+⠙[1G[0K

@@ -114,6 +114,10 @@
     @apply rounded-vintage border border-highlight/40 bg-surface-alt/70 shadow-soft backdrop-blur;
   }
 
+  .admin-card-read {
+    @apply rounded-vintage border border-border bg-white/90 shadow-soft backdrop-blur;
+  }
+
   .admin-eyebrow {
     @apply text-xs font-bold uppercase tracking-[0.32em] text-highlight;
   }
@@ -123,7 +127,14 @@
   }
 
   .admin-button-primary {
-    @apply rounded-vintage bg-accent px-4 py-3 font-bold text-primary shadow-soft transition hover:bg-white;
+    @apply rounded-vintage
+    border-3 border-accent
+    bg-surface
+    px-4 py-3
+    font-semibold text-highlight
+    shadow-soft
+    transition-all duration-200
+    hover:scale-105;
   }
 
   .admin-button-secondary {
@@ -203,5 +214,21 @@
 
   .admin-section-title {
     @apply font-heading text-lg font-bold text-foreground;
+  }
+
+  .admin-form {
+    @apply space-y-6;
+  }
+
+  .admin-form-row {
+    @apply grid gap-5 md:grid-cols-2;
+  }
+
+  .admin-actions {
+    @apply flex flex-wrap items-center gap-3 pt-2;
+  }
+
+  .admin-field-error {
+    @apply border-error bg-error-background/40;
   }
 }

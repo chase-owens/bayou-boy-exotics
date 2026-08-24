@@ -16,6 +16,7 @@ type NavItem = {
   Icon: ForwardRefExoticComponent<
     Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
   >;
+  isAdminOnly?: boolean;
 };
 
 export const adminNavItems: NavItem[] = [
@@ -26,4 +27,10 @@ export const adminNavItems: NavItem[] = [
   { label: "Featured Deals", to: "/featured-deals", Icon: Gift },
   { label: "Giveaways", to: "/giveaways", Icon: Ticket },
   { label: "Categories", to: "/categories", Icon: Folder },
+  {
+    label: "Users",
+    to: "/users",
+    Icon: Users,
+    isAdminOnly: true,
+  },
 ];

@@ -1096,6 +1096,15 @@
         "hash": "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw=="
       }
     },
+    "npm:@date-fns/tz": {
+      "type": "npm",
+      "name": "npm:@date-fns/tz",
+      "data": {
+        "version": "1.5.0",
+        "packageName": "@date-fns/tz",
+        "hash": "sha512-lwYN/vDPeNRULcepoE/LO2Pgx+7/RV+S9ARfbc9lr2DtGkOD7pAiruHvbR1RX3Qyf6ja47EWJDMsNK5vK08DJg=="
+      }
+    },
     "npm:@emnapi/core": {
       "type": "npm",
       "name": "npm:@emnapi/core",
@@ -4390,6 +4399,15 @@
         "hash": "sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw=="
       }
     },
+    "npm:react-day-picker": {
+      "type": "npm",
+      "name": "npm:react-day-picker",
+      "data": {
+        "version": "10.0.1",
+        "packageName": "react-day-picker",
+        "hash": "sha512-eNh6BlwcYInWaJtRv18mXQ06Ys/H6rdTZAnTaSdOYJuTpwP1JMCHNd1FDRadA+gbeinq+psdULN5Xnowy9mV8w=="
+      }
+    },
     "npm:react-dom": {
       "type": "npm",
       "name": "npm:react-dom",
@@ -4983,6 +5001,15 @@
         "packageName": "zod-validation-error",
         "hash": "sha512-Q6/nZLe6jxuU80qb/4uJ4t5v2VEZ44lzQjPDhYJNztRQ4wyWc6VF3D3Kb/fAuPetZQnhS3hnajCf9CsWesghLQ=="
       }
+    },
+    "npm:zustand": {
+      "type": "npm",
+      "name": "npm:zustand",
+      "data": {
+        "version": "5.0.15",
+        "packageName": "zustand",
+        "hash": "sha512-MpSEjRiBkA9crSYeOUH32rJC7SVqAbm0Fqcqge/bUi2PPoLcBWKOsG+C8mevmpr8TwXHBVkChbbJiyvkE+i/3A=="
+      }
     }
   },
   "dependencies": {
@@ -5235,6 +5262,11 @@
       },
       {
         "source": "@bayou/admin",
+        "target": "npm:aws-amplify",
+        "type": "static"
+      },
+      {
+        "source": "@bayou/admin",
         "target": "npm:date-fns",
         "type": "static"
       },
@@ -5250,6 +5282,11 @@
       },
       {
         "source": "@bayou/admin",
+        "target": "npm:react-day-picker",
+        "type": "static"
+      },
+      {
+        "source": "@bayou/admin",
         "target": "npm:react-dom",
         "type": "static"
       },
@@ -5261,6 +5298,16 @@
       {
         "source": "@bayou/admin",
         "target": "npm:tailwindcss",
+        "type": "static"
+      },
+      {
+        "source": "@bayou/admin",
+        "target": "npm:zod",
+        "type": "static"
+      },
+      {
+        "source": "@bayou/admin",
+        "target": "npm:zustand",
         "type": "static"
       }
     ],
@@ -10133,6 +10180,28 @@
         "type": "static"
       }
     ],
+    "npm:react-day-picker": [
+      {
+        "source": "npm:react-day-picker",
+        "target": "npm:@types/react",
+        "type": "static"
+      },
+      {
+        "source": "npm:react-day-picker",
+        "target": "npm:react",
+        "type": "static"
+      },
+      {
+        "source": "npm:react-day-picker",
+        "target": "npm:@date-fns/tz",
+        "type": "static"
+      },
+      {
+        "source": "npm:react-day-picker",
+        "target": "npm:date-fns",
+        "type": "static"
+      }
+    ],
     "npm:react-dom": [
       {
         "source": "npm:react-dom",
@@ -10983,9 +11052,26 @@
         "target": "npm:zod",
         "type": "static"
       }
+    ],
+    "npm:zustand": [
+      {
+        "source": "npm:zustand",
+        "target": "npm:@types/react",
+        "type": "static"
+      },
+      {
+        "source": "npm:zustand",
+        "target": "npm:immer",
+        "type": "static"
+      },
+      {
+        "source": "npm:zustand",
+        "target": "npm:react",
+        "type": "static"
+      }
     ]
   },
   "version": "6.0",
   "errors": [],
-  "computedAt": 1787353238778
+  "computedAt": 1787541204873
 }

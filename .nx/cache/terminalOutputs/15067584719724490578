@@ -1,0 +1,17 @@
+> nx run @bayou/admin:build
+
+> npm run build
+
+
+> @bayou/admin@0.0.0 build
+> tsc -b && vite build
+
+[36mvite v8.2.2 [32mbuilding client environment for production...[36m[39m
+[2Ktransforming (1241) [2m../node_modules/lucide-react/dist/esm/icons/file-output.mjs[0m[2Ktransforming (1240) [2m../node_modules/lucide-react/dist/esm/icons/file-plus.mjs[0m[2Ktransforming (1243) [2m../node_modules/lucide-react/dist/esm/icons/file-music.mjs[0m[2Ktransforming (1242) [2m../node_modules/lucide-react/dist/esm/icons/file-minus.mjs[0m[2Ktransforming (3250) [2m../node_modules/rxjs/dist/esm5/internal/util/arrRemove.js[0m[2K[32m✓[0m 3365 modules transformed.
+[2Krendering chunks (1)...[2Kcomputing gzip size...
+[2K[2mdist/[0m[32mindex.html                 [0m[1;2m  0.46 kB[0m[2m │ gzip:   0.30 kB[0m
+[2mdist/[0m[2massets/[0m[35mindex-BDJvKIl2.css  [0m[1;2m 30.07 kB[0m[2m │ gzip:   5.64 kB[0m
+[2mdist/[0m[2massets/[0m[36mindex-D-tt7CaJ.js   [0m[1;2m495.08 kB[0m[2m │ gzip: 151.06 kB[0m
+
+[32m✓ built in 324ms[39m
+⠙[1G[0K

@@ -1,14 +1,19 @@
-import { DynamoDBClient, QueryCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 
 const dynamodb = new DynamoDBClient({});
 
 const TABLE_NAME = process.env.ACCESS_REQUESTS_TABLE_NAME;
-const STATUS_INDEX_NAME = process.env.STATUS_INDEX_NAME;
+
+const headers = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*",
+};
 
 export const handler = async () => {
-  if (!TABLE_NAME || !STATUS_INDEX_NAME) {
+  if (!TABLE_NAME) {
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({
         message: "Access request configuration is missing",
       }),
@@ -16,23 +21,8 @@ export const handler = async () => {
   }
 
   const result = await dynamodb.send(
-    new QueryCommand({
+    new ScanCommand({
       TableName: TABLE_NAME,
-      IndexName: STATUS_INDEX_NAME,
-
-      KeyConditionExpression: "#status = :status",
-
-      ExpressionAttributeNames: {
-        "#status": "status",
-      },
-
-      ExpressionAttributeValues: {
-        ":status": {
-          S: "pending",
-        },
-      },
-
-      ScanIndexForward: true,
     }),
   );
 
@@ -44,13 +34,13 @@ export const handler = async () => {
       phone: item.phone?.S ?? "",
       status: item.status?.S ?? "pending",
       requestedAt: item.requestedAt?.S ?? "",
+      approvedAt: item.approvedAt?.S,
+      deniedAt: item.deniedAt?.S,
     })) ?? [];
 
   return {
     statusCode: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify(requests),
   };
 };

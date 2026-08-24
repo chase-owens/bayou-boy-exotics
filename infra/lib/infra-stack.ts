@@ -118,6 +118,20 @@ export class InfraStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.RETAIN,
     });
 
+    new cognito.CfnUserPoolGroup(this, "BayouAdminGroup", {
+      userPoolId: adminUserPool.userPoolId,
+      groupName: "admin",
+      description: "Full Bayou admin access",
+      precedence: 0,
+    });
+
+    new cognito.CfnUserPoolGroup(this, "BayouManagerGroup", {
+      userPoolId: adminUserPool.userPoolId,
+      groupName: "manager",
+      description: "Bayou manager access",
+      precedence: 1,
+    });
+
     const adminUserPoolClient = adminUserPool.addClient(
       "BayouAdminUserPoolClient",
       {
@@ -180,6 +194,8 @@ export class InfraStack extends cdk.Stack {
               origins.S3BucketOrigin.withOriginAccessControl(contentBucket),
             viewerProtocolPolicy:
               cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+
+            cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
           },
           "images/*": {
             origin:
@@ -203,7 +219,50 @@ export class InfraStack extends cdk.Stack {
       },
     );
 
-    // user api
+    const adminDistribution = new cloudfront.Distribution(
+      this,
+      "BayouAdminDistribution",
+      {
+        defaultRootObject: "index.html",
+
+        defaultBehavior: {
+          origin: origins.S3BucketOrigin.withOriginAccessControl(adminBucket),
+          viewerProtocolPolicy:
+            cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        },
+
+        additionalBehaviors: {
+          "data/*": {
+            origin:
+              origins.S3BucketOrigin.withOriginAccessControl(contentBucket),
+            viewerProtocolPolicy:
+              cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+            cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+          },
+
+          "images/*": {
+            origin:
+              origins.S3BucketOrigin.withOriginAccessControl(contentBucket),
+            viewerProtocolPolicy:
+              cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          },
+        },
+        errorResponses: [
+          {
+            httpStatus: 403,
+            responseHttpStatus: 200,
+            responsePagePath: "/index.html",
+          },
+          {
+            httpStatus: 404,
+            responseHttpStatus: 200,
+            responsePagePath: "/index.html",
+          },
+        ],
+      },
+    );
+
+    // user API
     const api = new apigateway.RestApi(this, "BayouApi", {
       restApiName: "bayou-api",
 
@@ -214,6 +273,7 @@ export class InfraStack extends cdk.Stack {
       },
     });
 
+    // Authorizers
     const adminAuthorizer = new apigateway.CognitoUserPoolsAuthorizer(
       this,
       "BayouAdminAuthorizer",
@@ -230,6 +290,7 @@ export class InfraStack extends cdk.Stack {
       },
     );
 
+    // Access Request Lambdas
     const createAccessRequestLambda = new lambda.Function(
       this,
       "CreateAccessRequestLambda",
@@ -290,6 +351,7 @@ export class InfraStack extends cdk.Stack {
         },
       },
     );
+
     const getAccessRequestLambda = new lambda.Function(
       this,
       "GetAccessRequestLambda",
@@ -305,26 +367,93 @@ export class InfraStack extends cdk.Stack {
       },
     );
 
+    // Access Request Permissions
+    accessRequestsTable.grantWriteData(createAccessRequestLambda);
+    accessRequestsTable.grantReadData(listAccessRequestsLambda);
+    accessRequestsTable.grantReadWriteData(approveAccessRequestLambda);
+    accessRequestsTable.grantReadWriteData(denyAccessRequestLambda);
     accessRequestsTable.grantReadData(getAccessRequestLambda);
 
-    accessRequestsTable.grantWriteData(createAccessRequestLambda);
+    // Content Lambdas
+    const updateAvailabilityLambda = new lambda.Function(
+      this,
+      "UpdateAvailabilityLambda",
+      {
+        runtime: lambda.Runtime.NODEJS_22_X,
+        handler: "index.handler",
+        code: lambda.Code.fromAsset(
+          path.join(__dirname, "../../lambdas/dist/admin/content/availability"),
+        ),
+        environment: {
+          CONTENT_BUCKET_NAME: contentBucket.bucketName,
+        },
+      },
+    );
 
-    accessRequestsTable.grantReadData(listAccessRequestsLambda);
+    const updateHomeLambda = new lambda.Function(this, "UpdateHomeLambda", {
+      runtime: lambda.Runtime.NODEJS_22_X,
+      handler: "index.handler",
+      code: lambda.Code.fromAsset(
+        path.join(__dirname, "../../lambdas/dist/admin/content/home"),
+      ),
+      environment: {
+        CONTENT_BUCKET_NAME: contentBucket.bucketName,
+      },
+    });
 
-    accessRequestsTable.grantReadWriteData(approveAccessRequestLambda);
+    const updateMenuLambda = new lambda.Function(this, "UpdateMenuLambda", {
+      runtime: lambda.Runtime.NODEJS_22_X,
+      handler: "index.handler",
+      code: lambda.Code.fromAsset(
+        path.join(__dirname, "../../lambdas/dist/admin/content/menu"),
+      ),
+      environment: {
+        CONTENT_BUCKET_NAME: contentBucket.bucketName,
+      },
+    });
 
-    accessRequestsTable.grantReadWriteData(denyAccessRequestLambda);
+    const updateRootLambda = new lambda.Function(this, "UpdateRootLambda", {
+      runtime: lambda.Runtime.NODEJS_22_X,
+      handler: "index.handler",
+      code: lambda.Code.fromAsset(
+        path.join(__dirname, "../../lambdas/dist/admin/content/root"),
+      ),
+      environment: {
+        CONTENT_BUCKET_NAME: contentBucket.bucketName,
+      },
+    });
 
+    // Content Permissions
+    contentBucket.grantWrite(updateAvailabilityLambda);
+    contentBucket.grantWrite(updateHomeLambda);
+    contentBucket.grantWrite(updateMenuLambda);
+    contentBucket.grantWrite(updateRootLambda);
+
+    // API Resources
     const accessRequests = api.root.addResource("access-requests");
 
+    const admin = api.root.addResource("admin");
+    const adminAccessRequests = admin.addResource("access-requests");
+    const adminContent = admin.addResource("content");
+
+    // Client Access Request Routes
     accessRequests.addMethod(
       "POST",
       new apigateway.LambdaIntegration(createAccessRequestLambda),
     );
 
-    const admin = api.root.addResource("admin");
-    const adminAccessRequests = admin.addResource("access-requests");
+    accessRequests
+      .addResource("{userId}")
+      .addMethod(
+        "GET",
+        new apigateway.LambdaIntegration(getAccessRequestLambda),
+        {
+          authorizationType: apigateway.AuthorizationType.COGNITO,
+          authorizer: clientAuthorizer,
+        },
+      );
 
+    // Admin Access Request Routes
     adminAccessRequests.addMethod(
       "GET",
       new apigateway.LambdaIntegration(listAccessRequestsLambda),
@@ -358,16 +487,38 @@ export class InfraStack extends cdk.Stack {
         },
       );
 
-    accessRequests
-      .addResource("{userId}")
+    // Admin Content Routes
+    adminContent
+      .addResource("availability")
       .addMethod(
-        "GET",
-        new apigateway.LambdaIntegration(getAccessRequestLambda),
+        "PUT",
+        new apigateway.LambdaIntegration(updateAvailabilityLambda),
         {
           authorizationType: apigateway.AuthorizationType.COGNITO,
-          authorizer: clientAuthorizer,
+          authorizer: adminAuthorizer,
         },
       );
+
+    adminContent
+      .addResource("home")
+      .addMethod("PUT", new apigateway.LambdaIntegration(updateHomeLambda), {
+        authorizationType: apigateway.AuthorizationType.COGNITO,
+        authorizer: adminAuthorizer,
+      });
+
+    adminContent
+      .addResource("menu")
+      .addMethod("PUT", new apigateway.LambdaIntegration(updateMenuLambda), {
+        authorizationType: apigateway.AuthorizationType.COGNITO,
+        authorizer: adminAuthorizer,
+      });
+
+    adminContent
+      .addResource("root")
+      .addMethod("PUT", new apigateway.LambdaIntegration(updateRootLambda), {
+        authorizationType: apigateway.AuthorizationType.COGNITO,
+        authorizer: adminAuthorizer,
+      });
 
     // Build Tables
     this.reservationsTable = new dynamodb.Table(
@@ -405,8 +556,12 @@ export class InfraStack extends cdk.Stack {
       value: api.url,
     });
 
-    new cdk.CfnOutput(this, "ClientDistributionDomain", {
-      value: clientDistribution.distributionDomainName,
+    new cdk.CfnOutput(this, "ClientDistributionId", {
+      value: clientDistribution.distributionId,
+    });
+
+    new cdk.CfnOutput(this, "AdminDistributionId", {
+      value: adminDistribution.distributionId,
     });
   }
 }
