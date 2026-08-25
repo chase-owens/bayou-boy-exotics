@@ -6,20 +6,20 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": ".gitignore",
-        "hash": "4321818116011872246"
-      },
-      {
         "file": "nx.json",
         "hash": "17720574272691467707"
       },
       {
-        "file": "package.json",
-        "hash": "5661605378981122373"
+        "file": ".gitignore",
+        "hash": "4321818116011872246"
       },
       {
         "file": "package-lock.json",
         "hash": "10254120617943448900"
+      },
+      {
+        "file": "package.json",
+        "hash": "5661605378981122373"
       },
       {
         "file": "README.md",
@@ -27,265 +27,30 @@
       }
     ],
     "projectFileMap": {
-      "@bayou/admin": [
-        {
-          "file": "admin/.gitignore",
-          "hash": "12862290348472965560"
-        },
-        {
-          "file": "admin/README.md",
-          "hash": "6146528543463783081"
-        },
-        {
-          "file": "admin/eslint.config.js",
-          "hash": "17737926363764924246"
-        },
-        {
-          "file": "admin/index.html",
-          "hash": "18142783970041896033"
-        },
-        {
-          "file": "admin/package-lock.json",
-          "hash": "10102298286687201278"
-        },
-        {
-          "file": "admin/package.json",
-          "hash": "12549726330477426008",
-          "deps": [
-            "npm:@eslint/js",
-            "npm:@types/node",
-            "npm:@types/react",
-            "npm:@types/react-dom",
-            "npm:@vitejs/plugin-react",
-            "npm:eslint",
-            "npm:eslint-plugin-react-hooks",
-            "npm:eslint-plugin-react-refresh",
-            "npm:globals",
-            "npm:typescript",
-            "npm:typescript-eslint",
-            "npm:vite",
-            "npm:@tailwindcss/vite",
-            "npm:aws-amplify",
-            "npm:date-fns",
-            "npm:lucide-react",
-            "npm:react",
-            "npm:react-day-picker",
-            "npm:react-dom",
-            "npm:react-router-dom",
-            "npm:tailwindcss",
-            "npm:zod",
-            "npm:zustand"
-          ]
-        },
-        {
-          "file": "admin/public/favicon.svg",
-          "hash": "9681363740239943431"
-        },
-        {
-          "file": "admin/public/icons.svg",
-          "hash": "12690649164411559435"
-        },
-        {
-          "file": "admin/public/images/bb-sketch.png",
-          "hash": "6102481808240120078"
-        },
-        {
-          "file": "admin/public/logo_light.jpg",
-          "hash": "10514677109132024220"
-        },
-        {
-          "file": "admin/src/api/availability.ts",
-          "hash": "17500373973823494772"
-        },
-        {
-          "file": "admin/src/api/home.ts",
-          "hash": "8435449423645362593"
-        },
-        {
-          "file": "admin/src/api/menu.ts",
-          "hash": "15914535077595420620"
-        },
-        {
-          "file": "admin/src/api/root.ts",
-          "hash": "12873035434991978361"
-        },
-        {
-          "file": "admin/src/assets/hero.png",
-          "hash": "8887776959365123467"
-        },
-        {
-          "file": "admin/src/assets/logo_light.jpg",
-          "hash": "10514677109132024220"
-        },
-        {
-          "file": "admin/src/auth/AdminRoute.tsx",
-          "hash": "12708205663340793013"
-        },
-        {
-          "file": "admin/src/auth/AuthProvider.tsx",
-          "hash": "2854852637727979288"
-        },
-        {
-          "file": "admin/src/auth/ProtectedRoute.tsx",
-          "hash": "14273406069070247346"
-        },
-        {
-          "file": "admin/src/auth/amplify.ts",
-          "hash": "2019835503938740875"
-        },
-        {
-          "file": "admin/src/auth/auth-context.ts",
-          "hash": "17217632655679135965"
-        },
-        {
-          "file": "admin/src/auth/useAuth.ts",
-          "hash": "4349462481783383525"
-        },
-        {
-          "file": "admin/src/components/layout/AdminLayout.tsx",
-          "hash": "9625173430494484375"
-        },
-        {
-          "file": "admin/src/components/layout/PageHeader.tsx",
-          "hash": "575226876686233488"
-        },
-        {
-          "file": "admin/src/components/layout/Sidebar.tsx",
-          "hash": "17570571524842588061"
-        },
-        {
-          "file": "admin/src/components/ui/AccessCard.tsx",
-          "hash": "11773010635596058796"
-        },
-        {
-          "file": "admin/src/components/ui/AccessUserRow.tsx",
-          "hash": "2834416196368808577"
-        },
-        {
-          "file": "admin/src/components/ui/AdminCard.tsx",
-          "hash": "9588760323811265522"
-        },
-        {
-          "file": "admin/src/components/ui/DataCard.tsx",
-          "hash": "15288373095221211215"
-        },
-        {
-          "file": "admin/src/components/ui/StatCard.tsx",
-          "hash": "15910808716172630447"
-        },
-        {
-          "file": "admin/src/components/ui/TeamBayouCard.tsx",
-          "hash": "2481306513816540130"
-        },
-        {
-          "file": "admin/src/config/adminNav.ts",
-          "hash": "6751036382373516419"
-        },
-        {
-          "file": "admin/src/context/draft/context.ts",
-          "hash": "12988726734991727035"
-        },
-        {
-          "file": "admin/src/context/draft/provider.tsx",
-          "hash": "14694563202129248958"
-        },
-        {
-          "file": "admin/src/context/draft/useDraft.tsx",
-          "hash": "1381777998592381993"
-        },
-        {
-          "file": "admin/src/index.css",
-          "hash": "3498156485008582973"
-        },
-        {
-          "file": "admin/src/main.tsx",
-          "hash": "12422925510081131135"
-        },
-        {
-          "file": "admin/src/pages/Analytics.tsx",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "admin/src/pages/Categories.tsx",
-          "hash": "5771031769730908515"
-        },
-        {
-          "file": "admin/src/pages/Dashboard.tsx",
-          "hash": "11297561278347372959"
-        },
-        {
-          "file": "admin/src/pages/FeaturedDeals.tsx",
-          "hash": "7335495623204055094"
-        },
-        {
-          "file": "admin/src/pages/Login.tsx",
-          "hash": "5766575209693191461"
-        },
-        {
-          "file": "admin/src/pages/MeetTimes.tsx",
-          "hash": "4526099099064189230"
-        },
-        {
-          "file": "admin/src/pages/Products.tsx",
-          "hash": "9493505422538235653"
-        },
-        {
-          "file": "admin/src/pages/Raffle.tsx",
-          "hash": "12522610775211740732"
-        },
-        {
-          "file": "admin/src/pages/Reservations.tsx",
-          "hash": "12580341200512406528"
-        },
-        {
-          "file": "admin/src/pages/Settings.tsx",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "admin/src/pages/Users.tsx",
-          "hash": "17313199612567894047"
-        },
-        {
-          "file": "admin/src/router/DraftRoute.tsx",
-          "hash": "13891669074253667548"
-        },
-        {
-          "file": "admin/src/router/index.tsx",
-          "hash": "17474635217341664783"
-        },
-        {
-          "file": "admin/tsconfig.app.json",
-          "hash": "7912388811211214214"
-        },
-        {
-          "file": "admin/tsconfig.json",
-          "hash": "2365188958523842680"
-        },
-        {
-          "file": "admin/tsconfig.node.json",
-          "hash": "11630970182584720633"
-        },
-        {
-          "file": "admin/vite.config.ts",
-          "hash": "12046244874089299862"
-        }
-      ],
       "@bayou/lambdas": [
         {
           "file": "lambdas/admin/content/availability/index.ts",
-          "hash": "16913814770606866696"
+          "hash": "15907986371969899527"
         },
         {
           "file": "lambdas/admin/content/home/index.ts",
-          "hash": "5880174702602750641"
+          "hash": "14165291605821119112"
         },
         {
           "file": "lambdas/admin/content/menu/index.ts",
-          "hash": "16529755874158891611"
+          "hash": "497861124438643175"
         },
         {
           "file": "lambdas/admin/content/root/index.ts",
-          "hash": "18440571145525909261"
+          "hash": "1861848846669123032"
+        },
+        {
+          "file": "lambdas/admin/images/index.ts",
+          "hash": "11895257909626949963"
+        },
+        {
+          "file": "lambdas/admin/images/upload.ts",
+          "hash": "6737745151517151486"
         },
         {
           "file": "lambdas/approve-access-request/index.ts",
@@ -342,107 +107,6 @@
         {
           "file": "lambdas/util/jsonResponse.ts",
           "hash": "15601141925642238577"
-        }
-      ],
-      "@bayou/shared": [
-        {
-          "file": "shared/constants/categories.ts",
-          "hash": "9849205384742732313"
-        },
-        {
-          "file": "shared/package-lock.json",
-          "hash": "9765185385958257446"
-        },
-        {
-          "file": "shared/package.json",
-          "hash": "7375526165584460305",
-          "deps": [
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "shared/tsconfig.json",
-          "hash": "17710441319383605347"
-        },
-        {
-          "file": "shared/types/Availability.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Availability.ts",
-          "hash": "11532697988151730510"
-        },
-        {
-          "file": "shared/types/Cart.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Cart.ts",
-          "hash": "4648781360704615659"
-        },
-        {
-          "file": "shared/types/Category.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Category.ts",
-          "hash": "12270227608083456759"
-        },
-        {
-          "file": "shared/types/FAQ.ts",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "shared/types/Featured.ts",
-          "hash": "9437884382110318554"
-        },
-        {
-          "file": "shared/types/Home.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Home.ts",
-          "hash": "2293225832954969069"
-        },
-        {
-          "file": "shared/types/Listing.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Listing.ts",
-          "hash": "7637704742914696347"
-        },
-        {
-          "file": "shared/types/Menu.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Menu.ts",
-          "hash": "12738798907957563631"
-        },
-        {
-          "file": "shared/types/Pricing.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Pricing.ts",
-          "hash": "10946140155093420771"
-        },
-        {
-          "file": "shared/types/Promotion.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Promotion.ts",
-          "hash": "4703878632179303030"
-        },
-        {
-          "file": "shared/types/Root.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Root.ts",
-          "hash": "8325191967287872691"
         }
       ],
       "@bayou/client": [
@@ -877,6 +541,10 @@
           "hash": "10498607895038270745"
         },
         {
+          "file": "client/static/images/flamingo.png",
+          "hash": "9368833224300374481"
+        },
+        {
           "file": "client/static/images/frog.png",
           "hash": "7877226422764103313"
         },
@@ -996,7 +664,7 @@
         },
         {
           "file": "infra/lib/infra-stack.ts",
-          "hash": "6910683853049073342"
+          "hash": "15201019029124927017"
         },
         {
           "file": "infra/package-lock.json",
@@ -1016,6 +684,354 @@
         {
           "file": "infra/tsconfig.json",
           "hash": "8565321941728511375"
+        }
+      ],
+      "@bayou/shared": [
+        {
+          "file": "shared/constants/categories.ts",
+          "hash": "9849205384742732313"
+        },
+        {
+          "file": "shared/package-lock.json",
+          "hash": "9765185385958257446"
+        },
+        {
+          "file": "shared/package.json",
+          "hash": "7375526165584460305",
+          "deps": [
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "shared/tsconfig.json",
+          "hash": "17710441319383605347"
+        },
+        {
+          "file": "shared/types/Availability.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Availability.ts",
+          "hash": "11532697988151730510"
+        },
+        {
+          "file": "shared/types/Cart.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Cart.ts",
+          "hash": "4648781360704615659"
+        },
+        {
+          "file": "shared/types/Category.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Category.ts",
+          "hash": "12270227608083456759"
+        },
+        {
+          "file": "shared/types/FAQ.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "shared/types/Featured.ts",
+          "hash": "9437884382110318554"
+        },
+        {
+          "file": "shared/types/Home.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Home.ts",
+          "hash": "2293225832954969069"
+        },
+        {
+          "file": "shared/types/Listing.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Listing.ts",
+          "hash": "7637704742914696347"
+        },
+        {
+          "file": "shared/types/Menu.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Menu.ts",
+          "hash": "12738798907957563631"
+        },
+        {
+          "file": "shared/types/Pricing.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Pricing.ts",
+          "hash": "10946140155093420771"
+        },
+        {
+          "file": "shared/types/Promotion.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Promotion.ts",
+          "hash": "4703878632179303030"
+        },
+        {
+          "file": "shared/types/Root.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Root.ts",
+          "hash": "8325191967287872691"
+        }
+      ],
+      "@bayou/admin": [
+        {
+          "file": "admin/.gitignore",
+          "hash": "12862290348472965560"
+        },
+        {
+          "file": "admin/README.md",
+          "hash": "6146528543463783081"
+        },
+        {
+          "file": "admin/eslint.config.js",
+          "hash": "17737926363764924246"
+        },
+        {
+          "file": "admin/index.html",
+          "hash": "18142783970041896033"
+        },
+        {
+          "file": "admin/package-lock.json",
+          "hash": "10102298286687201278"
+        },
+        {
+          "file": "admin/package.json",
+          "hash": "12549726330477426008",
+          "deps": [
+            "npm:@eslint/js",
+            "npm:@types/node",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@vitejs/plugin-react",
+            "npm:eslint",
+            "npm:eslint-plugin-react-hooks",
+            "npm:eslint-plugin-react-refresh",
+            "npm:globals",
+            "npm:typescript",
+            "npm:typescript-eslint",
+            "npm:vite",
+            "npm:@tailwindcss/vite",
+            "npm:aws-amplify",
+            "npm:date-fns",
+            "npm:lucide-react",
+            "npm:react",
+            "npm:react-day-picker",
+            "npm:react-dom",
+            "npm:react-router-dom",
+            "npm:tailwindcss",
+            "npm:zod",
+            "npm:zustand"
+          ]
+        },
+        {
+          "file": "admin/public/favicon.svg",
+          "hash": "9681363740239943431"
+        },
+        {
+          "file": "admin/public/icons.svg",
+          "hash": "12690649164411559435"
+        },
+        {
+          "file": "admin/public/images/bb-sketch.png",
+          "hash": "6102481808240120078"
+        },
+        {
+          "file": "admin/public/logo_light.jpg",
+          "hash": "10514677109132024220"
+        },
+        {
+          "file": "admin/src/api/fetchImages.ts",
+          "hash": "9692835812098866463"
+        },
+        {
+          "file": "admin/src/api/index.ts",
+          "hash": "14371054511899251822"
+        },
+        {
+          "file": "admin/src/api/uploadImages.ts",
+          "hash": "12460276107826443081"
+        },
+        {
+          "file": "admin/src/assets/hero.png",
+          "hash": "8887776959365123467"
+        },
+        {
+          "file": "admin/src/assets/logo_light.jpg",
+          "hash": "10514677109132024220"
+        },
+        {
+          "file": "admin/src/auth/AdminRoute.tsx",
+          "hash": "12708205663340793013"
+        },
+        {
+          "file": "admin/src/auth/AuthProvider.tsx",
+          "hash": "2854852637727979288"
+        },
+        {
+          "file": "admin/src/auth/ProtectedRoute.tsx",
+          "hash": "14273406069070247346"
+        },
+        {
+          "file": "admin/src/auth/amplify.ts",
+          "hash": "2019835503938740875"
+        },
+        {
+          "file": "admin/src/auth/auth-context.ts",
+          "hash": "17217632655679135965"
+        },
+        {
+          "file": "admin/src/auth/useAuth.ts",
+          "hash": "4349462481783383525"
+        },
+        {
+          "file": "admin/src/components/layout/AdminLayout.tsx",
+          "hash": "5402106206371256738"
+        },
+        {
+          "file": "admin/src/components/layout/PageHeader.tsx",
+          "hash": "575226876686233488"
+        },
+        {
+          "file": "admin/src/components/layout/Sidebar.tsx",
+          "hash": "10322935969202223070"
+        },
+        {
+          "file": "admin/src/components/ui/AccessCard.tsx",
+          "hash": "7515812937304371277"
+        },
+        {
+          "file": "admin/src/components/ui/AccessUserRow.tsx",
+          "hash": "7778713476356284667"
+        },
+        {
+          "file": "admin/src/components/ui/AdminCard.tsx",
+          "hash": "9588760323811265522"
+        },
+        {
+          "file": "admin/src/components/ui/DataCard.tsx",
+          "hash": "15288373095221211215"
+        },
+        {
+          "file": "admin/src/components/ui/StatCard.tsx",
+          "hash": "2999375605860150206"
+        },
+        {
+          "file": "admin/src/components/ui/StatusBanner.tsx",
+          "hash": "4920831314482688927"
+        },
+        {
+          "file": "admin/src/components/ui/TeamBayouCard.tsx",
+          "hash": "2481306513816540130"
+        },
+        {
+          "file": "admin/src/config/adminNav.ts",
+          "hash": "1855389886928027158"
+        },
+        {
+          "file": "admin/src/context/draft/context.ts",
+          "hash": "222645805286619240"
+        },
+        {
+          "file": "admin/src/context/draft/provider.tsx",
+          "hash": "12312108369247634468"
+        },
+        {
+          "file": "admin/src/context/draft/useDraft.tsx",
+          "hash": "1381777998592381993"
+        },
+        {
+          "file": "admin/src/index.css",
+          "hash": "11450916328714758916"
+        },
+        {
+          "file": "admin/src/main.tsx",
+          "hash": "12422925510081131135"
+        },
+        {
+          "file": "admin/src/pages/Analytics.tsx",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "admin/src/pages/Categories.tsx",
+          "hash": "5771031769730908515"
+        },
+        {
+          "file": "admin/src/pages/Dashboard.tsx",
+          "hash": "3815705835282755087"
+        },
+        {
+          "file": "admin/src/pages/FeaturedDeals.tsx",
+          "hash": "7335495623204055094"
+        },
+        {
+          "file": "admin/src/pages/ImageLibrary.tsx",
+          "hash": "17479413904962981200"
+        },
+        {
+          "file": "admin/src/pages/Login.tsx",
+          "hash": "5766575209693191461"
+        },
+        {
+          "file": "admin/src/pages/MeetTimes.tsx",
+          "hash": "7867603439903366761"
+        },
+        {
+          "file": "admin/src/pages/Products.tsx",
+          "hash": "9493505422538235653"
+        },
+        {
+          "file": "admin/src/pages/Raffle.tsx",
+          "hash": "12522610775211740732"
+        },
+        {
+          "file": "admin/src/pages/Reservations.tsx",
+          "hash": "12580341200512406528"
+        },
+        {
+          "file": "admin/src/pages/Settings.tsx",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "admin/src/pages/Users.tsx",
+          "hash": "14535328625252652192"
+        },
+        {
+          "file": "admin/src/router/DraftRoute.tsx",
+          "hash": "13891669074253667548"
+        },
+        {
+          "file": "admin/src/router/index.tsx",
+          "hash": "9413354074276901892"
+        },
+        {
+          "file": "admin/tsconfig.app.json",
+          "hash": "7912388811211214214"
+        },
+        {
+          "file": "admin/tsconfig.json",
+          "hash": "2365188958523842680"
+        },
+        {
+          "file": "admin/tsconfig.node.json",
+          "hash": "11630970182584720633"
+        },
+        {
+          "file": "admin/vite.config.ts",
+          "hash": "12046244874089299862"
         }
       ]
     }

@@ -8,7 +8,7 @@
 > vite build
 
 [36mvite v8.2.2 [32mbuilding ssr environment for production...[36m[39m
-[33m10:27:38 PM [vite-plugin-svelte] src/routes/+page.svelte:15:36 This reference only captures the initial value of `closedMessage`. Did you mean to reference it inside a closure instead?
+[33m7:20:43 PM [vite-plugin-svelte] src/routes/+page.svelte:15:36 This reference only captures the initial value of `closedMessage`. Did you mean to reference it inside a closure instead?
 https://svelte.dev/e/state_referenced_locally[39m
 13: 
 14:   const { calendarProps, closedMessage, home, meetTimesDisplay } = $derived(data);
@@ -16,7 +16,7 @@ https://svelte.dev/e/state_referenced_locally[39m
                                                       ^
 16: </script>
 17: 
-[2Ktransforming (63) [2msrc/lib/assets/icons/Arrow.svelte[0m[33m10:27:39 PM [vite-plugin-svelte] src/lib/components/productDetail/ProductOptionSelector.svelte:177:30 This reference only captures the initial value of `isInBag`. Did you mean to reference it inside a closure instead?
+[2Ktransforming (49) [2msrc/lib/utils/getDateStatus.ts[0m[2Ktransforming (51) [2msrc/lib/utils/date.ts[0m[2Ktransforming (50) [2msrc/lib/utils/buildDateWithTime.ts[0m[33m7:20:44 PM [vite-plugin-svelte] src/lib/components/productDetail/ProductOptionSelector.svelte:177:30 This reference only captures the initial value of `isInBag`. Did you mean to reference it inside a closure instead?
 https://svelte.dev/e/state_referenced_locally[39m
 175:     selectedPriceOption ? cart.hasItem(listing.id, selectedPriceOption?.id) : false
 176:   );
@@ -24,7 +24,7 @@ https://svelte.dev/e/state_referenced_locally[39m
                                            ^
 178: 
 179:   const buttonLabel = $derived(
-[33m10:27:39 PM [vite-plugin-svelte] src/lib/components/productDetail/ProductOptionSelector.svelte:177:39 This reference only captures the initial value of `canEdit`. Did you mean to reference it inside a closure instead?
+[33m7:20:44 PM [vite-plugin-svelte] src/lib/components/productDetail/ProductOptionSelector.svelte:177:39 This reference only captures the initial value of `canEdit`. Did you mean to reference it inside a closure instead?
 https://svelte.dev/e/state_referenced_locally[39m
 175:     selectedPriceOption ? cart.hasItem(listing.id, selectedPriceOption?.id) : false
 176:   );
@@ -32,7 +32,7 @@ https://svelte.dev/e/state_referenced_locally[39m
                                                     ^
 178: 
 179:   const buttonLabel = $derived(
-[33m10:27:39 PM [vite-plugin-svelte] src/lib/components/menu/Header.svelte:11:36 This reference only captures the initial value of `listingsCount`. Did you mean to reference it inside a closure instead?
+[33m7:20:44 PM [vite-plugin-svelte] src/lib/components/menu/Header.svelte:11:36 This reference only captures the initial value of `listingsCount`. Did you mean to reference it inside a closure instead?
 https://svelte.dev/e/state_referenced_locally[39m
  9: 
 10:   const { listingsCount }: HeaderProps = $props();
@@ -40,9 +40,9 @@ https://svelte.dev/e/state_referenced_locally[39m
                                                       ^
 12: </script>
 13: 
-[2Ktransforming (157) [2m../node_modules/svelte/src/html-tree-validation.js[0m[2K[32m✓[0m 218 modules transformed.
+[2Ktransforming (153) [2m../node_modules/svelte/src/internal/flags/index.js[0m[2Ktransforming (154) [2m../node_modules/@sveltejs/kit/src/runtime/app/env/index.js[0m[2Ktransforming (155) [2m../node_modules/svelte/src/legacy/legacy-client.js[0m[2K[32m✓[0m 218 modules transformed.
 [2Krendering chunks (1)...[2Krendering chunks (2)...[2Krendering chunks (3)...[2Krendering chunks (4)...[2Krendering chunks (5)...[2Krendering chunks (6)...[2Krendering chunks (7)...[2Krendering chunks (8)...[2Krendering chunks (9)...[2Krendering chunks (10)...[2Krendering chunks (11)...[2Krendering chunks (12)...[2Krendering chunks (13)...[2Krendering chunks (14)...[2Krendering chunks (15)...[2Krendering chunks (16)...[2Krendering chunks (17)...[2Krendering chunks (18)...[2Krendering chunks (19)...[2Krendering chunks (20)...[2Krendering chunks (21)...[2Krendering chunks (22)...[2Krendering chunks (23)...[2Krendering chunks (24)...[2Krendering chunks (25)...[2Krendering chunks (26)...[2Krendering chunks (27)...[2Krendering chunks (28)...[2Krendering chunks (29)...[2Krendering chunks (30)...[2Krendering chunks (31)...[2Krendering chunks (32)...[2Krendering chunks (33)...[2Krendering chunks (34)...[2Krendering chunks (35)...[2Krendering chunks (36)...[2Krendering chunks (37)...[2Krendering chunks (38)...[2Krendering chunks (39)...[2Krendering chunks (40)...[2Krendering chunks (41)...[2K[36mvite v8.2.2 [32mbuilding client environment for production...[36m[39m
-[33m10:27:39 PM [vite-plugin-svelte] src/routes/+page.svelte:15:36 This reference only captures the initial value of `closedMessage`. Did you mean to reference it inside a closure instead?
+[33m7:20:44 PM [vite-plugin-svelte] src/routes/+page.svelte:15:36 This reference only captures the initial value of `closedMessage`. Did you mean to reference it inside a closure instead?
 https://svelte.dev/e/state_referenced_locally[39m
 13: 
 14:   const { calendarProps, closedMessage, home, meetTimesDisplay } = $derived(data);
@@ -50,7 +50,7 @@ https://svelte.dev/e/state_referenced_locally[39m
                                                       ^
 16: </script>
 17: 
-[33m10:27:39 PM [vite-plugin-svelte] src/lib/components/menu/Header.svelte:11:36 This reference only captures the initial value of `listingsCount`. Did you mean to reference it inside a closure instead?
+[2Ktransforming (70) [2msrc/lib/assets/icons/Arrow.svelte[0m[33m7:20:44 PM [vite-plugin-svelte] src/lib/components/menu/Header.svelte:11:36 This reference only captures the initial value of `listingsCount`. Did you mean to reference it inside a closure instead?
 https://svelte.dev/e/state_referenced_locally[39m
  9: 
 10:   const { listingsCount }: HeaderProps = $props();
@@ -58,7 +58,7 @@ https://svelte.dev/e/state_referenced_locally[39m
                                                       ^
 12: </script>
 13: 
-[2Ktransforming (115) [2m../node_modules/svelte/src/constants.js[0m[33m10:27:39 PM [vite-plugin-svelte] src/lib/components/productDetail/ProductOptionSelector.svelte:177:30 This reference only captures the initial value of `isInBag`. Did you mean to reference it inside a closure instead?
+[33m7:20:44 PM [vite-plugin-svelte] src/lib/components/productDetail/ProductOptionSelector.svelte:177:30 This reference only captures the initial value of `isInBag`. Did you mean to reference it inside a closure instead?
 https://svelte.dev/e/state_referenced_locally[39m
 175:     selectedPriceOption ? cart.hasItem(listing.id, selectedPriceOption?.id) : false
 176:   );
@@ -66,7 +66,7 @@ https://svelte.dev/e/state_referenced_locally[39m
                                            ^
 178: 
 179:   const buttonLabel = $derived(
-[33m10:27:39 PM [vite-plugin-svelte] src/lib/components/productDetail/ProductOptionSelector.svelte:177:39 This reference only captures the initial value of `canEdit`. Did you mean to reference it inside a closure instead?
+[33m7:20:44 PM [vite-plugin-svelte] src/lib/components/productDetail/ProductOptionSelector.svelte:177:39 This reference only captures the initial value of `canEdit`. Did you mean to reference it inside a closure instead?
 https://svelte.dev/e/state_referenced_locally[39m
 175:     selectedPriceOption ? cart.hasItem(listing.id, selectedPriceOption?.id) : false
 176:   );
@@ -74,17 +74,17 @@ https://svelte.dev/e/state_referenced_locally[39m
                                                     ^
 178: 
 179:   const buttonLabel = $derived(
-[2Ktransforming (496) [2msrc/lib/assets/icons/Sparkles.svelte[0m[2K[32m✓[0m 1132 modules transformed.
+[2Ktransforming (482) [2msrc/lib/assets/icons/Leaf.svelte[0m[2Ktransforming (971) [2m../node_modules/rxjs/dist/esm5/internal/operators/publish.js[0m[2K[32m✓[0m 1132 modules transformed.
 [2Krendering chunks (1)...[2Krendering chunks (2)...[2Krendering chunks (3)...[2Krendering chunks (4)...[2Krendering chunks (5)...[2Krendering chunks (6)...[2Krendering chunks (7)...[2Krendering chunks (8)...[2Krendering chunks (9)...[2Krendering chunks (10)...[2Krendering chunks (11)...[2Krendering chunks (12)...[2Krendering chunks (13)...[2Krendering chunks (14)...[2Krendering chunks (15)...[2Krendering chunks (16)...[2Krendering chunks (17)...[2Krendering chunks (18)...[2Krendering chunks (19)...[2Krendering chunks (20)...[2Krendering chunks (21)...[2Krendering chunks (22)...[2Krendering chunks (23)...[2Krendering chunks (24)...[2Krendering chunks (25)...[2Krendering chunks (26)...[2Krendering chunks (27)...[2Krendering chunks (28)...[2Krendering chunks (29)...[2Krendering chunks (30)...[2Kcomputing gzip size...
 [2K[2m.svelte-kit/output/client/[0m[32m_app/version.json                       [0m[1;2m  0.02 kB[0m[2m │ gzip:  0.04 kB[0m
-[2m.svelte-kit/output/client/[0m[32m.vite/manifest.json                     [0m[1;2m  8.21 kB[0m[2m │ gzip:  1.13 kB[0m
+[2m.svelte-kit/output/client/[0m[32m.vite/manifest.json                     [0m[1;2m  8.21 kB[0m[2m │ gzip:  1.12 kB[0m
 [2m.svelte-kit/output/client/[0m[35m_app/immutable/assets/0.CFXLhlQP.css    [0m[1;2m 65.06 kB[0m[2m │ gzip: 10.58 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/CG95gDfN.js       [0m[1;2m  0.02 kB[0m[2m │ gzip:  0.04 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/BqSvQ_Zn.js       [0m[1;2m  0.02 kB[0m[2m │ gzip:  0.04 kB[0m
 [2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/xihTtKlq.js       [0m[1;2m  0.06 kB[0m[2m │ gzip:  0.08 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/CvcPDTNv.js       [0m[1;2m  0.07 kB[0m[2m │ gzip:  0.09 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/entry/start.DbzyUkbd.js  [0m[1;2m  0.08 kB[0m[2m │ gzip:  0.09 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/BOLZ4u_p.js       [0m[1;2m  0.29 kB[0m[2m │ gzip:  0.16 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/1.CwFhXquw.js      [0m[1;2m  0.37 kB[0m[2m │ gzip:  0.26 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/N7-tc0s0.js       [0m[1;2m  0.07 kB[0m[2m │ gzip:  0.09 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/entry/start.BzKpl-uC.js  [0m[1;2m  0.08 kB[0m[2m │ gzip:  0.09 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/XXN2ayXJ.js       [0m[1;2m  0.29 kB[0m[2m │ gzip:  0.16 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/1.DZX1sR6j.js      [0m[1;2m  0.37 kB[0m[2m │ gzip:  0.26 kB[0m
 [2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/wJl1Ygyt.js       [0m[1;2m  0.37 kB[0m[2m │ gzip:  0.18 kB[0m
 [2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/AFZRlSXm.js       [0m[1;2m  0.43 kB[0m[2m │ gzip:  0.32 kB[0m
 [2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/Cmomkopr.js       [0m[1;2m  0.53 kB[0m[2m │ gzip:  0.37 kB[0m
@@ -92,25 +92,25 @@ https://svelte.dev/e/state_referenced_locally[39m
 [2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/C4Qz1DdJ.js       [0m[1;2m  1.34 kB[0m[2m │ gzip:  0.76 kB[0m
 [2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/Bjy-W4x2.js       [0m[1;2m  1.36 kB[0m[2m │ gzip:  0.65 kB[0m
 [2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/CiyAyUNx.js       [0m[1;2m  1.46 kB[0m[2m │ gzip:  0.84 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/UT3LkuhJ.js       [0m[1;2m  2.47 kB[0m[2m │ gzip:  1.22 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/DCrVscHO.js       [0m[1;2m  2.47 kB[0m[2m │ gzip:  1.22 kB[0m
 [2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/BZddCNsO.js       [0m[1;2m  2.86 kB[0m[2m │ gzip:  1.33 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/DgdIrPWA.js       [0m[1;2m  3.06 kB[0m[2m │ gzip:  1.52 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/5.t5OZa9pW.js      [0m[1;2m  3.48 kB[0m[2m │ gzip:  1.64 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/4.CuvB1LoV.js      [0m[1;2m  4.01 kB[0m[2m │ gzip:  1.87 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/8.BS9U5K8B.js      [0m[1;2m  4.80 kB[0m[2m │ gzip:  1.84 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/B7AyVajs.js       [0m[1;2m  3.06 kB[0m[2m │ gzip:  1.52 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/5.DanU8jhS.js      [0m[1;2m  3.48 kB[0m[2m │ gzip:  1.64 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/4.BVntBKyn.js      [0m[1;2m  4.01 kB[0m[2m │ gzip:  1.87 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/8.BuQZqOmE.js      [0m[1;2m  4.80 kB[0m[2m │ gzip:  1.84 kB[0m
 [2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/BitgYzYd.js       [0m[1;2m  5.01 kB[0m[2m │ gzip:  1.82 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/entry/app.DxnIX8k3.js    [0m[1;2m  5.35 kB[0m[2m │ gzip:  2.28 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/9.CNlU5AE3.js      [0m[1;2m  5.71 kB[0m[2m │ gzip:  1.90 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/6.BFi0wSLZ.js      [0m[1;2m  7.91 kB[0m[2m │ gzip:  3.32 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/3.tTdbHkKv.js      [0m[1;2m  8.64 kB[0m[2m │ gzip:  3.63 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/7.BMyAMfF2.js      [0m[1;2m 10.04 kB[0m[2m │ gzip:  3.83 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/2.B5Bs3CwX.js      [0m[1;2m 10.32 kB[0m[2m │ gzip:  3.72 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/CHPnIzB8.js       [0m[1;2m 29.25 kB[0m[2m │ gzip: 11.33 kB[0m
-[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/0.CCgDg3yQ.js      [0m[1;2m 44.44 kB[0m[2m │ gzip: 14.31 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/entry/app.DBdqmbSZ.js    [0m[1;2m  5.35 kB[0m[2m │ gzip:  2.28 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/9.r6iLObkB.js      [0m[1;2m  5.71 kB[0m[2m │ gzip:  1.89 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/6.gfsbmTMB.js      [0m[1;2m  7.91 kB[0m[2m │ gzip:  3.32 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/3.D-lHQ-j0.js      [0m[1;2m  8.64 kB[0m[2m │ gzip:  3.63 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/7.Be_1oUwQ.js      [0m[1;2m 10.04 kB[0m[2m │ gzip:  3.83 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/2.BaxSBJab.js      [0m[1;2m 10.32 kB[0m[2m │ gzip:  3.72 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/BAiBcNy_.js       [0m[1;2m 29.25 kB[0m[2m │ gzip: 11.33 kB[0m
+[2m.svelte-kit/output/client/[0m[36m_app/immutable/nodes/0.BYaJaOEv.js      [0m[1;2m 44.44 kB[0m[2m │ gzip: 14.31 kB[0m
 [2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/BVvpWNJv.js       [0m[1;2m 46.62 kB[0m[2m │ gzip: 17.81 kB[0m
 [2m.svelte-kit/output/client/[0m[36m_app/immutable/chunks/gB9nOzuG.js       [0m[1;2m116.61 kB[0m[2m │ gzip: 33.27 kB[0m
 
-[32m✓ built in 458ms[39m
+[32m✓ built in 453ms[39m
 computing gzip size...
 [2K[2m.svelte-kit/output/server/[0m[32m.vite/manifest.json                             [0m[1;2m  9.04 kB[0m[2m │ gzip:  1.17 kB[0m
 [2m.svelte-kit/output/server/[0m[35m_app/immutable/assets/_layout.BR3fO0kW.css      [0m[1;2m 63.87 kB[0m[2m │ gzip: 10.56 kB[0m
@@ -156,7 +156,7 @@ computing gzip size...
 [2m.svelte-kit/output/server/[0m[36mindex.js                                        [0m[1;2m124.17 kB[0m[2m │ gzip: 31.47 kB[0m
 [2m.svelte-kit/output/server/[0m[36mchunks/internal.js                              [0m[1;2m150.83 kB[0m[2m │ gzip: 39.19 kB[0m
 
-[32m✓ built in 1.52s[39m
+[32m✓ built in 1.59s[39m
 
 Run [1m[36mnpm run preview[22m[39m to preview your production build locally.
 [1m[36m

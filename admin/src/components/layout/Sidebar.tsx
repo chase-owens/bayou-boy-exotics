@@ -29,7 +29,7 @@ export default function Sidebar() {
   );
 
   return (
-    <aside className="admin-sidebar flex min-h-screen flex-col p-6">
+    <aside className="admin-sidebar sticky top-0 flex h-screen flex-col overflow-y-auto p-6">
       <div>
         <p className="admin-eyebrow">Bayou Boy</p>
         <h1 className="text-3xl leading-none text-gray-700">Exotics</h1>
