@@ -14,6 +14,7 @@ import Login from "../pages/Login";
 import { ProtectedRoute } from "../auth/ProtectedRoute";
 import { AdminRoute } from "../auth/AdminRoute";
 import DraftRoute from "./DraftRoute";
+import ImageLibrary from "../pages/ImageLibrary";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
               { path: "meet-times", element: <MeetTimes /> },
               { path: "reservations", element: <Reservations /> },
               { path: "featured-deals", element: <FeaturedDeals /> },
+              { path: "image-library", element: <ImageLibrary /> },
               { path: "raffle", element: <Raffle /> },
               { path: "categories", element: <Categories /> },
               {

@@ -9,9 +9,11 @@ export default function AdminLayout() {
       <main
         className="
           relative
+           min-w-0
           bg-[url('/images/bb-sketch.png')]
           bg-contain
-          bg-right-bottom
+          bg-fixed
+          bg-bottom-right
           bg-no-repeat
           p-8
         "

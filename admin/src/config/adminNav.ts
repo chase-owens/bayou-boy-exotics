@@ -7,6 +7,7 @@ import {
   Ticket,
   Users,
   type LucideProps,
+  Images,
 } from "lucide-react";
 import type { ForwardRefExoticComponent } from "react";
 
@@ -26,6 +27,7 @@ export const adminNavItems: NavItem[] = [
   { label: "Reservations", to: "/reservations", Icon: Users },
   { label: "Featured Deals", to: "/featured-deals", Icon: Gift },
   { label: "Giveaways", to: "/giveaways", Icon: Ticket },
+  { label: "Image Library", to: "/image-library", Icon: Images },
   { label: "Categories", to: "/categories", Icon: Folder },
   {
     label: "Users",

@@ -1,0 +1,22 @@
+> nx run @bayou/admin:build
+
+> npm run build
+
+
+> @bayou/admin@0.0.0 build
+> tsc -b && vite build
+
+[36mvite v8.2.2 [32mbuilding client environment for production...[36m[39m
+[2Ktransforming (1166) [2msrc/index.css[0m[2Ktransforming (3210) [2m../node_modules/rxjs/dist/esm5/internal/types.js[0m[2Ktransforming (3211) [2m../node_modules/rxjs/dist/esm5/internal/operators/audit.js[0m[2K[32m✓[0m 3374 modules transformed.
+[2Krendering chunks (1)...[2Kcomputing gzip size...
+[2K[2mdist/[0m[32mindex.html                 [0m[1;2m  0.46 kB[0m[2m │ gzip:   0.30 kB[0m
+[2mdist/[0m[2massets/[0m[35mindex-CSyygzzf.css  [0m[1;2m 38.15 kB[0m[2m │ gzip:   6.62 kB[0m
+[2mdist/[0m[2massets/[0m[36mindex-BqLkIAzV.js   [0m[33;1m528.28 kB[0m[2m │ gzip: 158.16 kB[0m
+
+[32m✓ built in 322ms[39m
+[2K[1G[33m[plugin builtin:vite-reporter] [33;1m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[0m[39m
+⠙[1G[0K

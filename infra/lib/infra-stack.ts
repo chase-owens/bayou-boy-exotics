@@ -35,6 +35,16 @@ export class InfraStack extends cdk.Stack {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
       autoDeleteObjects: false,
+      cors: [
+        {
+          allowedMethods: [s3.HttpMethods.PUT],
+          allowedOrigins: [
+            "https://d2ti5ggxcbsxpd.cloudfront.net",
+            "http://localhost:5174",
+          ],
+          allowedHeaders: ["*"],
+        },
+      ],
     });
 
     // bayou-boys
@@ -423,11 +433,36 @@ export class InfraStack extends cdk.Stack {
       },
     });
 
+    // Images Lambdas
+    const listImagesLambda = new lambda.Function(this, "ListImagesLambda", {
+      runtime: lambda.Runtime.NODEJS_22_X,
+      handler: "index.handler",
+      code: lambda.Code.fromAsset(
+        path.join(__dirname, "../../lambdas/dist/admin/images"),
+      ),
+      environment: {
+        CONTENT_BUCKET_NAME: contentBucket.bucketName,
+      },
+    });
+
+    const uploadImagesLambda = new lambda.Function(this, "UploadImagesLambda", {
+      runtime: lambda.Runtime.NODEJS_22_X,
+      handler: "upload.handler",
+      code: lambda.Code.fromAsset(
+        path.join(__dirname, "../../lambdas/dist/admin/images"),
+      ),
+      environment: {
+        CONTENT_BUCKET_NAME: contentBucket.bucketName,
+      },
+    });
+
     // Content Permissions
     contentBucket.grantWrite(updateAvailabilityLambda);
     contentBucket.grantWrite(updateHomeLambda);
     contentBucket.grantWrite(updateMenuLambda);
     contentBucket.grantWrite(updateRootLambda);
+    contentBucket.grantRead(listImagesLambda);
+    contentBucket.grantWrite(uploadImagesLambda);
 
     // API Resources
     const accessRequests = api.root.addResource("access-requests");
@@ -435,6 +470,7 @@ export class InfraStack extends cdk.Stack {
     const admin = api.root.addResource("admin");
     const adminAccessRequests = admin.addResource("access-requests");
     const adminContent = admin.addResource("content");
+    const adminImages = admin.addResource("images");
 
     // Client Access Request Routes
     accessRequests.addMethod(
@@ -486,6 +522,25 @@ export class InfraStack extends cdk.Stack {
           authorizer: adminAuthorizer,
         },
       );
+
+    // Admin Image Routes
+    adminImages.addMethod(
+      "GET",
+      new apigateway.LambdaIntegration(listImagesLambda),
+      {
+        authorizationType: apigateway.AuthorizationType.COGNITO,
+        authorizer: adminAuthorizer,
+      },
+    );
+
+    adminImages.addMethod(
+      "POST",
+      new apigateway.LambdaIntegration(uploadImagesLambda),
+      {
+        authorizationType: apigateway.AuthorizationType.COGNITO,
+        authorizer: adminAuthorizer,
+      },
+    );
 
     // Admin Content Routes
     adminContent
