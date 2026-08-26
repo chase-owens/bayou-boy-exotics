@@ -1,18 +1,29 @@
 {
   "run": {
-    "command": "nx run-many -t check",
-    "startTime": "2026-08-25T01:01:53.377Z",
-    "endTime": "2026-08-25T01:01:55.234Z",
+    "command": "nx run-many -t lint",
+    "startTime": "2026-08-25T19:00:04.383Z",
+    "endTime": "2026-08-25T19:00:08.052Z",
     "inner": false
   },
   "tasks": [
     {
-      "taskId": "@bayou/client:check",
-      "target": "check",
+      "taskId": "@bayou/admin:lint",
+      "target": "lint",
+      "projectName": "@bayou/admin",
+      "hash": "7672355187237665509",
+      "startTime": "2026-08-25T19:00:04.411Z",
+      "endTime": "2026-08-25T19:00:06.054Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 1
+    },
+    {
+      "taskId": "@bayou/client:lint",
+      "target": "lint",
       "projectName": "@bayou/client",
-      "hash": "5215430830279276086",
-      "startTime": "2026-08-25T01:01:53.405Z",
-      "endTime": "2026-08-25T01:01:55.233Z",
+      "hash": "4314655615202163546",
+      "startTime": "2026-08-25T19:00:04.411Z",
+      "endTime": "2026-08-25T19:00:08.051Z",
       "params": "",
       "cacheStatus": "cache-miss",
       "status": 0

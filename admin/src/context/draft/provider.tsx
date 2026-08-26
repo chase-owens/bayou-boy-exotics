@@ -28,11 +28,14 @@ import {
 } from "./context";
 
 import { fetchAuthSession } from "aws-amplify/auth";
+import type { Listing } from "../../../../shared/types/Listing";
+import type { PricingConfig } from "../../../../shared/types/Pricing";
 
 const contentPaths: Record<DraftFileKey, string> = {
   availability: "/data/availability.json",
   home: "/data/home.json",
   menu: "/data/menu.json",
+  pricing: "/data/pricing.json",
   root: "/data/root.json",
 };
 
@@ -49,10 +52,11 @@ const fetchJson = async <T,>(path: string): Promise<T> => {
 };
 
 const fetchPublishedContent = async (): Promise<ContentFileMap> => {
-  const [availability, home, menu, root] = await Promise.all([
+  const [availability, home, menu, pricing, root] = await Promise.all([
     fetchJson<AvailabilityContent>(contentPaths.availability),
     fetchJson<HomeContent>(contentPaths.home),
     fetchJson<MenuContent>(contentPaths.menu),
+    fetchJson<PricingConfig>(contentPaths.pricing),
     fetchJson<RootContent>(contentPaths.root),
   ]);
 
@@ -60,6 +64,7 @@ const fetchPublishedContent = async (): Promise<ContentFileMap> => {
     availability,
     home,
     menu,
+    pricing,
     root,
   };
 };
@@ -127,6 +132,7 @@ export function DraftProvider({ children }: Props) {
     }
   }, []);
 
+  const pricing = drafts.pricing ?? published.pricing;
   const availability = drafts.availability ?? published.availability;
   const home = drafts.home ?? published.home;
   const menu = drafts.menu ?? published.menu;
@@ -340,6 +346,49 @@ export function DraftProvider({ children }: Props) {
     },
     [updateAvailabilityDraft],
   );
+  const addListing = useCallback(
+    (listing: Listing) => {
+      updateMenuDraft((current) => ({
+        ...current,
+        listings: [...current.listings, listing],
+        currentMenu: {
+          ...current.currentMenu,
+          listingIds: [...current.currentMenu.listingIds, listing.id],
+        },
+      }));
+    },
+    [updateMenuDraft],
+  );
+
+  const editListing = useCallback(
+    (listing: Listing) => {
+      updateMenuDraft((current) => ({
+        ...current,
+        listings: current.listings.map((item) =>
+          item.id === listing.id ? listing : item,
+        ),
+      }));
+    },
+    [updateMenuDraft],
+  );
+
+  const deleteListing = useCallback(
+    (listingId: string) => {
+      updateMenuDraft((current) => ({
+        ...current,
+        listings: current.listings.filter(
+          (listing) => listing.id !== listingId,
+        ),
+        currentMenu: {
+          ...current.currentMenu,
+          listingIds: current.currentMenu.listingIds.filter(
+            (id) => id !== listingId,
+          ),
+        },
+      }));
+    },
+    [updateMenuDraft],
+  );
 
   const addMeetCancellation = useCallback(
     (cancellation: MeetCancellation) => {
@@ -430,6 +479,7 @@ export function DraftProvider({ children }: Props) {
       availability,
       home,
       menu,
+      pricing,
       root,
 
       isLoading,
@@ -459,6 +509,10 @@ export function DraftProvider({ children }: Props) {
       editClosure,
       deleteClosure,
 
+      addListing,
+      editListing,
+      deleteListing,
+
       addMeetCancellation,
       editMeetCancellation,
       deleteMeetCancellation,
@@ -475,6 +529,7 @@ export function DraftProvider({ children }: Props) {
       availability,
       home,
       menu,
+      pricing,
       root,
       isLoading,
       error,
@@ -495,6 +550,9 @@ export function DraftProvider({ children }: Props) {
       addClosure,
       editClosure,
       deleteClosure,
+      addListing,
+      editListing,
+      deleteListing,
       addMeetCancellation,
       editMeetCancellation,
       deleteMeetCancellation,

@@ -11,11 +11,14 @@ import type {
   BusinessDayHours,
   RootContent,
 } from "../../../../shared/types/Root";
+import type { Listing } from "../../../../shared/types/Listing";
+import type { PricingConfig } from "../../../../shared/types/Pricing";
 
 export type ContentFileMap = {
   availability: AvailabilityContent;
   home: HomeContent;
   menu: MenuContent;
+  pricing: PricingConfig;
   root: RootContent;
 };
 
@@ -31,6 +34,7 @@ export type DraftContextValue = {
   availability?: AvailabilityContent;
   home?: HomeContent;
   menu?: MenuContent;
+  pricing?: PricingConfig;
   root?: RootContent;
 
   isLoading: boolean;
@@ -64,6 +68,10 @@ export type DraftContextValue = {
   addClosure: (closure: ClosurePeriod) => void;
   editClosure: (closure: ClosurePeriod) => void;
   deleteClosure: (closureId: string) => void;
+
+  addListing: (listing: Listing) => void;
+  editListing: (listing: Listing) => void;
+  deleteListing: (listingId: string) => void;
 
   addMeetCancellation: (cancellation: MeetCancellation) => void;
   editMeetCancellation: (cancellation: MeetCancellation) => void;

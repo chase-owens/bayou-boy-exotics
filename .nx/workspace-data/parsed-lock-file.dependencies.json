@@ -1,17 +1,12 @@
 [
   {
+    "source": "npm:@types/node@24.13.3",
+    "target": "npm:undici-types@7.18.2",
+    "type": "static"
+  },
+  {
     "source": "npm:@types/node@22.20.1",
     "target": "npm:undici-types",
-    "type": "static"
-  },
-  {
-    "source": "npm:@types/node@26.2.0",
-    "target": "npm:undici-types@8.3.0",
-    "type": "static"
-  },
-  {
-    "source": "npm:@types/node@26.2.0",
-    "target": "npm:undici-types@8.3.0",
     "type": "static"
   },
   {
@@ -2226,7 +2221,7 @@
   },
   {
     "source": "npm:@types/node",
-    "target": "npm:undici-types@7.18.2",
+    "target": "npm:undici-types@8.3.0",
     "type": "static"
   },
   {

@@ -11,7 +11,6 @@ export interface Promotion {
   items: PromotionItem[];
 
   active: boolean;
-  sortOrder: number;
 }
 
 export interface PromotionItem {

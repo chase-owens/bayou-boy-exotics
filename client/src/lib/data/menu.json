@@ -1,12 +1,12 @@
 {
 	"lastUpdated": "2026-06-28T12:00:00-05:00",
 	"categories": [
-		{ "id": "flower", "label": "Flower", "sortOrder": 1, "active": true },
-		{ "id": "carts", "label": "Carts", "sortOrder": 2, "active": true },
-		{ "id": "wax", "label": "Wax", "sortOrder": 3, "active": true },
-		{ "id": "pre-rolls", "label": "Pre-Rolls", "sortOrder": 4, "active": true },
-		{ "id": "mushrooms", "label": "Mushrooms", "sortOrder": 5, "active": true },
-		{ "id": "edibles", "label": "Edibles", "sortOrder": 6, "active": true }
+		{ "id": "flower", "label": "Flower", "active": true },
+		{ "id": "carts", "label": "Carts", "active": true },
+		{ "id": "wax", "label": "Wax", "active": true },
+		{ "id": "pre-rolls", "label": "Pre-Rolls", "active": true },
+		{ "id": "mushrooms", "label": "Mushrooms", "active": true },
+		{ "id": "edibles", "label": "Edibles", "active": true }
 	],
 	"listings": [
 		{
@@ -28,8 +28,7 @@
 			],
 			"inventory": { "tracked": false, "soldOut": false },
 			"active": true,
-			"featured": true,
-			"sortOrder": 1
+			"featured": true
 		},
 		{
 			"id": "gamma-runtz",
@@ -49,8 +48,7 @@
 			],
 			"inventory": { "tracked": false, "soldOut": false },
 			"active": true,
-			"featured": false,
-			"sortOrder": 2
+			"featured": false
 		},
 		{
 			"id": "permafrost",
@@ -71,8 +69,7 @@
 			],
 			"inventory": { "tracked": false, "soldOut": false },
 			"active": true,
-			"featured": false,
-			"sortOrder": 3
+			"featured": false
 		},
 		{
 			"id": "super-sour-kush",
@@ -92,8 +89,7 @@
 			],
 			"inventory": { "tracked": false, "soldOut": false },
 			"active": true,
-			"featured": false,
-			"sortOrder": 4
+			"featured": false
 		},
 		{
 			"id": "ny-sour-treatz",
@@ -113,8 +109,7 @@
 			],
 			"inventory": { "tracked": false, "soldOut": false },
 			"active": true,
-			"featured": false,
-			"sortOrder": 5
+			"featured": false
 		},
 		{
 			"id": "mac-1",
@@ -134,8 +129,7 @@
 			],
 			"inventory": { "tracked": false, "soldOut": false },
 			"active": true,
-			"featured": true,
-			"sortOrder": 6
+			"featured": true
 		},
 		{
 			"id": "albino-penis-envy",
@@ -154,8 +148,7 @@
 			],
 			"inventory": { "tracked": false, "soldOut": false },
 			"active": true,
-			"featured": true,
-			"sortOrder": 7
+			"featured": true
 		},
 		{
 			"id": "rainbow-ice-dabbin-dotz",
@@ -173,8 +166,7 @@
 			],
 			"inventory": { "tracked": false, "soldOut": false },
 			"active": true,
-			"featured": false,
-			"sortOrder": 8
+			"featured": false
 		},
 		{
 			"id": "hitz-carts",
@@ -199,8 +191,7 @@
 			],
 			"inventory": { "tracked": false, "soldOut": false },
 			"active": true,
-			"featured": true,
-			"sortOrder": 9
+			"featured": true
 		},
 		{
 			"id": "hittz-infinity-2g-carts",
@@ -223,8 +214,7 @@
 			],
 			"inventory": { "tracked": false, "soldOut": false },
 			"active": true,
-			"featured": false,
-			"sortOrder": 10
+			"featured": false
 		}
 	],
 	"promotions": []

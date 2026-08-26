@@ -1,0 +1,128 @@
+{
+	"sets": {
+		"g-standard": {
+			"label": "Standard",
+			"unit": "g",
+			"options": [
+				{ "quantity": 2, "label": "2g" },
+				{ "quantity": 3, "label": "3g" },
+				{ "quantity": 3.5, "label": "3.5g" },
+				{ "quantity": 7, "label": "7g" },
+				{ "quantity": 14, "label": "14g" },
+				{ "quantity": 28, "label": "1 oz" }
+			]
+		},
+
+		"g-standard-with-2oz": {
+			"label": "Standard + 2 oz",
+			"unit": "g",
+			"options": [
+				{ "quantity": 2, "label": "2g" },
+				{ "quantity": 3, "label": "3g" },
+				{ "quantity": 3.5, "label": "3.5g" },
+				{ "quantity": 7, "label": "7g" },
+				{ "quantity": 14, "label": "14g" },
+				{ "quantity": 28, "label": "1 oz" },
+				{ "quantity": 56, "label": "2 oz" }
+			]
+		},
+
+		"g-standard-no-3": {
+			"label": "Standard without 3g",
+			"unit": "g",
+			"options": [
+				{ "quantity": 2, "label": "2g" },
+				{ "quantity": 3.5, "label": "3.5g" },
+				{ "quantity": 7, "label": "7g" },
+				{ "quantity": 14, "label": "14g" },
+				{ "quantity": 28, "label": "1 oz" }
+			]
+		},
+
+		"g-3-5-plus": {
+			"label": "3.5g and up",
+			"unit": "g",
+			"options": [
+				{ "quantity": 3.5, "label": "3.5g" },
+				{ "quantity": 7, "label": "7g" },
+				{ "quantity": 14, "label": "14g" },
+				{ "quantity": 28, "label": "1 oz" }
+			]
+		},
+
+		"g-7-plus": {
+			"label": "7g and up",
+			"unit": "g",
+			"options": [
+				{ "quantity": 7, "label": "7g" },
+				{ "quantity": 14, "label": "14g" },
+				{ "quantity": 28, "label": "1 oz" }
+			]
+		},
+
+		"g-2-minimum": {
+			"label": "2g minimum",
+			"unit": "g",
+			"options": [
+				{ "quantity": 2, "label": "2g" },
+				{ "quantity": 3.5, "label": "3.5g" },
+				{ "quantity": 7, "label": "7g" },
+				{ "quantity": 14, "label": "14g" },
+				{ "quantity": 28, "label": "1 oz" }
+			]
+		},
+
+		"each-single": {
+			"label": "Single",
+			"unit": "each",
+			"options": [{ "quantity": 1, "label": "Each" }]
+		},
+
+		"each-pair": {
+			"label": "Single / Pair",
+			"unit": "each",
+			"options": [
+				{ "quantity": 1, "label": "Each" },
+				{ "quantity": 2, "label": "2 for" }
+			]
+		},
+
+		"each-ten": {
+			"label": "Single / 10",
+			"unit": "each",
+			"options": [
+				{ "quantity": 1, "label": "Each" },
+				{ "quantity": 10, "label": "10 for" }
+			]
+		},
+
+		"each-pair-ten": {
+			"label": "Single / Pair / 10",
+			"unit": "each",
+			"options": [
+				{ "quantity": 1, "label": "Each" },
+				{ "quantity": 2, "label": "2 for" },
+				{ "quantity": 10, "label": "10 for" }
+			]
+		},
+
+		"cart-pair": {
+			"label": "Single / Pair",
+			"unit": "cart",
+			"options": [
+				{ "quantity": 1, "label": "Each" },
+				{ "quantity": 2, "label": "2 for" }
+			]
+		},
+
+		"cart-pair-ten": {
+			"label": "Single / Pair / 10",
+			"unit": "cart",
+			"options": [
+				{ "quantity": 1, "label": "Each" },
+				{ "quantity": 2, "label": "2 for" },
+				{ "quantity": 10, "label": "10 for" }
+			]
+		}
+	}
+}

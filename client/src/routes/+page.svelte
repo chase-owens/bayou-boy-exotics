@@ -11,8 +11,7 @@
 
 	let { data } = $props();
 
-	const { calendarProps, closedMessage, home, meetTimesDisplay } = $derived(data);
-	console.log('🚀 ~ closedMessage:', closedMessage);
+	const { calendarProps, home, meetTimesDisplay } = $derived(data);
 </script>
 
 <svelte:head>

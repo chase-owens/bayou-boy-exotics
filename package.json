@@ -21,6 +21,7 @@
     "validate": "npm run lint && npm run build && npm run check && npm run synth"
   },
   "devDependencies": {
+    "@types/node": "^26.3.0",
     "nx": "^23.1.1"
   }
 }
