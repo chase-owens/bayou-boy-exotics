@@ -6,8 +6,24 @@
   "fileMap": {
     "nonProjectFiles": [
       {
+        "file": "README.md",
+        "hash": "14576388324799318000"
+      },
+      {
         "file": "tsconfig.json",
         "hash": "3041802698825988591"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "2762752470638050055"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "6782716216147038930"
+      },
+      {
+        "file": "nx.json",
+        "hash": "17720574272691467707"
       },
       {
         "file": "package.json",
@@ -16,22 +32,6 @@
       {
         "file": "package-lock.json",
         "hash": "2296415940923846472"
-      },
-      {
-        "file": ".gitignore",
-        "hash": "2762752470638050055"
-      },
-      {
-        "file": "nx.json",
-        "hash": "17720574272691467707"
-      },
-      {
-        "file": "README.md",
-        "hash": "14576388324799318000"
-      },
-      {
-        "file": "tsconfig.base.json",
-        "hash": "6782716216147038930"
       }
     ],
     "projectFileMap": {
@@ -731,7 +731,7 @@
         },
         {
           "file": "client/src/lib/components/cards/ProductCard.svelte",
-          "hash": "4258205623157529037"
+          "hash": "9799919399240121257"
         },
         {
           "file": "client/src/lib/components/cards/SoldOutCard.svelte",
@@ -743,7 +743,7 @@
         },
         {
           "file": "client/src/lib/components/cart/CartMeetSummary.svelte",
-          "hash": "14632284010787965899"
+          "hash": "11003914124791105157"
         },
         {
           "file": "client/src/lib/components/home/AvailabilityCalendar.svelte",
@@ -875,7 +875,7 @@
         },
         {
           "file": "client/src/routes/cart/+page.svelte",
-          "hash": "7743531068744115226"
+          "hash": "8906859091525391445"
         },
         {
           "file": "client/src/routes/cart/+page.ts",

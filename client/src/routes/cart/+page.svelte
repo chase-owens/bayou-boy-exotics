@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import CartItem from '$lib/components/cart/CartItem.svelte';
-	import CartMeetSummary from '$lib/components/cart/CartMeetSummary.svelte';
-	import MeetTimesCard from '$lib/components/MeetTimesCard.svelte';
-	import { cart } from '$lib/stores/cart.svelte';
+	import CartItem from '../../lib/components/cart/CartItem.svelte';
+	import CartMeetSummary from '../../lib/components/cart/CartMeetSummary.svelte';
+	import MeetTimesCard from '../../lib/components/MeetTimesCard.svelte';
+	import { cart } from '../../lib/stores/cart.svelte';
 	import type { PageData } from './$types';
 
 	const hasItems = $derived(cart.items.length > 0);
@@ -15,7 +15,7 @@
 	let selectedMeetTime = $state<string | null>(null);
 
 	const selectedMeet = $derived(
-		meetTimesDisplay?.meets.find((meet) => meet.time === selectedMeetTime) ?? null
+		meetTimesDisplay?.meets.find((time: string) => time === selectedMeetTime) ?? null
 	);
 
 	const canContinue = $derived(cart.items.length > 0 && Boolean(selectedMeet));
@@ -53,7 +53,7 @@
 		<MeetTimesCard
 			{meetTimesDisplay}
 			{selectedMeetTime}
-			onChange={(meetTime) => (selectedMeetTime = meetTime)}
+			onChange={(meetTime: string | null) => (selectedMeetTime = meetTime)}
 		/>
 
 		<CartMeetSummary {selectedMeetTime} onSubmit={handleSubmit} total={cart.total} />
