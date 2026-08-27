@@ -4,124 +4,63 @@
 			"label": "Standard",
 			"unit": "g",
 			"options": [
-				{ "quantity": 2, "label": "2g" },
-				{ "quantity": 3, "label": "3g" },
-				{ "quantity": 3.5, "label": "3.5g" },
-				{ "quantity": 7, "label": "7g" },
-				{ "quantity": 14, "label": "14g" },
-				{ "quantity": 28, "label": "1 oz" }
+				{ "id": "g-standard-2", "price": 15, "units": 2, "label": "2g" },
+				{ "id": "g-standard-3", "price": 25, "units": 3, "label": "3g" },
+				{ "id": "g-standard-3.5", "price": 30, "units": 3.5, "label": "3.5g" },
+				{ "id": "g-standard-7", "price": 55, "units": 7, "label": "7g" },
+				{ "id": "g-standard-14", "price": 100, "units": 14, "label": "14g" },
+				{ "id": "g-standard-28", "price": 190, "units": 28, "label": "1 oz" },
+				{ "id": "g-standard-56", "price": 300, "units": 56, "label": "2 zips" }
 			]
 		},
 
-		"g-standard-with-2oz": {
-			"label": "Standard + 2 oz",
-			"unit": "g",
-			"options": [
-				{ "quantity": 2, "label": "2g" },
-				{ "quantity": 3, "label": "3g" },
-				{ "quantity": 3.5, "label": "3.5g" },
-				{ "quantity": 7, "label": "7g" },
-				{ "quantity": 14, "label": "14g" },
-				{ "quantity": 28, "label": "1 oz" },
-				{ "quantity": 56, "label": "2 oz" }
-			]
-		},
-
-		"g-standard-no-3": {
-			"label": "Standard without 3g",
-			"unit": "g",
-			"options": [
-				{ "quantity": 2, "label": "2g" },
-				{ "quantity": 3.5, "label": "3.5g" },
-				{ "quantity": 7, "label": "7g" },
-				{ "quantity": 14, "label": "14g" },
-				{ "quantity": 28, "label": "1 oz" }
-			]
-		},
-
-		"g-3-5-plus": {
-			"label": "3.5g and up",
-			"unit": "g",
-			"options": [
-				{ "quantity": 3.5, "label": "3.5g" },
-				{ "quantity": 7, "label": "7g" },
-				{ "quantity": 14, "label": "14g" },
-				{ "quantity": 28, "label": "1 oz" }
-			]
-		},
-
-		"g-7-plus": {
-			"label": "7g and up",
-			"unit": "g",
-			"options": [
-				{ "quantity": 7, "label": "7g" },
-				{ "quantity": 14, "label": "14g" },
-				{ "quantity": 28, "label": "1 oz" }
-			]
-		},
-
-		"g-2-minimum": {
-			"label": "2g minimum",
-			"unit": "g",
-			"options": [
-				{ "quantity": 2, "label": "2g" },
-				{ "quantity": 3.5, "label": "3.5g" },
-				{ "quantity": 7, "label": "7g" },
-				{ "quantity": 14, "label": "14g" },
-				{ "quantity": 28, "label": "1 oz" }
-			]
+		"g-bulk": {
+			"label": "2 Zippers",
+			"unit": "zip",
+			"options": [{ "id": "g-bulk-double", "price": 60, "units": 2, "label": "2 for" }]
 		},
 
 		"each-single": {
 			"label": "Single",
 			"unit": "each",
-			"options": [{ "quantity": 1, "label": "Each" }]
+			"options": [{ "id": "each-single-single", "price": 15, "units": 1, "label": "Each" }]
 		},
 
 		"each-pair": {
 			"label": "Single / Pair",
 			"unit": "each",
 			"options": [
-				{ "quantity": 1, "label": "Each" },
-				{ "quantity": 2, "label": "2 for" }
+				{ "id": "each-pair-single", "price": 35, "units": 1, "label": "Each" },
+				{ "id": "each-pair-dos", "price": 60, "units": 2, "label": "2 for" }
+			]
+		},
+
+		"each-five": {
+			"label": "Single / Five",
+			"unit": "each",
+			"options": [
+				{ "id": "each-five-single", "price": 35, "units": 1, "label": "Each" },
+				{ "id": "each-five-cinco", "price": 60, "units": 5, "label": "5 for" }
 			]
 		},
 
 		"each-ten": {
-			"label": "Single / 10",
+			"label": "Single / Ten",
 			"unit": "each",
 			"options": [
-				{ "quantity": 1, "label": "Each" },
-				{ "quantity": 10, "label": "10 for" }
+				{ "id": "each-ten-single", "price": 35, "units": 1, "label": "Each" },
+				{ "id": "each-ten-diez", "price": 275, "units": 10, "label": "10 for" }
 			]
 		},
 
-		"each-pair-ten": {
-			"label": "Single / Pair / 10",
+		"each-pair-cinco-ten": {
+			"label": "1, 2, 5, or 10",
 			"unit": "each",
 			"options": [
-				{ "quantity": 1, "label": "Each" },
-				{ "quantity": 2, "label": "2 for" },
-				{ "quantity": 10, "label": "10 for" }
-			]
-		},
-
-		"cart-pair": {
-			"label": "Single / Pair",
-			"unit": "cart",
-			"options": [
-				{ "quantity": 1, "label": "Each" },
-				{ "quantity": 2, "label": "2 for" }
-			]
-		},
-
-		"cart-pair-ten": {
-			"label": "Single / Pair / 10",
-			"unit": "cart",
-			"options": [
-				{ "quantity": 1, "label": "Each" },
-				{ "quantity": 2, "label": "2 for" },
-				{ "quantity": 10, "label": "10 for" }
+				{ "id": "each-pair-cinco-ten-uno", "price": 35, "units": 1, "label": "Each" },
+				{ "id": "each-pair-cinco-ten-dos", "price": 60, "units": 2, "label": "2 for" },
+				{ "id": "each-pair-cinco-five-cinco", "price": 60, "units": 5, "label": "5 for" },
+				{ "id": "each-pair-cinco-ten-demayo", "price": 275, "units": 10, "label": "10 for" }
 			]
 		}
 	}

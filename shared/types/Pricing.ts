@@ -8,16 +8,12 @@ export interface PriceOption {
   unit?: "g" | "each" | "pack" | "cart";
 }
 
-type PricingPatternOption = {
-  quantity: number;
-  label: string;
-};
+export type PricingSetOption = Omit<PriceOption, "unit">;
 
 export type PricingSet = {
   label: string;
   unit: NonNullable<PriceOption["unit"]>;
-  options: PricingPatternOption[];
-  pricing: PriceOption[];
+  options: PricingSetOption[];
 };
 
 type PricingCategoryConfig = {

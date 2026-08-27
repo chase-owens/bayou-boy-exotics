@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { MeetTimesDisplay } from '$lib/utils/buildMeetTimesCard';
+	import type { MeetTimesDisplay } from '../utils/buildMeetTimesCard';
 	import SectionHeader from './layout/SectionHeader.svelte';
 
 	type MeetTimeProps = {

@@ -1,34 +1,27 @@
-import { Plus, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ImagePlus, LoaderCircle, Plus, Trash2 } from "lucide-react";
 
 import type {
   Listing,
   ListingOption,
   ProductType,
 } from "../../../../shared/types/Listing";
-import type { CategoryId } from "../../../../shared/types/Category";
+import type { Category, CategoryId } from "../../../../shared/types/Category";
 import type {
   PriceOption,
   PricingConfig,
   PricingSet,
 } from "../../../../shared/types/Pricing";
+import { createPricingFromSet } from "../../utils/pricing";
+import { fetchImages, type ImageLibraryResponse } from "../../api";
 
-const createPricingFromSet = (set: PricingSet): PriceOption[] =>
-  set.options.map((option) => ({
-    id: crypto.randomUUID(),
-    label: option.label,
-    price: 0,
-    units: option.quantity,
-    unit: set.unit,
-  }));
-
-const categories: { id: CategoryId; label: string }[] = [
-  { id: "flower", label: "Flower" },
-  { id: "carts", label: "Carts" },
-  { id: "wax", label: "Wax" },
-  { id: "pre-rolls", label: "Pre-Rolls" },
-  { id: "mushrooms", label: "Mushrooms" },
-  { id: "edibles", label: "Edibles" },
-];
+type Props = {
+  categories: Category[];
+  draft: Listing;
+  pricing?: PricingConfig;
+  onChange: (draft: Listing) => void;
+  isCategoryLocked?: boolean;
+};
 
 const productTypes: { value: ProductType; label: string }[] = [
   { value: "indica", label: "Indica" },
@@ -44,36 +37,14 @@ const productTypes: { value: ProductType; label: string }[] = [
   },
 ];
 
-const pricingUnits: {
-  value: NonNullable<PriceOption["unit"]>;
-  label: string;
-}[] = [
-  { value: "g", label: "Grams" },
-  { value: "each", label: "Each" },
-  { value: "pack", label: "Pack" },
-  { value: "cart", label: "Cart" },
-];
-
-type Props = {
-  draft: Listing;
-  pricing?: PricingConfig;
-  onChange: (draft: Listing) => void;
-  isCategoryLocked?: boolean;
-};
-
-const createPriceOption = (categoryId: CategoryId): PriceOption => ({
+const createPriceOption = (
+  unit: NonNullable<PriceOption["unit"]>,
+): PriceOption => ({
   id: crypto.randomUUID(),
   label: "",
   price: 0,
   units: 1,
-  unit:
-    categoryId === "carts"
-      ? "cart"
-      : categoryId === "flower" ||
-          categoryId === "wax" ||
-          categoryId === "mushrooms"
-        ? "g"
-        : "each",
+  unit,
 });
 
 const createListingOption = (): ListingOption => ({
@@ -83,11 +54,42 @@ const createListingOption = (): ListingOption => ({
 });
 
 export default function ProductForm({
+  categories,
   draft,
-  isCategoryLocked = false,
-  onChange,
   pricing,
+  onChange,
+  isCategoryLocked = false,
 }: Props) {
+  const [imageLibrary, setImageLibrary] = useState<ImageLibraryResponse | null>(
+    null,
+  );
+
+  const [showImagePicker, setShowImagePicker] = useState(false);
+
+  const isLoadingImages = showImagePicker && !imageLibrary;
+
+  const category = categories.find(
+    (category) => category.id === draft.categoryId,
+  );
+
+  const [selectedPricingSetId, setSelectedPricingSetId] = useState(
+    category?.defaultPricingSetId ?? "",
+  );
+
+  const availablePricingSets =
+    category?.pricingSetIds
+      ?.map((id) => ({
+        id,
+        set: pricing?.sets[id],
+      }))
+      .filter((item): item is { id: string; set: PricingSet } =>
+        Boolean(item.set),
+      ) ?? [];
+
+  const selectedPricingSet = selectedPricingSetId
+    ? pricing?.sets[selectedPricingSetId]
+    : undefined;
+
   const updateDraft = <K extends keyof Listing>(key: K, value: Listing[K]) => {
     onChange({
       ...draft,
@@ -96,69 +98,96 @@ export default function ProductForm({
   };
 
   const handleCategoryChange = (categoryId: CategoryId) => {
+    const nextCategory = categories.find(
+      (category) => category.id === categoryId,
+    );
+
+    const defaultPricingSetId = nextCategory?.defaultPricingSetId ?? "";
+
+    const defaultPricingSet = defaultPricingSetId
+      ? pricing?.sets[defaultPricingSetId]
+      : undefined;
+
+    setSelectedPricingSetId(defaultPricingSetId);
+
     onChange({
       ...draft,
       categoryId,
+      pricing: defaultPricingSet ? createPricingFromSet(defaultPricingSet) : [],
       type: categoryId === "flower" ? draft.type : undefined,
       options: categoryId === "carts" ? (draft.options ?? []) : undefined,
     });
   };
 
+  const handlePricingSetChange = (pricingSetId: string) => {
+    const pricingSet = pricing?.sets[pricingSetId];
+
+    if (!pricingSet) return;
+
+    setSelectedPricingSetId(pricingSetId);
+    updateDraft("pricing", createPricingFromSet(pricingSet));
+  };
+
   const addPrice = () => {
-    onChange({
-      ...draft,
-      pricing: [...draft.pricing, createPriceOption(draft.categoryId)],
-    });
+    const unit =
+      selectedPricingSet?.unit ??
+      draft.pricing[0]?.unit ??
+      ("each" as NonNullable<PriceOption["unit"]>);
+
+    updateDraft("pricing", [...draft.pricing, createPriceOption(unit)]);
   };
 
   const updatePrice = (priceId: string, updates: Partial<PriceOption>) => {
-    onChange({
-      ...draft,
-      pricing: draft.pricing.map((price) =>
+    updateDraft(
+      "pricing",
+      draft.pricing.map((price) =>
         price.id === priceId ? { ...price, ...updates } : price,
       ),
-    });
+    );
   };
 
   const deletePrice = (priceId: string) => {
-    onChange({
-      ...draft,
-      pricing: draft.pricing.filter((price) => price.id !== priceId),
-    });
-  };
-
-  const handlePricingSetChange = (setId: string) => {
-    if (!pricing) return;
-
-    const set = pricing.sets[setId];
-
-    if (!set) return;
-
-    updateDraft("pricing", createPricingFromSet(set));
+    updateDraft(
+      "pricing",
+      draft.pricing.filter((price) => price.id !== priceId),
+    );
   };
 
   const addOption = () => {
-    onChange({
-      ...draft,
-      options: [...(draft.options ?? []), createListingOption()],
-    });
+    updateDraft("options", [...(draft.options ?? []), createListingOption()]);
   };
 
   const updateOption = (optionId: string, updates: Partial<ListingOption>) => {
-    onChange({
-      ...draft,
-      options: (draft.options ?? []).map((option) =>
+    updateDraft(
+      "options",
+      (draft.options ?? []).map((option) =>
         option.id === optionId ? { ...option, ...updates } : option,
       ),
-    });
+    );
   };
 
   const deleteOption = (optionId: string) => {
-    onChange({
-      ...draft,
-      options: (draft.options ?? []).filter((option) => option.id !== optionId),
-    });
+    updateDraft(
+      "options",
+      (draft.options ?? []).filter((option) => option.id !== optionId),
+    );
   };
+
+  const selectImage = (key: string) => {
+    const imagePath = key.startsWith("/") ? key : `/${key}`;
+
+    updateDraft("images", [imagePath]);
+    setShowImagePicker(false);
+  };
+
+  const removeImage = () => {
+    updateDraft("images", []);
+  };
+  useEffect(() => {
+    if (!showImagePicker || imageLibrary) return;
+
+    void fetchImages().then(setImageLibrary);
+  }, [showImagePicker, imageLibrary]);
 
   return (
     <div className="mt-6 space-y-6 border-t border-white/10 pt-6">
@@ -259,57 +288,107 @@ export default function ProductForm({
       )}
 
       <div>
-        <p className="admin-label text-white">Images</p>
-
-        <p className="mt-2 text-sm text-white/60">Image picker coming next.</p>
-      </div>
-
-      <div>
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="admin-label text-white">Pricing</p>
-
+            <p className="admin-label text-white">Image</p>
             <p className="mt-1 text-xs text-white/60">
-              Add each available size or quantity.
+              Select one image from the image library.
             </p>
           </div>
 
           <button
             type="button"
-            onClick={addPrice}
+            onClick={() => setShowImagePicker((current) => !current)}
             className="flex items-center gap-2 text-sm font-semibold text-accent"
           >
-            <Plus className="size-4" />
-            Add Price
+            <ImagePlus className="size-4" />
+            {draft.images?.length ? "Change Image" : "Add Image"}
           </button>
         </div>
 
+        {draft.images?.[0] && (
+          <div className="mt-4 flex items-center gap-4">
+            <img
+              src={draft.images[0]}
+              alt=""
+              className="size-24 rounded-md object-cover"
+            />
+
+            <button
+              type="button"
+              onClick={removeImage}
+              className="flex items-center gap-2 text-sm font-semibold text-highlight"
+            >
+              <Trash2 className="size-4" />
+              Remove
+            </button>
+          </div>
+        )}
+
+        {showImagePicker && (
+          <div className="mt-4 border-t border-white/10 pt-4">
+            {isLoadingImages ? (
+              <div className="flex items-center gap-2 text-sm text-white/60">
+                <LoaderCircle className="size-4 animate-spin" />
+                Loading images...
+              </div>
+            ) : (
+              <div className="grid max-h-96 grid-cols-2 gap-3 overflow-y-auto sm:grid-cols-3 md:grid-cols-4">
+                {(imageLibrary?.images ?? []).map((image) => (
+                  <button
+                    key={image.key}
+                    type="button"
+                    onClick={() => selectImage(image.key)}
+                    className="overflow-hidden rounded-md border border-white/10 transition hover:border-accent"
+                  >
+                    <img
+                      src={image.url}
+                      alt={image.name}
+                      className="aspect-square w-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div>
         <div>
-          <label htmlFor="pricing-pattern" className="admin-label text-white">
-            Pricing Pattern
-          </label>
-
-          <select
-            id="pricing-pattern"
-            defaultValue=""
-            onChange={(event) => handlePricingSetChange(event.target.value)}
-            className="admin-select mt-2"
-          >
-            <option value="">Select pricing pattern</option>
-
-            {draft.pricing.map((setId) => (
-              <option key={setId.id} value={setId.id}>
-                {draft.name}
-              </option>
-            ))}
-          </select>
+          <p className="admin-label text-white">Pricing</p>
+          <p className="mt-1 text-xs text-white/60">
+            Select a pricing pattern or adjust the rows below.
+          </p>
         </div>
+
+        {availablePricingSets.length > 0 && (
+          <div className="mt-4">
+            <label htmlFor="pricing-pattern" className="admin-label text-white">
+              Pricing Pattern
+            </label>
+
+            <select
+              id="pricing-pattern"
+              value={selectedPricingSetId}
+              onChange={(event) => handlePricingSetChange(event.target.value)}
+              className="admin-select mt-2"
+            >
+              {availablePricingSets.map(({ id, set }) => (
+                <option key={id} value={id}>
+                  {set.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         {draft.pricing.length > 0 && (
           <div className="mt-4 space-y-3">
             {draft.pricing.map((price) => (
               <div
                 key={price.id}
-                className="grid gap-3 border-t border-white/10 pt-3 sm:grid-cols-[1.2fr_0.8fr_0.8fr_1fr_auto]"
+                className="grid gap-3 border-t border-white/10 pt-3 sm:grid-cols-[1.2fr_0.8fr_0.8fr_auto]"
               >
                 <div>
                   <label className="admin-label text-white">Label</label>
@@ -320,9 +399,6 @@ export default function ProductForm({
                       updatePrice(price.id, {
                         label: event.target.value,
                       })
-                    }
-                    placeholder={
-                      draft.categoryId === "carts" ? "2 for" : "3.5g"
                     }
                     className="admin-input mt-2"
                   />
@@ -362,29 +438,6 @@ export default function ProductForm({
                   />
                 </div>
 
-                <div>
-                  <label className="admin-label text-white">Unit</label>
-
-                  <select
-                    value={price.unit ?? ""}
-                    onChange={(event) =>
-                      updatePrice(price.id, {
-                        unit: (event.target.value ||
-                          undefined) as PriceOption["unit"],
-                      })
-                    }
-                    className="admin-select mt-2"
-                  >
-                    <option value="">Select unit</option>
-
-                    {pricingUnits.map((unit) => (
-                      <option key={unit.value} value={unit.value}>
-                        {unit.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
                 <button
                   type="button"
                   onClick={() => deletePrice(price.id)}
@@ -397,6 +450,15 @@ export default function ProductForm({
             ))}
           </div>
         )}
+
+        <button
+          type="button"
+          onClick={addPrice}
+          className="mt-4 flex items-center gap-2 text-sm font-semibold text-accent"
+        >
+          <Plus className="size-4" />
+          Add Price
+        </button>
       </div>
 
       {draft.categoryId === "carts" && (
@@ -404,7 +466,6 @@ export default function ProductForm({
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="admin-label text-white">Flavors</p>
-
               <p className="mt-1 text-xs text-white/60">
                 Add each available cart flavor.
               </p>

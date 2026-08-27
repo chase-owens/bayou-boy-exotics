@@ -1,5 +1,6 @@
 export { fetchImages } from "./fetchImages";
 export { uploadImages } from "./uploadImages";
+export { saveContent } from "./saveContent";
 
 export type {
   ImageAsset,

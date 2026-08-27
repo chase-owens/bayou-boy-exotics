@@ -204,7 +204,6 @@ export class InfraStack extends cdk.Stack {
               origins.S3BucketOrigin.withOriginAccessControl(contentBucket),
             viewerProtocolPolicy:
               cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-
             cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
           },
           "images/*": {

@@ -1,23 +1,61 @@
 {
 	"lastUpdated": "2026-06-28T12:00:00-05:00",
 	"categories": [
-		{ "id": "flower", "label": "Flower", "active": true },
-		{ "id": "carts", "label": "Carts", "active": true },
-		{ "id": "wax", "label": "Wax", "active": true },
-		{ "id": "pre-rolls", "label": "Pre-Rolls", "active": true },
-		{ "id": "mushrooms", "label": "Mushrooms", "active": true },
-		{ "id": "edibles", "label": "Edibles", "active": true }
+		{
+			"id": "flower",
+			"label": "Flower",
+			"active": true,
+			"defaultPricingSetId": "g-standard",
+			"pricingSetIds": ["g-standard", "g-premium", "g-bulk"]
+		},
+		{
+			"id": "carts",
+			"label": "Carts",
+			"active": true,
+			"defaultPricingSetId": "each-pair-cinco-ten",
+			"pricingSetIds": ["each-single", "each-pair", "each-five"]
+		},
+		{
+			"id": "wax",
+			"label": "Wax",
+			"active": true,
+			"defaultPricingSetId": "g-standard",
+			"pricingSetIds": ["g-standard", "g-premium", "g-bulk"]
+		},
+		{
+			"id": "pre-rolls",
+			"label": "Pre-Rolls",
+			"active": true,
+			"defaultPricingSetId": "each-pair-cinco-ten",
+			"pricingSetIds": ["each-single", "each-pair", "each-five"]
+		},
+		{
+			"id": "mushrooms",
+			"label": "Mushrooms",
+			"active": true,
+			"defaultPricingSetId": "g-standard",
+			"pricingSetIds": ["g-standard", "g-premium", "g-bulk"]
+		},
+		{
+			"id": "edibles",
+			"label": "Edibles",
+			"active": true,
+			"defaultPricingSetId": "each-pair-cinco-ten",
+			"pricingSetIds": ["each-single", "each-pair", "each-five"]
+		}
 	],
 	"listings": [
 		{
-			"id": "the-funk",
+			"id": "glue-pop",
 			"categoryId": "flower",
-			"name": "The Funk",
+			"name": "Glue Pop",
 			"description": "The Rolls Royce of greenery. This is the most in-deman stand there is - only for conisourers. ",
 			"brand": "Dubbz Gardenz",
 			"type": "indica",
 			"tags": ["Fresh Drop", "Super Steal"],
-			"images": ["/images/funk.png"],
+			"images": [
+				"/images/07aee984-434e-445e-ba9d-70c881c89bf0-84B0EA0E-B1C6-492F-8B23-88BE9F21F692.jpeg"
+			],
 			"pricing": [
 				{ "id": "2g", "label": "2g", "price": 15, "units": 2, "unit": "g" },
 				{ "id": "3g", "label": "3g", "price": 25, "units": 3, "unit": "g" },
@@ -31,13 +69,37 @@
 			"featured": true
 		},
 		{
-			"id": "gamma-runtz",
+			"id": "purple-lemons",
 			"categoryId": "flower",
 			"name": "Gamma Runtz",
-			"brand": "Hilltop Farms",
+			"brand": "Jungle Boys",
 			"type": "sativa",
-			"tags": ["Fresh Drop"],
-			"images": ["/images/gamma.png"],
+			"tags": ["Purple Lemons"],
+			"images": [
+				"/images/1550a8b7-666d-4f6a-9e30-a37dbf0a78a6-5494D713-EBCD-4D3E-A612-9A55F958976D.jpeg"
+			],
+			"pricing": [
+				{ "id": "2g", "label": "2g", "price": 15, "units": 2, "unit": "g" },
+				{ "id": "3g", "label": "3g", "price": 25, "units": 3, "unit": "g" },
+				{ "id": "3-5g", "label": "3.5g", "price": 30, "units": 3.5, "unit": "g" },
+				{ "id": "7g", "label": "7g", "price": 55, "units": 7, "unit": "g" },
+				{ "id": "14g", "label": "14g", "price": 100, "units": 14, "unit": "g" },
+				{ "id": "28g", "label": "28g", "price": 190, "units": 28, "unit": "g" }
+			],
+			"inventory": { "tracked": false, "soldOut": false },
+			"active": true,
+			"featured": false
+		},
+		{
+			"id": "candy-gas",
+			"categoryId": "flower",
+			"name": "Candy Gas",
+			"brand": "Jungle Boys",
+			"type": "sativa",
+			"tags": ["Candy Gas"],
+			"images": [
+				"/images/7b151a1c-eece-471b-9770-a73f6aa15a32-6E104155-5782-4E75-8B3D-5D8CFD534255.jpeg"
+			],
 			"pricing": [
 				{ "id": "2g", "label": "2g", "price": 15, "units": 2, "unit": "g" },
 				{ "id": "3g", "label": "3g", "price": 25, "units": 3, "unit": "g" },

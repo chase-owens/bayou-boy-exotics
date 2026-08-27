@@ -15,13 +15,14 @@
 	let selectedMeetTime = $state<string | null>(null);
 
 	const selectedMeet = $derived(
-		meetTimesDisplay?.meets.find((time: string) => time === selectedMeetTime) ?? null
+		meetTimesDisplay?.meets.find((meet) => meet.time === selectedMeetTime) ?? null
 	);
 
 	const canContinue = $derived(cart.items.length > 0 && Boolean(selectedMeet));
 
 	const handleSubmit = () => {
 		if (!selectedMeet || !meetTimesDisplay || !canContinue) return;
+		console.log('🚀 ~  ~ submitting:', selectedMeet);
 
 		const payload = {
 			items: cart.items,
@@ -49,13 +50,11 @@
 				<CartItem {item} />
 			{/each}
 		</div>
-
 		<MeetTimesCard
 			{meetTimesDisplay}
 			{selectedMeetTime}
 			onChange={(meetTime: string | null) => (selectedMeetTime = meetTime)}
 		/>
-
 		<CartMeetSummary {selectedMeetTime} onSubmit={handleSubmit} total={cart.total} />
 	{:else}
 		<section class="rounded-vintage border border-border bg-surface p-6 text-center shadow-soft">

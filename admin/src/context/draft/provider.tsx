@@ -27,9 +27,9 @@ import {
   type PublishedContent,
 } from "./context";
 
-import { fetchAuthSession } from "aws-amplify/auth";
 import type { Listing } from "../../../../shared/types/Listing";
 import type { PricingConfig } from "../../../../shared/types/Pricing";
+import { saveContent } from "../../api";
 
 const contentPaths: Record<DraftFileKey, string> = {
   availability: "/data/availability.json",
@@ -38,8 +38,6 @@ const contentPaths: Record<DraftFileKey, string> = {
   pricing: "/data/pricing.json",
   root: "/data/root.json",
 };
-
-const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchJson = async <T,>(path: string): Promise<T> => {
   const response = await fetch(path);
@@ -156,31 +154,13 @@ export function DraftProvider({ children }: Props) {
     setError(null);
 
     try {
-      const session = await fetchAuthSession();
-      const token = session.tokens?.idToken?.toString();
-
-      if (!token) {
-        throw new Error("Admin authentication is required");
-      }
-
       await Promise.all(
         filesToPublish.map(async (file) => {
           const draft = drafts[file];
 
           if (!draft) return;
 
-          const response = await fetch(`${API_URL}admin/content/${file}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(draft),
-          });
-
-          if (!response.ok) {
-            throw new Error(`Failed to publish ${file}`);
-          }
+          await saveContent(file, draft);
         }),
       );
 
@@ -346,15 +326,12 @@ export function DraftProvider({ children }: Props) {
     },
     [updateAvailabilityDraft],
   );
+
   const addListing = useCallback(
     (listing: Listing) => {
       updateMenuDraft((current) => ({
         ...current,
         listings: [...current.listings, listing],
-        currentMenu: {
-          ...current.currentMenu,
-          listingIds: [...current.currentMenu.listingIds, listing.id],
-        },
       }));
     },
     [updateMenuDraft],
@@ -364,8 +341,8 @@ export function DraftProvider({ children }: Props) {
     (listing: Listing) => {
       updateMenuDraft((current) => ({
         ...current,
-        listings: current.listings.map((item) =>
-          item.id === listing.id ? listing : item,
+        listings: current.listings.map((currentListing) =>
+          currentListing.id === listing.id ? listing : currentListing,
         ),
       }));
     },
@@ -379,12 +356,6 @@ export function DraftProvider({ children }: Props) {
         listings: current.listings.filter(
           (listing) => listing.id !== listingId,
         ),
-        currentMenu: {
-          ...current.currentMenu,
-          listingIds: current.currentMenu.listingIds.filter(
-            (id) => id !== listingId,
-          ),
-        },
       }));
     },
     [updateMenuDraft],

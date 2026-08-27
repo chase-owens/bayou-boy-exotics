@@ -4,12 +4,7 @@ import { ChevronDown, ChevronUp, LoaderCircle, Search } from "lucide-react";
 import AccessUserRow from "./AccessUserRow";
 import StatusBanner from "./StatusBanner";
 
-import type { AccessAction, AccessRequest } from "../../pages/Users";
-
-type Banner = {
-  status: "success" | "error" | "warning" | "info";
-  message: string;
-};
+import type { AccessAction, AccessRequest, Banner } from "../../pages/Users";
 
 type Props = {
   title: string;
