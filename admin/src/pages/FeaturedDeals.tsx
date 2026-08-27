@@ -28,6 +28,20 @@ type FeatureDraft = {
   priceOptionId: string;
 };
 
+const toStandaloneFeature = (feature: Feature) => {
+  const next = { ...feature } as Feature & {
+    cartItem?: unknown;
+    listingId?: string;
+    price?: number;
+  };
+
+  delete next.cartItem;
+  delete next.listingId;
+  delete next.price;
+
+  return next as Feature;
+};
+
 const createFeatureDraft = (): FeatureDraft => ({
   enabled: true,
   eyebrow: "Super Steal",
@@ -163,19 +177,7 @@ export default function FeaturedDeals() {
     let feature: Feature;
 
     if (!featureDraft.listingId) {
-      // Explicitly standalone — remove any old product/cart relationship.
-      const {
-        cartItem: _cartItem,
-        listingId: _listingId,
-        price: _price,
-        ...standaloneFeature
-      } = baseFeature as Feature & {
-        cartItem?: unknown;
-        listingId?: string;
-        price?: number;
-      };
-
-      feature = standaloneFeature as Feature;
+      feature = toStandaloneFeature(baseFeature as Feature);
     } else if (selectedListing && selectedPriceOption) {
       // Current product selected — rebuild cart data from the product.
       feature = {
