@@ -1,0 +1,558 @@
+import { useEffect, useState } from "react";
+import { ImagePlus, LoaderCircle, Plus, Trash2 } from "lucide-react";
+
+import type {
+  Listing,
+  ListingOption,
+  ProductType,
+} from "../../../../shared/types/Listing";
+import type { Category, CategoryId } from "../../../../shared/types/Category";
+import type {
+  PriceOption,
+  PricingConfig,
+  PricingSet,
+} from "../../../../shared/types/Pricing";
+import { createPricingFromSet } from "../../utils/pricing";
+import { fetchImages, type ImageLibraryResponse } from "../../api";
+
+type Props = {
+  categories: Category[];
+  draft: Listing;
+  pricing?: PricingConfig;
+  onChange: (draft: Listing) => void;
+  isCategoryLocked?: boolean;
+};
+
+const productTypes: { value: ProductType; label: string }[] = [
+  { value: "indica", label: "Indica" },
+  { value: "sativa", label: "Sativa" },
+  { value: "hybrid", label: "Hybrid" },
+  {
+    value: "indica-dominant-hybrid",
+    label: "Indica-Dominant Hybrid",
+  },
+  {
+    value: "sativa-dominant-hybrid",
+    label: "Sativa-Dominant Hybrid",
+  },
+];
+
+const createPriceOption = (
+  unit: NonNullable<PriceOption["unit"]>,
+): PriceOption => ({
+  id: crypto.randomUUID(),
+  label: "",
+  price: 0,
+  units: 1,
+  unit,
+});
+
+const createListingOption = (): ListingOption => ({
+  id: crypto.randomUUID(),
+  label: "",
+  active: true,
+});
+
+export default function ProductForm({
+  categories,
+  draft,
+  pricing,
+  onChange,
+  isCategoryLocked = false,
+}: Props) {
+  const [imageLibrary, setImageLibrary] = useState<ImageLibraryResponse | null>(
+    null,
+  );
+
+  const [showImagePicker, setShowImagePicker] = useState(false);
+
+  const isLoadingImages = showImagePicker && !imageLibrary;
+
+  const category = categories.find(
+    (category) => category.id === draft.categoryId,
+  );
+
+  const [selectedPricingSetId, setSelectedPricingSetId] = useState(
+    category?.defaultPricingSetId ?? "",
+  );
+
+  const availablePricingSets =
+    category?.pricingSetIds
+      ?.map((id) => ({
+        id,
+        set: pricing?.sets[id],
+      }))
+      .filter((item): item is { id: string; set: PricingSet } =>
+        Boolean(item.set),
+      ) ?? [];
+
+  const selectedPricingSet = selectedPricingSetId
+    ? pricing?.sets[selectedPricingSetId]
+    : undefined;
+
+  const updateDraft = <K extends keyof Listing>(key: K, value: Listing[K]) => {
+    onChange({
+      ...draft,
+      [key]: value,
+    });
+  };
+
+  const handleCategoryChange = (categoryId: CategoryId) => {
+    const nextCategory = categories.find(
+      (category) => category.id === categoryId,
+    );
+
+    const defaultPricingSetId = nextCategory?.defaultPricingSetId ?? "";
+
+    const defaultPricingSet = defaultPricingSetId
+      ? pricing?.sets[defaultPricingSetId]
+      : undefined;
+
+    setSelectedPricingSetId(defaultPricingSetId);
+
+    onChange({
+      ...draft,
+      categoryId,
+      pricing: defaultPricingSet ? createPricingFromSet(defaultPricingSet) : [],
+      type: categoryId === "flower" ? draft.type : undefined,
+      options: categoryId === "carts" ? (draft.options ?? []) : undefined,
+    });
+  };
+
+  const handlePricingSetChange = (pricingSetId: string) => {
+    const pricingSet = pricing?.sets[pricingSetId];
+
+    if (!pricingSet) return;
+
+    setSelectedPricingSetId(pricingSetId);
+    updateDraft("pricing", createPricingFromSet(pricingSet));
+  };
+
+  const addPrice = () => {
+    const unit =
+      selectedPricingSet?.unit ??
+      draft.pricing[0]?.unit ??
+      ("each" as NonNullable<PriceOption["unit"]>);
+
+    updateDraft("pricing", [...draft.pricing, createPriceOption(unit)]);
+  };
+
+  const updatePrice = (priceId: string, updates: Partial<PriceOption>) => {
+    updateDraft(
+      "pricing",
+      draft.pricing.map((price) =>
+        price.id === priceId ? { ...price, ...updates } : price,
+      ),
+    );
+  };
+
+  const deletePrice = (priceId: string) => {
+    updateDraft(
+      "pricing",
+      draft.pricing.filter((price) => price.id !== priceId),
+    );
+  };
+
+  const addOption = () => {
+    updateDraft("options", [...(draft.options ?? []), createListingOption()]);
+  };
+
+  const updateOption = (optionId: string, updates: Partial<ListingOption>) => {
+    updateDraft(
+      "options",
+      (draft.options ?? []).map((option) =>
+        option.id === optionId ? { ...option, ...updates } : option,
+      ),
+    );
+  };
+
+  const deleteOption = (optionId: string) => {
+    updateDraft(
+      "options",
+      (draft.options ?? []).filter((option) => option.id !== optionId),
+    );
+  };
+
+  const selectImage = (key: string) => {
+    const imagePath = key.startsWith("/") ? key : `/${key}`;
+
+    updateDraft("images", [imagePath]);
+    setShowImagePicker(false);
+  };
+
+  const removeImage = () => {
+    updateDraft("images", []);
+  };
+  useEffect(() => {
+    if (!showImagePicker || imageLibrary) return;
+
+    void fetchImages().then(setImageLibrary);
+  }, [showImagePicker, imageLibrary]);
+
+  return (
+    <div className="mt-6 space-y-6 border-t border-white/10 pt-6">
+      <p className="admin-eyebrow">Product Details</p>
+
+      <div>
+        <label htmlFor="product-category" className="admin-label text-white">
+          Category
+        </label>
+
+        <select
+          id="product-category"
+          value={draft.categoryId}
+          disabled={isCategoryLocked}
+          onChange={(event) =>
+            handleCategoryChange(event.target.value as CategoryId)
+          }
+          className="admin-select mt-2 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <div>
+          <label htmlFor="product-name" className="admin-label text-white">
+            Name
+          </label>
+
+          <input
+            id="product-name"
+            value={draft.name}
+            onChange={(event) => updateDraft("name", event.target.value)}
+            placeholder="Product name"
+            className="admin-input mt-2"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="product-brand" className="admin-label text-white">
+            Brand
+          </label>
+
+          <input
+            id="product-brand"
+            value={draft.brand ?? ""}
+            onChange={(event) => updateDraft("brand", event.target.value)}
+            placeholder="Brand"
+            className="admin-input mt-2"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="product-description" className="admin-label text-white">
+          Description
+        </label>
+
+        <textarea
+          id="product-description"
+          value={draft.description ?? ""}
+          onChange={(event) => updateDraft("description", event.target.value)}
+          placeholder="Product description..."
+          className="admin-input mt-2 min-h-24 resize-y"
+        />
+      </div>
+
+      {draft.categoryId === "flower" && (
+        <div>
+          <label htmlFor="product-type" className="admin-label text-white">
+            Type
+          </label>
+
+          <select
+            id="product-type"
+            value={draft.type ?? ""}
+            onChange={(event) =>
+              updateDraft(
+                "type",
+                (event.target.value || undefined) as ProductType | undefined,
+              )
+            }
+            className="admin-select mt-2"
+          >
+            <option value="">Select type</option>
+
+            {productTypes.map((type) => (
+              <option key={type.value} value={type.value}>
+                {type.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      <div>
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <p className="admin-label text-white">Image</p>
+            <p className="mt-1 text-xs text-white/60">
+              Select one image from the image library.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setShowImagePicker((current) => !current)}
+            className="flex items-center gap-2 text-sm font-semibold text-accent"
+          >
+            <ImagePlus className="size-4" />
+            {draft.images?.length ? "Change Image" : "Add Image"}
+          </button>
+        </div>
+
+        {draft.images?.[0] && (
+          <div className="mt-4 flex items-center gap-4">
+            <img
+              src={draft.images[0]}
+              alt=""
+              className="size-24 rounded-md object-cover"
+            />
+
+            <button
+              type="button"
+              onClick={removeImage}
+              className="flex items-center gap-2 text-sm font-semibold text-highlight"
+            >
+              <Trash2 className="size-4" />
+              Remove
+            </button>
+          </div>
+        )}
+
+        {showImagePicker && (
+          <div className="mt-4 border-t border-white/10 pt-4">
+            {isLoadingImages ? (
+              <div className="flex items-center gap-2 text-sm text-white/60">
+                <LoaderCircle className="size-4 animate-spin" />
+                Loading images...
+              </div>
+            ) : (
+              <div className="grid max-h-96 grid-cols-2 gap-3 overflow-y-auto sm:grid-cols-3 md:grid-cols-4">
+                {(imageLibrary?.images ?? []).map((image) => (
+                  <button
+                    key={image.key}
+                    type="button"
+                    onClick={() => selectImage(image.key)}
+                    className="overflow-hidden rounded-md border border-white/10 transition hover:border-accent"
+                  >
+                    <img
+                      src={image.url}
+                      alt={image.name}
+                      className="aspect-square w-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div>
+        <div>
+          <p className="admin-label text-white">Pricing</p>
+          <p className="mt-1 text-xs text-white/60">
+            Select a pricing pattern or adjust the rows below.
+          </p>
+        </div>
+
+        {availablePricingSets.length > 0 && (
+          <div className="mt-4">
+            <label htmlFor="pricing-pattern" className="admin-label text-white">
+              Pricing Pattern
+            </label>
+
+            <select
+              id="pricing-pattern"
+              value={selectedPricingSetId}
+              onChange={(event) => handlePricingSetChange(event.target.value)}
+              className="admin-select mt-2"
+            >
+              {availablePricingSets.map(({ id, set }) => (
+                <option key={id} value={id}>
+                  {set.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {draft.pricing.length > 0 && (
+          <div className="mt-4 space-y-3">
+            {draft.pricing.map((price) => (
+              <div
+                key={price.id}
+                className="grid gap-3 border-t border-white/10 pt-3 sm:grid-cols-[1.2fr_0.8fr_0.8fr_auto]"
+              >
+                <div>
+                  <label className="admin-label text-white">Label</label>
+
+                  <input
+                    value={price.label}
+                    onChange={(event) =>
+                      updatePrice(price.id, {
+                        label: event.target.value,
+                      })
+                    }
+                    className="admin-input mt-2"
+                  />
+                </div>
+
+                <div>
+                  <label className="admin-label text-white">Price</label>
+
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={price.price}
+                    onChange={(event) =>
+                      updatePrice(price.id, {
+                        price: Number(event.target.value),
+                      })
+                    }
+                    className="admin-input mt-2"
+                  />
+                </div>
+
+                <div>
+                  <label className="admin-label text-white">Units</label>
+
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.1"
+                    value={price.units}
+                    onChange={(event) =>
+                      updatePrice(price.id, {
+                        units: Number(event.target.value),
+                      })
+                    }
+                    className="admin-input mt-2"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => deletePrice(price.id)}
+                  aria-label="Delete price"
+                  className="mt-7 flex size-10 items-center justify-center text-highlight"
+                >
+                  <Trash2 className="size-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={addPrice}
+          className="mt-4 flex items-center gap-2 text-sm font-semibold text-accent"
+        >
+          <Plus className="size-4" />
+          Add Price
+        </button>
+      </div>
+
+      {draft.categoryId === "carts" && (
+        <div>
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="admin-label text-white">Flavors</p>
+              <p className="mt-1 text-xs text-white/60">
+                Add each available cart flavor.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={addOption}
+              className="flex items-center gap-2 text-sm font-semibold text-accent"
+            >
+              <Plus className="size-4" />
+              Add Flavor
+            </button>
+          </div>
+
+          {(draft.options ?? []).length > 0 && (
+            <div className="mt-4 divide-y divide-white/10">
+              {(draft.options ?? []).map((option) => (
+                <div
+                  key={option.id}
+                  className="flex items-end gap-3 py-3 first:pt-0"
+                >
+                  <div className="min-w-0 flex-1">
+                    <label className="admin-label text-white">Flavor</label>
+
+                    <input
+                      value={option.label}
+                      onChange={(event) =>
+                        updateOption(option.id, {
+                          label: event.target.value,
+                        })
+                      }
+                      placeholder="Blueberry Jam"
+                      className="admin-input mt-2"
+                    />
+                  </div>
+
+                  <label className="mb-2 flex shrink-0 cursor-pointer items-center gap-2 text-sm font-semibold text-white">
+                    <input
+                      type="checkbox"
+                      checked={option.active}
+                      onChange={(event) =>
+                        updateOption(option.id, {
+                          active: event.target.checked,
+                        })
+                      }
+                      className="size-4 accent-accent"
+                    />
+                    Active
+                  </label>
+
+                  <button
+                    type="button"
+                    onClick={() => deleteOption(option.id)}
+                    aria-label={`Delete ${option.label || "flavor"}`}
+                    className="mb-1 flex size-10 items-center justify-center text-highlight"
+                  >
+                    <Trash2 className="size-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-6 border-y border-white/10 py-4">
+        <label className="flex cursor-pointer items-center gap-2 text-sm font-semibold text-white">
+          <input
+            type="checkbox"
+            checked={draft.active}
+            onChange={(event) => updateDraft("active", event.target.checked)}
+            className="size-4 accent-accent"
+          />
+          Active
+        </label>
+
+        <label className="flex cursor-pointer items-center gap-2 text-sm font-semibold text-white">
+          <input
+            type="checkbox"
+            checked={draft.featured}
+            onChange={(event) => updateDraft("featured", event.target.checked)}
+            className="size-4 accent-accent"
+          />
+          Featured
+        </label>
+      </div>
+    </div>
+  );
+}

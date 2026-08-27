@@ -30,7 +30,6 @@ export interface Listing {
 
   active: boolean;
   featured: boolean;
-  sortOrder: number;
 }
 
 export type ProductType =

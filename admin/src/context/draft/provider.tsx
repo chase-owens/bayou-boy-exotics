@@ -27,16 +27,17 @@ import {
   type PublishedContent,
 } from "./context";
 
-import { fetchAuthSession } from "aws-amplify/auth";
+import type { Listing } from "../../../../shared/types/Listing";
+import type { PricingConfig } from "../../../../shared/types/Pricing";
+import { saveContent } from "../../api";
 
 const contentPaths: Record<DraftFileKey, string> = {
   availability: "/data/availability.json",
   home: "/data/home.json",
   menu: "/data/menu.json",
+  pricing: "/data/pricing.json",
   root: "/data/root.json",
 };
-
-const API_URL = import.meta.env.VITE_API_URL;
 
 const fetchJson = async <T,>(path: string): Promise<T> => {
   const response = await fetch(path);
@@ -49,10 +50,11 @@ const fetchJson = async <T,>(path: string): Promise<T> => {
 };
 
 const fetchPublishedContent = async (): Promise<ContentFileMap> => {
-  const [availability, home, menu, root] = await Promise.all([
+  const [availability, home, menu, pricing, root] = await Promise.all([
     fetchJson<AvailabilityContent>(contentPaths.availability),
     fetchJson<HomeContent>(contentPaths.home),
     fetchJson<MenuContent>(contentPaths.menu),
+    fetchJson<PricingConfig>(contentPaths.pricing),
     fetchJson<RootContent>(contentPaths.root),
   ]);
 
@@ -60,6 +62,7 @@ const fetchPublishedContent = async (): Promise<ContentFileMap> => {
     availability,
     home,
     menu,
+    pricing,
     root,
   };
 };
@@ -127,6 +130,7 @@ export function DraftProvider({ children }: Props) {
     }
   }, []);
 
+  const pricing = drafts.pricing ?? published.pricing;
   const availability = drafts.availability ?? published.availability;
   const home = drafts.home ?? published.home;
   const menu = drafts.menu ?? published.menu;
@@ -150,31 +154,13 @@ export function DraftProvider({ children }: Props) {
     setError(null);
 
     try {
-      const session = await fetchAuthSession();
-      const token = session.tokens?.idToken?.toString();
-
-      if (!token) {
-        throw new Error("Admin authentication is required");
-      }
-
       await Promise.all(
         filesToPublish.map(async (file) => {
           const draft = drafts[file];
 
           if (!draft) return;
 
-          const response = await fetch(`${API_URL}admin/content/${file}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(draft),
-          });
-
-          if (!response.ok) {
-            throw new Error(`Failed to publish ${file}`);
-          }
+          await saveContent(file, draft);
         }),
       );
 
@@ -341,6 +327,40 @@ export function DraftProvider({ children }: Props) {
     [updateAvailabilityDraft],
   );
 
+  const addListing = useCallback(
+    (listing: Listing) => {
+      updateMenuDraft((current) => ({
+        ...current,
+        listings: [...current.listings, listing],
+      }));
+    },
+    [updateMenuDraft],
+  );
+
+  const editListing = useCallback(
+    (listing: Listing) => {
+      updateMenuDraft((current) => ({
+        ...current,
+        listings: current.listings.map((currentListing) =>
+          currentListing.id === listing.id ? listing : currentListing,
+        ),
+      }));
+    },
+    [updateMenuDraft],
+  );
+
+  const deleteListing = useCallback(
+    (listingId: string) => {
+      updateMenuDraft((current) => ({
+        ...current,
+        listings: current.listings.filter(
+          (listing) => listing.id !== listingId,
+        ),
+      }));
+    },
+    [updateMenuDraft],
+  );
+
   const addMeetCancellation = useCallback(
     (cancellation: MeetCancellation) => {
       updateAvailabilityDraft((current) => ({
@@ -430,6 +450,7 @@ export function DraftProvider({ children }: Props) {
       availability,
       home,
       menu,
+      pricing,
       root,
 
       isLoading,
@@ -459,6 +480,10 @@ export function DraftProvider({ children }: Props) {
       editClosure,
       deleteClosure,
 
+      addListing,
+      editListing,
+      deleteListing,
+
       addMeetCancellation,
       editMeetCancellation,
       deleteMeetCancellation,
@@ -475,6 +500,7 @@ export function DraftProvider({ children }: Props) {
       availability,
       home,
       menu,
+      pricing,
       root,
       isLoading,
       error,
@@ -495,6 +521,9 @@ export function DraftProvider({ children }: Props) {
       addClosure,
       editClosure,
       deleteClosure,
+      addListing,
+      editListing,
+      deleteListing,
       addMeetCancellation,
       editMeetCancellation,
       deleteMeetCancellation,

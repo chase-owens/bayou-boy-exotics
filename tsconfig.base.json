@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "NodeNext",
+    "strict": true,
+    "moduleResolution": "NodeNext",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "paths": {}
+  },
+  "scripts": {
+    "dev": "tsx apps/myapp/src/index.ts",
+    "build": "tsc -p apps/myapp/tsconfig.json",
+    "typecheck": "tsc -p apps/myapp/tsconfig.json --noEmit"
+  }
+}

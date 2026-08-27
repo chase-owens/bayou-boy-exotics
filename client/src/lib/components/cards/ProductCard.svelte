@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Listing } from '../../../../../shared/types/Listing';
-	import Arrow from '$lib/assets/icons/Arrow.svelte';
+	import Arrow from '../../assets/icons/Arrow.svelte';
 	import { resolve } from '$app/paths';
 	const { listing }: { listing: Listing } = $props();
 

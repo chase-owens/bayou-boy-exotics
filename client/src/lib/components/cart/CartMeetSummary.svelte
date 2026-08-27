@@ -1,5 +1,6 @@
 <script lang="ts">
-	import Arrow from '$lib/assets/icons/Arrow.svelte';
+	import Arrow from '../../assets/icons/Arrow.svelte';
+
 	type CartMeetSummaryProps = {
 		selectedMeetTime: string | null;
 		total: number;

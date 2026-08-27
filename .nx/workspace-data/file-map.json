@@ -6,109 +6,31 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": "nx.json",
-        "hash": "17720574272691467707"
-      },
-      {
-        "file": ".gitignore",
-        "hash": "4321818116011872246"
-      },
-      {
-        "file": "package-lock.json",
-        "hash": "10254120617943448900"
-      },
-      {
         "file": "package.json",
-        "hash": "5661605378981122373"
+        "hash": "10585099851544121218"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "6782716216147038930"
       },
       {
         "file": "README.md",
         "hash": "14576388324799318000"
+      },
+      {
+        "file": "nx.json",
+        "hash": "17720574272691467707"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "2296415940923846472"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "2762752470638050055"
       }
     ],
     "projectFileMap": {
-      "@bayou/lambdas": [
-        {
-          "file": "lambdas/admin/content/availability/index.ts",
-          "hash": "15907986371969899527"
-        },
-        {
-          "file": "lambdas/admin/content/home/index.ts",
-          "hash": "14165291605821119112"
-        },
-        {
-          "file": "lambdas/admin/content/menu/index.ts",
-          "hash": "497861124438643175"
-        },
-        {
-          "file": "lambdas/admin/content/root/index.ts",
-          "hash": "1861848846669123032"
-        },
-        {
-          "file": "lambdas/admin/images/index.ts",
-          "hash": "11895257909626949963"
-        },
-        {
-          "file": "lambdas/admin/images/upload.ts",
-          "hash": "6737745151517151486"
-        },
-        {
-          "file": "lambdas/approve-access-request/index.ts",
-          "hash": "11403765497235890585"
-        },
-        {
-          "file": "lambdas/create-access-request/index.ts",
-          "hash": "14435525931111012295"
-        },
-        {
-          "file": "lambdas/deny-access-request/index.ts",
-          "hash": "13862904472378761382"
-        },
-        {
-          "file": "lambdas/get-access-request/index.ts",
-          "hash": "10549471722725488699"
-        },
-        {
-          "file": "lambdas/list-access-requests/index.ts",
-          "hash": "5857019819614038288"
-        },
-        {
-          "file": "lambdas/package-lock.json",
-          "hash": "17975783623713632533"
-        },
-        {
-          "file": "lambdas/package.json",
-          "hash": "17543440541398406933",
-          "deps": [
-            "npm:@types/aws-lambda",
-            "npm:@types/node@26.2.0",
-            "npm:typescript",
-            "npm:@aws-sdk/client-cloudfront",
-            "npm:@aws-sdk/client-dynamodb",
-            "npm:@aws-sdk/client-eventbridge",
-            "npm:@aws-sdk/client-s3",
-            "npm:@aws-sdk/client-ses",
-            "npm:@aws-sdk/lib-dynamodb",
-            "npm:@aws-sdk/s3-request-presigner"
-          ]
-        },
-        {
-          "file": "lambdas/tsconfig.build.json",
-          "hash": "13717386851590478334"
-        },
-        {
-          "file": "lambdas/tsconfig.json",
-          "hash": "1640744803390800099"
-        },
-        {
-          "file": "lambdas/update-menu/index.ts",
-          "hash": "4059162903607325221"
-        },
-        {
-          "file": "lambdas/util/jsonResponse.ts",
-          "hash": "15601141925642238577"
-        }
-      ],
       "@bayou/client": [
         {
           "file": "client/.gitignore",
@@ -322,7 +244,7 @@
         },
         {
           "file": "client/src/lib/components/MeetTimesCard.svelte",
-          "hash": "13204409073157756831"
+          "hash": "8876957213537323958"
         },
         {
           "file": "client/src/lib/components/cards/CategoryCard.svelte",
@@ -334,7 +256,7 @@
         },
         {
           "file": "client/src/lib/components/cards/ProductCard.svelte",
-          "hash": "4258205623157529037"
+          "hash": "9799919399240121257"
         },
         {
           "file": "client/src/lib/components/cards/SoldOutCard.svelte",
@@ -342,11 +264,11 @@
         },
         {
           "file": "client/src/lib/components/cart/CartItem.svelte",
-          "hash": "15248969393127569399"
+          "hash": "8865389726469972367"
         },
         {
           "file": "client/src/lib/components/cart/CartMeetSummary.svelte",
-          "hash": "14632284010787965899"
+          "hash": "11003914124791105157"
         },
         {
           "file": "client/src/lib/components/home/AvailabilityCalendar.svelte",
@@ -414,7 +336,11 @@
         },
         {
           "file": "client/src/lib/data/menu.json",
-          "hash": "12718546399864571665"
+          "hash": "10518029681234320880"
+        },
+        {
+          "file": "client/src/lib/data/pricing.json",
+          "hash": "9487025165299537810"
         },
         {
           "file": "client/src/lib/data/root.json",
@@ -422,7 +348,7 @@
         },
         {
           "file": "client/src/lib/index.ts",
-          "hash": "4692936798736377880"
+          "hash": "3244421341483603138"
         },
         {
           "file": "client/src/lib/stores/auth.svelte.ts",
@@ -474,15 +400,11 @@
         },
         {
           "file": "client/src/routes/+page.svelte",
-          "hash": "10348532987182532750"
-        },
-        {
-          "file": "client/src/routes/+page.ts",
-          "hash": "7488875641799290141"
+          "hash": "8207973583817686760"
         },
         {
           "file": "client/src/routes/cart/+page.svelte",
-          "hash": "7743531068744115226"
+          "hash": "9541332309808283358"
         },
         {
           "file": "client/src/routes/cart/+page.ts",
@@ -502,7 +424,7 @@
         },
         {
           "file": "client/src/routes/menu/+page.ts",
-          "hash": "6008455887454077671"
+          "hash": "12242044918441785742"
         },
         {
           "file": "client/src/routes/menu/[listingId]/+page.svelte",
@@ -519,6 +441,18 @@
         {
           "file": "client/src/routes/waiting-room/+page.svelte",
           "hash": "8504825488983286830"
+        },
+        {
+          "file": "client/static/images/07aee984-434e-445e-ba9d-70c881c89bf0-84B0EA0E-B1C6-492F-8B23-88BE9F21F692.jpeg",
+          "hash": "14478597314886744937"
+        },
+        {
+          "file": "client/static/images/1550a8b7-666d-4f6a-9e30-a37dbf0a78a6-5494D713-EBCD-4D3E-A612-9A55F958976D.jpeg",
+          "hash": "9523011733992778881"
+        },
+        {
+          "file": "client/static/images/7b151a1c-eece-471b-9770-a73f6aa15a32-6E104155-5782-4E75-8B3D-5D8CFD534255.jpeg",
+          "hash": "10686767542469226904"
         },
         {
           "file": "client/static/images/bayou-crew.png",
@@ -646,145 +580,93 @@
         },
         {
           "file": "client/tsconfig.json",
-          "hash": "5289453440970324680"
+          "hash": "2472977970506246702"
         },
         {
           "file": "client/vite.config.ts",
           "hash": "1631270818815352193"
         }
       ],
-      "@bayou/infra": [
+      "@bayou/lambdas": [
         {
-          "file": "infra/bin/infra.ts",
-          "hash": "14815105575479506458"
+          "file": "lambdas/admin/content/availability/index.ts",
+          "hash": "15907986371969899527"
         },
         {
-          "file": "infra/cdk.json",
-          "hash": "5642375916263947803"
+          "file": "lambdas/admin/content/home/index.ts",
+          "hash": "14165291605821119112"
         },
         {
-          "file": "infra/lib/infra-stack.ts",
-          "hash": "15201019029124927017"
+          "file": "lambdas/admin/content/menu/index.ts",
+          "hash": "497861124438643175"
         },
         {
-          "file": "infra/package-lock.json",
-          "hash": "7101004725159635162"
+          "file": "lambdas/admin/content/root/index.ts",
+          "hash": "1861848846669123032"
         },
         {
-          "file": "infra/package.json",
-          "hash": "15513452072245131194",
+          "file": "lambdas/admin/images/index.ts",
+          "hash": "11895257909626949963"
+        },
+        {
+          "file": "lambdas/admin/images/upload.ts",
+          "hash": "6737745151517151486"
+        },
+        {
+          "file": "lambdas/approve-access-request/index.ts",
+          "hash": "11403765497235890585"
+        },
+        {
+          "file": "lambdas/create-access-request/index.ts",
+          "hash": "14435525931111012295"
+        },
+        {
+          "file": "lambdas/deny-access-request/index.ts",
+          "hash": "13862904472378761382"
+        },
+        {
+          "file": "lambdas/get-access-request/index.ts",
+          "hash": "10549471722725488699"
+        },
+        {
+          "file": "lambdas/list-access-requests/index.ts",
+          "hash": "5857019819614038288"
+        },
+        {
+          "file": "lambdas/package-lock.json",
+          "hash": "17975783623713632533"
+        },
+        {
+          "file": "lambdas/package.json",
+          "hash": "17543440541398406933",
           "deps": [
-            "npm:@types/node@26.2.0",
-            "npm:aws-cdk",
-            "npm:ts-node",
-            "npm:aws-cdk-lib",
-            "npm:constructs"
+            "npm:@types/aws-lambda",
+            "npm:@types/node",
+            "npm:typescript",
+            "npm:@aws-sdk/client-cloudfront",
+            "npm:@aws-sdk/client-dynamodb",
+            "npm:@aws-sdk/client-eventbridge",
+            "npm:@aws-sdk/client-s3",
+            "npm:@aws-sdk/client-ses",
+            "npm:@aws-sdk/lib-dynamodb",
+            "npm:@aws-sdk/s3-request-presigner"
           ]
         },
         {
-          "file": "infra/tsconfig.json",
-          "hash": "8565321941728511375"
-        }
-      ],
-      "@bayou/shared": [
-        {
-          "file": "shared/constants/categories.ts",
-          "hash": "9849205384742732313"
+          "file": "lambdas/tsconfig.build.json",
+          "hash": "13717386851590478334"
         },
         {
-          "file": "shared/package-lock.json",
-          "hash": "9765185385958257446"
+          "file": "lambdas/tsconfig.json",
+          "hash": "1640744803390800099"
         },
         {
-          "file": "shared/package.json",
-          "hash": "7375526165584460305",
-          "deps": [
-            "npm:typescript"
-          ]
+          "file": "lambdas/update-menu/index.ts",
+          "hash": "4059162903607325221"
         },
         {
-          "file": "shared/tsconfig.json",
-          "hash": "17710441319383605347"
-        },
-        {
-          "file": "shared/types/Availability.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Availability.ts",
-          "hash": "11532697988151730510"
-        },
-        {
-          "file": "shared/types/Cart.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Cart.ts",
-          "hash": "4648781360704615659"
-        },
-        {
-          "file": "shared/types/Category.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Category.ts",
-          "hash": "12270227608083456759"
-        },
-        {
-          "file": "shared/types/FAQ.ts",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "shared/types/Featured.ts",
-          "hash": "9437884382110318554"
-        },
-        {
-          "file": "shared/types/Home.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Home.ts",
-          "hash": "2293225832954969069"
-        },
-        {
-          "file": "shared/types/Listing.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Listing.ts",
-          "hash": "7637704742914696347"
-        },
-        {
-          "file": "shared/types/Menu.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Menu.ts",
-          "hash": "12738798907957563631"
-        },
-        {
-          "file": "shared/types/Pricing.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Pricing.ts",
-          "hash": "10946140155093420771"
-        },
-        {
-          "file": "shared/types/Promotion.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Promotion.ts",
-          "hash": "4703878632179303030"
-        },
-        {
-          "file": "shared/types/Root.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Root.ts",
-          "hash": "8325191967287872691"
+          "file": "lambdas/util/jsonResponse.ts",
+          "hash": "15601141925642238577"
         }
       ],
       "@bayou/admin": [
@@ -813,7 +695,7 @@
           "hash": "12549726330477426008",
           "deps": [
             "npm:@eslint/js",
-            "npm:@types/node",
+            "npm:@types/node@24.13.3",
             "npm:@types/react",
             "npm:@types/react-dom",
             "npm:@vitejs/plugin-react",
@@ -859,7 +741,11 @@
         },
         {
           "file": "admin/src/api/index.ts",
-          "hash": "14371054511899251822"
+          "hash": "2874746379377172636"
+        },
+        {
+          "file": "admin/src/api/saveContent.ts",
+          "hash": "18312230140115399056"
         },
         {
           "file": "admin/src/api/uploadImages.ts",
@@ -907,11 +793,11 @@
         },
         {
           "file": "admin/src/components/layout/Sidebar.tsx",
-          "hash": "10322935969202223070"
+          "hash": "8448258023709664934"
         },
         {
           "file": "admin/src/components/ui/AccessCard.tsx",
-          "hash": "7515812937304371277"
+          "hash": "16826324192086296786"
         },
         {
           "file": "admin/src/components/ui/AccessUserRow.tsx",
@@ -924,6 +810,14 @@
         {
           "file": "admin/src/components/ui/DataCard.tsx",
           "hash": "15288373095221211215"
+        },
+        {
+          "file": "admin/src/components/ui/ProductForm.tsx",
+          "hash": "6729751307244347260"
+        },
+        {
+          "file": "admin/src/components/ui/ProductWheel.tsx",
+          "hash": "8680464896116807045"
         },
         {
           "file": "admin/src/components/ui/StatCard.tsx",
@@ -943,11 +837,11 @@
         },
         {
           "file": "admin/src/context/draft/context.ts",
-          "hash": "222645805286619240"
+          "hash": "1816526256896791788"
         },
         {
           "file": "admin/src/context/draft/provider.tsx",
-          "hash": "12312108369247634468"
+          "hash": "870718308431597944"
         },
         {
           "file": "admin/src/context/draft/useDraft.tsx",
@@ -991,7 +885,7 @@
         },
         {
           "file": "admin/src/pages/Products.tsx",
-          "hash": "9493505422538235653"
+          "hash": "16617518915271538032"
         },
         {
           "file": "admin/src/pages/Raffle.tsx",
@@ -1018,6 +912,10 @@
           "hash": "9413354074276901892"
         },
         {
+          "file": "admin/src/utils/pricing.ts",
+          "hash": "18331332479562965517"
+        },
+        {
           "file": "admin/tsconfig.app.json",
           "hash": "7912388811211214214"
         },
@@ -1033,8 +931,142 @@
           "file": "admin/vite.config.ts",
           "hash": "12046244874089299862"
         }
+      ],
+      "@bayou/shared": [
+        {
+          "file": "shared/constants/categories.ts",
+          "hash": "9849205384742732313"
+        },
+        {
+          "file": "shared/package-lock.json",
+          "hash": "9765185385958257446"
+        },
+        {
+          "file": "shared/package.json",
+          "hash": "7375526165584460305",
+          "deps": [
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "shared/tsconfig.json",
+          "hash": "1905082765446832403"
+        },
+        {
+          "file": "shared/types/Availability.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Availability.ts",
+          "hash": "11532697988151730510"
+        },
+        {
+          "file": "shared/types/Cart.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Cart.ts",
+          "hash": "4648781360704615659"
+        },
+        {
+          "file": "shared/types/Category.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Category.ts",
+          "hash": "14911595827313045973"
+        },
+        {
+          "file": "shared/types/FAQ.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "shared/types/Featured.ts",
+          "hash": "9437884382110318554"
+        },
+        {
+          "file": "shared/types/Home.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Home.ts",
+          "hash": "2293225832954969069"
+        },
+        {
+          "file": "shared/types/Listing.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Listing.ts",
+          "hash": "10237662108669724597"
+        },
+        {
+          "file": "shared/types/Menu.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Menu.ts",
+          "hash": "12738798907957563631"
+        },
+        {
+          "file": "shared/types/Pricing.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Pricing.ts",
+          "hash": "504107292176696023"
+        },
+        {
+          "file": "shared/types/Promotion.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Promotion.ts",
+          "hash": "11354679909286312462"
+        },
+        {
+          "file": "shared/types/Root.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Root.ts",
+          "hash": "8325191967287872691"
+        }
+      ],
+      "@bayou/infra": [
+        {
+          "file": "infra/bin/infra.ts",
+          "hash": "14815105575479506458"
+        },
+        {
+          "file": "infra/cdk.json",
+          "hash": "5642375916263947803"
+        },
+        {
+          "file": "infra/lib/infra-stack.ts",
+          "hash": "659670681786663723"
+        },
+        {
+          "file": "infra/package-lock.json",
+          "hash": "7101004725159635162"
+        },
+        {
+          "file": "infra/package.json",
+          "hash": "15513452072245131194",
+          "deps": [
+            "npm:@types/node",
+            "npm:aws-cdk",
+            "npm:ts-node",
+            "npm:aws-cdk-lib",
+            "npm:constructs"
+          ]
+        },
+        {
+          "file": "infra/tsconfig.json",
+          "hash": "14899864924681375378"
+        }
       ]
     }
   },
-  "externalNodesHash": "13608982515067129076"
+  "externalNodesHash": "7189747021823215701"
 }

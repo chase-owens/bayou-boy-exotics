@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { cart } from '$lib/stores/cart.svelte';
 	import type { CartItem } from '../../../../../shared/types/Cart';
-	import Diamond from '$lib/assets/icons/Diamond.svelte';
-	import Trash from '$lib/assets/icons/Trash.svelte';
-	import getRandomBrandImage from '$lib/utils/getRandomBrandImage';
-	import Edit from '$lib/assets/icons/Edit.svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import getRandomBrandImage from '../../utils/getRandomBrandImage';
+	import Edit from '../../assets/icons/Edit.svelte';
+	import Diamond from '../../assets/icons/Diamond.svelte';
+	import Trash from '../../assets/icons/Trash.svelte';
+	import { cart } from '../../stores/cart.svelte';
 
 	const { item }: { item: CartItem } = $props();
 

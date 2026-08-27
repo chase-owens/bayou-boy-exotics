@@ -1,5 +1,14 @@
 {
   "nodes": {
+    "npm:@types/node@24.13.3": {
+      "type": "npm",
+      "name": "npm:@types/node@24.13.3",
+      "data": {
+        "version": "24.13.3",
+        "packageName": "@types/node",
+        "hash": "sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q=="
+      }
+    },
     "npm:@types/node@22.20.1": {
       "type": "npm",
       "name": "npm:@types/node@22.20.1",
@@ -9,31 +18,13 @@
         "hash": "sha512-EANqOCF9QFyra+4pfxUcX9STKJpCLjMbObVzljIJomAWSnuSIEAvyzEU53GaajbXJEgdh0iEcPL+DGvpUd4k1Q=="
       }
     },
-    "npm:@types/node@26.2.0": {
-      "type": "npm",
-      "name": "npm:@types/node@26.2.0",
-      "data": {
-        "version": "26.2.0",
-        "packageName": "@types/node",
-        "hash": "sha512-5IviulTZeRNp2vAJ514cc/HUlY5nZ9fCbq9DMyC52BrhFZACo3nI0R7qBxhQmo/d27NFe96ur/b7Wwxklda+kg=="
-      }
-    },
     "npm:@types/node": {
       "type": "npm",
       "name": "npm:@types/node",
       "data": {
-        "version": "24.13.3",
+        "version": "26.3.0",
         "packageName": "@types/node",
-        "hash": "sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q=="
-      }
-    },
-    "npm:undici-types@8.3.0": {
-      "type": "npm",
-      "name": "npm:undici-types@8.3.0",
-      "data": {
-        "version": "8.3.0",
-        "packageName": "undici-types",
-        "hash": "sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ=="
+        "hash": "sha512-L3fgrnchriRC2ExBflb8j4uZZURHZfQsmQeyVzhjcHW4kkwVyo8/0h1B2MVzMTrYUJYu6G7EWs14hW/L9putqw=="
       }
     },
     "npm:undici-types@7.18.2": {
@@ -43,6 +34,15 @@
         "version": "7.18.2",
         "packageName": "undici-types",
         "hash": "sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w=="
+      }
+    },
+    "npm:undici-types@8.3.0": {
+      "type": "npm",
+      "name": "npm:undici-types@8.3.0",
+      "data": {
+        "version": "8.3.0",
+        "packageName": "undici-types",
+        "hash": "sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ=="
       }
     },
     "npm:undici-types": {
@@ -4646,11 +4646,9 @@
     }
   },
   "keyMap": {
+    "admin/node_modules/@types/node": "npm:@types/node@24.13.3",
+    "admin/node_modules/undici-types": "npm:undici-types@7.18.2",
     "client/node_modules/@types/node": "npm:@types/node@22.20.1",
-    "infra/node_modules/@types/node": "npm:@types/node@26.2.0",
-    "infra/node_modules/undici-types": "npm:undici-types@8.3.0",
-    "lambdas/node_modules/@types/node": "npm:@types/node@26.2.0",
-    "lambdas/node_modules/undici-types": "npm:undici-types@8.3.0",
     "node_modules/@aws-amplify/analytics": "npm:@aws-amplify/analytics",
     "node_modules/@aws-amplify/api": "npm:@aws-amplify/api",
     "node_modules/@aws-amplify/api-graphql": "npm:@aws-amplify/api-graphql",
@@ -4829,7 +4827,7 @@
     "node_modules/@types/estree": "npm:@types/estree",
     "node_modules/@types/json-schema": "npm:@types/json-schema",
     "node_modules/@types/node": "npm:@types/node",
-    "node_modules/@types/node/node_modules/undici-types": "npm:undici-types@7.18.2",
+    "node_modules/@types/node/node_modules/undici-types": "npm:undici-types@8.3.0",
     "node_modules/@types/react": "npm:@types/react",
     "node_modules/@types/react-dom": "npm:@types/react-dom",
     "node_modules/@types/trusted-types": "npm:@types/trusted-types",

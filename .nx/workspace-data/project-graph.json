@@ -367,6 +367,15 @@
     }
   },
   "externalNodes": {
+    "npm:@types/node@24.13.3": {
+      "type": "npm",
+      "name": "npm:@types/node@24.13.3",
+      "data": {
+        "version": "24.13.3",
+        "packageName": "@types/node",
+        "hash": "sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q=="
+      }
+    },
     "npm:@types/node@22.20.1": {
       "type": "npm",
       "name": "npm:@types/node@22.20.1",
@@ -376,31 +385,13 @@
         "hash": "sha512-EANqOCF9QFyra+4pfxUcX9STKJpCLjMbObVzljIJomAWSnuSIEAvyzEU53GaajbXJEgdh0iEcPL+DGvpUd4k1Q=="
       }
     },
-    "npm:@types/node@26.2.0": {
-      "type": "npm",
-      "name": "npm:@types/node@26.2.0",
-      "data": {
-        "version": "26.2.0",
-        "packageName": "@types/node",
-        "hash": "sha512-5IviulTZeRNp2vAJ514cc/HUlY5nZ9fCbq9DMyC52BrhFZACo3nI0R7qBxhQmo/d27NFe96ur/b7Wwxklda+kg=="
-      }
-    },
     "npm:@types/node": {
       "type": "npm",
       "name": "npm:@types/node",
       "data": {
-        "version": "24.13.3",
+        "version": "26.3.0",
         "packageName": "@types/node",
-        "hash": "sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q=="
-      }
-    },
-    "npm:undici-types@8.3.0": {
-      "type": "npm",
-      "name": "npm:undici-types@8.3.0",
-      "data": {
-        "version": "8.3.0",
-        "packageName": "undici-types",
-        "hash": "sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ=="
+        "hash": "sha512-L3fgrnchriRC2ExBflb8j4uZZURHZfQsmQeyVzhjcHW4kkwVyo8/0h1B2MVzMTrYUJYu6G7EWs14hW/L9putqw=="
       }
     },
     "npm:undici-types@7.18.2": {
@@ -410,6 +401,15 @@
         "version": "7.18.2",
         "packageName": "undici-types",
         "hash": "sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w=="
+      }
+    },
+    "npm:undici-types@8.3.0": {
+      "type": "npm",
+      "name": "npm:undici-types@8.3.0",
+      "data": {
+        "version": "8.3.0",
+        "packageName": "undici-types",
+        "hash": "sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ=="
       }
     },
     "npm:undici-types": {
@@ -5021,7 +5021,7 @@
       },
       {
         "source": "@bayou/lambdas",
-        "target": "npm:@types/node@26.2.0",
+        "target": "npm:@types/node",
         "type": "static"
       },
       {
@@ -5202,7 +5202,7 @@
       },
       {
         "source": "@bayou/admin",
-        "target": "npm:@types/node",
+        "target": "npm:@types/node@24.13.3",
         "type": "static"
       },
       {
@@ -5314,7 +5314,7 @@
     "@bayou/infra": [
       {
         "source": "@bayou/infra",
-        "target": "npm:@types/node@26.2.0",
+        "target": "npm:@types/node",
         "type": "static"
       },
       {
@@ -5338,17 +5338,17 @@
         "type": "static"
       }
     ],
+    "npm:@types/node@24.13.3": [
+      {
+        "source": "npm:@types/node@24.13.3",
+        "target": "npm:undici-types@7.18.2",
+        "type": "static"
+      }
+    ],
     "npm:@types/node@22.20.1": [
       {
         "source": "npm:@types/node@22.20.1",
         "target": "npm:undici-types",
-        "type": "static"
-      }
-    ],
-    "npm:@types/node@26.2.0": [
-      {
-        "source": "npm:@types/node@26.2.0",
-        "target": "npm:undici-types@8.3.0",
         "type": "static"
       }
     ],
@@ -7756,7 +7756,7 @@
     "npm:@types/node": [
       {
         "source": "npm:@types/node",
-        "target": "npm:undici-types@7.18.2",
+        "target": "npm:undici-types@8.3.0",
         "type": "static"
       }
     ],
@@ -11073,5 +11073,5 @@
   },
   "version": "6.0",
   "errors": [],
-  "computedAt": 1787619506729
+  "computedAt": 1787796769396
 }

@@ -6,8 +6,9 @@ import { useDraft } from "../../context/draft/useDraft";
 
 const fileLabels = {
   availability: "Availability",
-  menu: "Menu",
   home: "Homepage",
+  menu: "Menu",
+  pricing: "Pricing",
   root: "Site",
 } as const;
 

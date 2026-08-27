@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import CartItem from '$lib/components/cart/CartItem.svelte';
-	import CartMeetSummary from '$lib/components/cart/CartMeetSummary.svelte';
-	import MeetTimesCard from '$lib/components/MeetTimesCard.svelte';
-	import { cart } from '$lib/stores/cart.svelte';
+	import CartItem from '../../lib/components/cart/CartItem.svelte';
+	import CartMeetSummary from '../../lib/components/cart/CartMeetSummary.svelte';
+	import MeetTimesCard from '../../lib/components/MeetTimesCard.svelte';
+	import { cart } from '../../lib/stores/cart.svelte';
 	import type { PageData } from './$types';
 
 	const hasItems = $derived(cart.items.length > 0);
@@ -22,6 +22,7 @@
 
 	const handleSubmit = () => {
 		if (!selectedMeet || !meetTimesDisplay || !canContinue) return;
+		console.log('🚀 ~  ~ submitting:', selectedMeet);
 
 		const payload = {
 			items: cart.items,
@@ -49,13 +50,11 @@
 				<CartItem {item} />
 			{/each}
 		</div>
-
 		<MeetTimesCard
 			{meetTimesDisplay}
 			{selectedMeetTime}
-			onChange={(meetTime) => (selectedMeetTime = meetTime)}
+			onChange={(meetTime: string | null) => (selectedMeetTime = meetTime)}
 		/>
-
 		<CartMeetSummary {selectedMeetTime} onSubmit={handleSubmit} total={cart.total} />
 	{:else}
 		<section class="rounded-vintage border border-border bg-surface p-6 text-center shadow-soft">
