@@ -8,6 +8,14 @@ import AdminCard from "../components/ui/AdminCard";
 import StatCard from "../components/ui/StatCard";
 import { useDraft } from "../context/draft/useDraft";
 
+const fileLabels = {
+  availability: "Availability",
+  home: "Homepage",
+  menu: "Menu",
+  pricing: "Pricing",
+  root: "Site",
+} as const;
+
 type AccessRequest = {
   userId: string;
   status: "pending" | "approved" | "denied";
@@ -39,7 +47,17 @@ const fetchPendingRequestCount = async (): Promise<number> => {
 };
 
 export default function Dashboard() {
-  const { menu, home, isLoading: isContentLoading } = useDraft();
+  const {
+    menu,
+    home,
+    isLoading: isContentLoading,
+    hasChanges,
+    dirtyFiles,
+    isPublishing,
+    publishChanges,
+    publishedFiles,
+    publishSucceeded,
+  } = useDraft();
 
   const [pendingRequestCount, setPendingRequestCount] = useState(0);
   const [isPendingLoading, setIsPendingLoading] = useState(true);
@@ -123,8 +141,51 @@ export default function Dashboard() {
         </AdminCard>
 
         <AdminCard>
-          <p className="admin-eyebrow">Today's Menu</p>
-          <h2 className="mt-2 text-2xl">Ready to Publish?</h2>
+          <div className="flex h-full items-center justify-between gap-6">
+            <div>
+              <p className="admin-eyebrow">Content Status</p>
+
+              <h2 className="mt-2 text-2xl">
+                {isPublishing
+                  ? "Publishing Changes..."
+                  : publishSucceeded
+                    ? "Everything Is Up to Date"
+                    : hasChanges
+                      ? "Changes Ready to Publish"
+                      : "Everything Is Up to Date"}
+              </h2>
+
+              {hasChanges && !publishSucceeded && (
+                <p className="mt-2 text-sm text-white">
+                  {dirtyFiles.map((file) => fileLabels[file]).join(", ")}
+                </p>
+              )}
+
+              {publishSucceeded && publishedFiles.length > 0 && (
+                <p className="mt-2 text-sm text-success">
+                  {publishedFiles.map((file) => fileLabels[file]).join(", ")}{" "}
+                  published
+                </p>
+              )}
+
+              {!hasChanges && !publishSucceeded && (
+                <p className="mt-2 text-sm text-white">
+                  Your published content matches your current changes.
+                </p>
+              )}
+            </div>
+
+            {hasChanges && !publishSucceeded && (
+              <button
+                type="button"
+                onClick={() => void publishChanges()}
+                disabled={isPublishing}
+                className="admin-button-primary shrink-0 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {isPublishing ? "Publishing..." : "Publish Changes"}
+              </button>
+            )}
+          </div>
         </AdminCard>
       </div>
     </>

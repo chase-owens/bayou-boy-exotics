@@ -1,14 +1,9 @@
 <script lang="ts">
-	// import Cube from '$lib/assets/icons/Cube.svelte';
-	// import Calendar from '$lib/assets/icons/Calendar.svelte';
-	// import Diamond from '$lib/assets/icons/Diamond.svelte';
-
 	type HeaderProps = {
 		listingsCount: number;
 	};
 
 	const { listingsCount }: HeaderProps = $props();
-	console.log('🚀 ~ listingsCount:', listingsCount);
 </script>
 
 <section class="relative overflow-hidden bg-black shadow-soft">

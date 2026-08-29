@@ -20,10 +20,6 @@
 			isSigningOut = false;
 		}
 	};
-
-	$effect(() => {
-		console.log('auth:', auth.isAuthenticated, auth.isApproved, auth.isPending);
-	});
 </script>
 
 <svelte:head>
