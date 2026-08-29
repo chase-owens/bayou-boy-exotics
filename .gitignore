@@ -29,6 +29,7 @@ admin/src/assets/vite.svg
 **/.env.*
 
 .nx/
+.nx/workspace-data/
 
 # Lambda build artifacts
 **/*.zip
