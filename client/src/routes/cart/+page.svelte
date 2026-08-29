@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { submitReservation } from '$lib/api/reservations';
 	import CartItem from '../../lib/components/cart/CartItem.svelte';
 	import CartMeetSummary from '../../lib/components/cart/CartMeetSummary.svelte';
 	import MeetTimesCard from '../../lib/components/MeetTimesCard.svelte';
@@ -13,6 +14,8 @@
 	const { meetTimesDisplay } = $derived(data);
 
 	let selectedMeetTime = $state<string | null>(null);
+	let isSuccess = $state<boolean | null>(null);
+	let error = $state('');
 
 	const selectedMeet = $derived(
 		meetTimesDisplay?.meets.find((meet) => meet.time === selectedMeetTime) ?? null
@@ -20,10 +23,10 @@
 
 	const canContinue = $derived(cart.items.length > 0 && Boolean(selectedMeet));
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		if (!selectedMeet || !meetTimesDisplay || !canContinue) return;
-		console.log('🚀 ~  ~ submitting:', selectedMeet);
 
+		error = '';
 		const payload = {
 			items: cart.items,
 			total: cart.total,
@@ -33,7 +36,17 @@
 				label: selectedMeet.label
 			}
 		};
-		console.log('🚀 ~ handleSubmit ~ payload:', payload);
+
+		try {
+			submitReservation(payload);
+
+			isSuccess = true;
+			setTimeout(() => {
+				isSuccess = false;
+			}, 5000);
+		} catch (err) {
+			error = err instanceof Error ? err.message : 'Reservation failed to send';
+		}
 	};
 </script>
 
@@ -55,7 +68,13 @@
 			{selectedMeetTime}
 			onChange={(meetTime: string | null) => (selectedMeetTime = meetTime)}
 		/>
-		<CartMeetSummary {selectedMeetTime} onSubmit={handleSubmit} total={cart.total} />
+		<CartMeetSummary
+			{error}
+			{selectedMeetTime}
+			{isSuccess}
+			onSubmit={handleSubmit}
+			total={cart.total}
+		/>
 	{:else}
 		<section class="rounded-vintage border border-border bg-surface p-6 text-center shadow-soft">
 			<h2 class="text-2xl font-bold text-foreground">Your cart is empty</h2>

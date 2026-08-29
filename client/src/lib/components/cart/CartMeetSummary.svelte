@@ -2,12 +2,14 @@
 	import Arrow from '../../assets/icons/Arrow.svelte';
 
 	type CartMeetSummaryProps = {
+		error: string;
+		isSuccess: boolean | null;
 		selectedMeetTime: string | null;
 		total: number;
 		onSubmit: () => void;
 	};
 
-	const { selectedMeetTime, total, onSubmit }: CartMeetSummaryProps = $props();
+	const { error, isSuccess, onSubmit, selectedMeetTime, total }: CartMeetSummaryProps = $props();
 </script>
 
 <section
@@ -46,12 +48,37 @@
 			</div>
 		</div>
 
-		<button
-			class="inline-flex w-fit items-center gap-3 rounded-xl border border-highlight bg-black/70 px-6 py-3 font-semibold text-accent backdrop-blur transition hover:border-accent/80 hover:bg-black/85 hover:text-white"
-			onclick={onSubmit}
-		>
-			<span>{!selectedMeetTime ? 'Select Meet Time' : 'Continue to Checkout'}</span>
-			<Arrow class="size-6" />
-		</button>
+		<div class="flex items-center gap-3">
+			<button
+				class={[
+					'inline-flex w-fit items-center gap-3 rounded-xl border px-6 py-3 font-semibold backdrop-blur transition disabled:cursor-not-allowed disabled:border-white/10 disabled:bg-black/40 disabled:text-white/30 disabled:opacity-60',
+					isSuccess
+						? 'border-success bg-success-background text-success'
+						: 'border-highlight bg-black/70 text-accent hover:border-accent/80 hover:bg-black/85 hover:text-white disabled:hover:border-white/10 disabled:hover:bg-black/40 disabled:hover:text-white/30'
+				]}
+				disabled={!selectedMeetTime}
+				onclick={onSubmit}
+			>
+				<span>
+					{isSuccess
+						? 'Submitted'
+						: !selectedMeetTime
+							? 'Select Meet Time'
+							: 'Continue to Checkout'}
+				</span>
+
+				{#if !isSuccess}
+					<Arrow class="size-6" />
+				{/if}
+			</button>
+
+			{#if error}
+				<span
+					class="rounded-lg border border-error/40 bg-error-background px-3 py-2 text-xs font-semibold text-error"
+				>
+					{error}
+				</span>
+			{/if}
+		</div>
 	</div>
 </section>

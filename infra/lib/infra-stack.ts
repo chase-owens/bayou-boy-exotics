@@ -41,7 +41,6 @@ export class InfraStack extends cdk.Stack {
           allowedMethods: [s3.HttpMethods.PUT],
           allowedOrigins: [
             "https://admin.bayouboyexotics.com",
-            "https://d2ti5ggxcbsxpd.cloudfront.net",
             "http://localhost:5174",
           ],
           allowedHeaders: ["*"],
@@ -184,6 +183,45 @@ export class InfraStack extends cdk.Stack {
 
       sortKey: {
         name: "requestedAt",
+        type: dynamodb.AttributeType.STRING,
+      },
+    });
+
+    // Reservations Table
+    this.reservationsTable = new dynamodb.Table(
+      this,
+      "BayouReservationsTable",
+      {
+        tableName: "bayou-reservations-prod",
+        partitionKey: {
+          name: "reservationId",
+          type: dynamodb.AttributeType.STRING,
+        },
+        billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+        removalPolicy: cdk.RemovalPolicy.RETAIN,
+      },
+    );
+
+    this.reservationsTable.addGlobalSecondaryIndex({
+      indexName: "status-index",
+      partitionKey: {
+        name: "status",
+        type: dynamodb.AttributeType.STRING,
+      },
+      sortKey: {
+        name: "submittedAt",
+        type: dynamodb.AttributeType.STRING,
+      },
+    });
+
+    this.reservationsTable.addGlobalSecondaryIndex({
+      indexName: "user-index",
+      partitionKey: {
+        name: "userId",
+        type: dynamodb.AttributeType.STRING,
+      },
+      sortKey: {
+        name: "submittedAt",
         type: dynamodb.AttributeType.STRING,
       },
     });
@@ -472,6 +510,53 @@ export class InfraStack extends cdk.Stack {
       },
     });
 
+    // Reservations Lambdas
+    const createReservationLambda = new lambda.Function(
+      this,
+      "CreateReservationLambda",
+      {
+        runtime: lambda.Runtime.NODEJS_22_X,
+        handler: "index.handler",
+        code: lambda.Code.fromAsset(
+          path.join(__dirname, "../../lambdas/dist/reservations"),
+        ),
+        environment: {
+          RESERVATIONS_TABLE_NAME: this.reservationsTable.tableName,
+        },
+      },
+    );
+
+    const listReservationsLambda = new lambda.Function(
+      this,
+      "ListReservationsLambda",
+      {
+        runtime: lambda.Runtime.NODEJS_22_X,
+        handler: "index.handler",
+        code: lambda.Code.fromAsset(
+          path.join(__dirname, "../../lambdas/dist/admin/reservations"),
+        ),
+        environment: {
+          RESERVATIONS_TABLE_NAME: this.reservationsTable.tableName,
+          STATUS_INDEX_NAME: "status-index",
+        },
+      },
+    );
+
+    const confirmReservationLambda = new lambda.Function(
+      this,
+      "ConfirmReservationLambda",
+      {
+        runtime: lambda.Runtime.NODEJS_22_X,
+        handler: "confirm.handler",
+        code: lambda.Code.fromAsset(
+          path.join(__dirname, "../../lambdas/dist/admin/reservations"),
+        ),
+        environment: {
+          RESERVATIONS_TABLE_NAME: this.reservationsTable.tableName,
+        },
+      },
+    );
+
     // Content Permissions
     contentBucket.grantWrite(updateAvailabilityLambda);
     contentBucket.grantWrite(updateHomeLambda);
@@ -480,13 +565,19 @@ export class InfraStack extends cdk.Stack {
     contentBucket.grantRead(listImagesLambda);
     contentBucket.grantWrite(uploadImagesLambda);
 
+    this.reservationsTable.grantWriteData(createReservationLambda);
+    this.reservationsTable.grantReadData(listReservationsLambda);
+    this.reservationsTable.grantReadWriteData(confirmReservationLambda);
+
     // API Resources
     const accessRequests = api.root.addResource("access-requests");
+    const reservations = api.root.addResource("reservations");
 
     const admin = api.root.addResource("admin");
     const adminAccessRequests = admin.addResource("access-requests");
     const adminContent = admin.addResource("content");
     const adminImages = admin.addResource("images");
+    const adminReservations = admin.addResource("reservations");
 
     // Client Access Request Routes
     accessRequests.addMethod(
@@ -591,20 +682,37 @@ export class InfraStack extends cdk.Stack {
         authorizer: adminAuthorizer,
       });
 
-    // Build Tables
-    this.reservationsTable = new dynamodb.Table(
-      this,
-      "BayouReservationsTable",
+    // Client Reservation Routes
+    reservations.addMethod(
+      "POST",
+      new apigateway.LambdaIntegration(createReservationLambda),
       {
-        tableName: "bayou-reservations-prod",
-        partitionKey: {
-          name: "reservationId",
-          type: dynamodb.AttributeType.STRING,
-        },
-        billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-        removalPolicy: cdk.RemovalPolicy.RETAIN,
+        authorizationType: apigateway.AuthorizationType.COGNITO,
+        authorizer: clientAuthorizer,
       },
     );
+
+    // Admin Reservation Routes
+    adminReservations.addMethod(
+      "GET",
+      new apigateway.LambdaIntegration(listReservationsLambda),
+      {
+        authorizationType: apigateway.AuthorizationType.COGNITO,
+        authorizer: adminAuthorizer,
+      },
+    );
+
+    adminReservations
+      .addResource("{reservationId}")
+      .addResource("confirm")
+      .addMethod(
+        "PATCH",
+        new apigateway.LambdaIntegration(confirmReservationLambda),
+        {
+          authorizationType: apigateway.AuthorizationType.COGNITO,
+          authorizer: adminAuthorizer,
+        },
+      );
 
     // Outputs
     new cdk.CfnOutput(this, "ClientUserPoolId", {

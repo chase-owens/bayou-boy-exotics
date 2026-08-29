@@ -11,7 +11,8 @@
     "get-access-request/**/*.ts",
     "list-access-requests/**/*.ts",
     "approve-access-request/**/*.ts",
-    "deny-access-request/**/*.ts"
+    "deny-access-request/**/*.ts",
+    "reservations/**/*.ts"
   ],
   "exclude": ["dist", "node_modules"]
 }
