@@ -21,13 +21,16 @@
 
 	<meta property="og:title" content="Bayou Boy Exotics" />
 	<meta property="og:description" content="Premium Products | Premium Service" />
-	<meta property="og:image" content="https://d2uhik5lt0ieo8.cloudfront.net/images/menu-hero.png" />
+	<meta property="og:image" content="https://bayouboyexotics.com/images/menu-hero.png" />
 	<meta property="og:type" content="website" />
 
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="Bayou Boy Exotics" />
 	<meta name="twitter:description" content="Premium Products | Premium Service" />
-	<meta name="twitter:image" content="https://d2uhik5lt0ieo8.cloudfront.net/images/menu-hero.png" />
+	<meta name="twitter:image" content="https://bayouboyexotics.com/images/menu-hero.png" />
+
+	<link rel="canonical" href="https://bayouboyexotics.com/" />
+	<meta property="og:url" content="https://bayouboyexotics.com/" />
 </svelte:head>
 
 <Hero hero={home.hero} />

@@ -6,6 +6,7 @@ import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
 import * as cognito from "aws-cdk-lib/aws-cognito";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as apigateway from "aws-cdk-lib/aws-apigateway";
+import * as acm from "aws-cdk-lib/aws-certificatemanager";
 import * as path from "path";
 import { Construct } from "constructs";
 
@@ -39,6 +40,7 @@ export class InfraStack extends cdk.Stack {
         {
           allowedMethods: [s3.HttpMethods.PUT],
           allowedOrigins: [
+            "https://admin.bayouboyexotics.com",
             "https://d2ti5ggxcbsxpd.cloudfront.net",
             "http://localhost:5174",
           ],
@@ -186,12 +188,20 @@ export class InfraStack extends cdk.Stack {
       },
     });
 
+    const certificate = acm.Certificate.fromCertificateArn(
+      this,
+      "BayouCertificate",
+      "arn:aws:acm:us-east-1:657830185399:certificate/90f6daf0-dd2a-40ef-aa1b-f5c87fe16297",
+    );
+
     // Instantiate client and admin distributions
     const clientDistribution = new cloudfront.Distribution(
       this,
       "BayouClientDistribution",
       {
         defaultRootObject: "index.html",
+        domainNames: ["bayouboyexotics.com", "www.bayouboyexotics.com"],
+        certificate,
         defaultBehavior: {
           origin: origins.S3BucketOrigin.withOriginAccessControl(clientBucket),
           viewerProtocolPolicy:
@@ -233,7 +243,8 @@ export class InfraStack extends cdk.Stack {
       "BayouAdminDistribution",
       {
         defaultRootObject: "index.html",
-
+        domainNames: ["admin.bayouboyexotics.com"],
+        certificate,
         defaultBehavior: {
           origin: origins.S3BucketOrigin.withOriginAccessControl(adminBucket),
           viewerProtocolPolicy:
@@ -276,7 +287,13 @@ export class InfraStack extends cdk.Stack {
       restApiName: "bayou-api",
 
       defaultCorsPreflightOptions: {
-        allowOrigins: apigateway.Cors.ALL_ORIGINS,
+        allowOrigins: [
+          "https://bayouboyexotics.com",
+          "https://www.bayouboyexotics.com",
+          "https://admin.bayouboyexotics.com",
+          "http://localhost:5173",
+          "http://localhost:5174",
+        ],
         allowMethods: apigateway.Cors.ALL_METHODS,
         allowHeaders: ["Content-Type", "Authorization"],
       },

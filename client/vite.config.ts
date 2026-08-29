@@ -22,7 +22,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/data': {
-				target: 'https://d2uhik5lt0ieo8.cloudfront.net',
+				target: 'https://bayouboyexotics.com',
 				changeOrigin: true
 			}
 		}

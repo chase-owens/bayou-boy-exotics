@@ -8,13 +8,13 @@ export default defineConfig({
   server: {
     proxy: {
       "/data": {
-        target: "https://d2ti5ggxcbsxpd.cloudfront.net",
+        target: "https://admin.bayouboyexotics.com",
         changeOrigin: true,
         secure: true,
       },
 
       "/images": {
-        target: "https://d2ti5ggxcbsxpd.cloudfront.net",
+        target: "https://admin.bayouboyexotics.com",
         changeOrigin: true,
         secure: true,
       },
