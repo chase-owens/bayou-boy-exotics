@@ -6,8 +6,16 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": "package.json",
-        "hash": "10585099851544121218"
+        "file": "package-lock.json",
+        "hash": "2296415940923846472"
+      },
+      {
+        "file": "nx.json",
+        "hash": "17720574272691467707"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "2762752470638050055"
       },
       {
         "file": "tsconfig.base.json",
@@ -18,19 +26,116 @@
         "hash": "14576388324799318000"
       },
       {
-        "file": "nx.json",
-        "hash": "17720574272691467707"
-      },
-      {
-        "file": "package-lock.json",
-        "hash": "2296415940923846472"
-      },
-      {
-        "file": ".gitignore",
-        "hash": "2762752470638050055"
+        "file": "package.json",
+        "hash": "10585099851544121218"
       }
     ],
     "projectFileMap": {
+      "@bayou/shared": [
+        {
+          "file": "shared/constants/categories.ts",
+          "hash": "9849205384742732313"
+        },
+        {
+          "file": "shared/package-lock.json",
+          "hash": "9765185385958257446"
+        },
+        {
+          "file": "shared/package.json",
+          "hash": "7375526165584460305",
+          "deps": [
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "shared/tsconfig.json",
+          "hash": "1905082765446832403"
+        },
+        {
+          "file": "shared/types/Availability.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Availability.ts",
+          "hash": "11532697988151730510"
+        },
+        {
+          "file": "shared/types/Cart.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Cart.ts",
+          "hash": "4648781360704615659"
+        },
+        {
+          "file": "shared/types/Category.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Category.ts",
+          "hash": "14911595827313045973"
+        },
+        {
+          "file": "shared/types/FAQ.ts",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "shared/types/Featured.ts",
+          "hash": "9437884382110318554"
+        },
+        {
+          "file": "shared/types/Home.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Home.ts",
+          "hash": "2293225832954969069"
+        },
+        {
+          "file": "shared/types/Listing.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Listing.ts",
+          "hash": "10237662108669724597"
+        },
+        {
+          "file": "shared/types/Menu.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Menu.ts",
+          "hash": "12738798907957563631"
+        },
+        {
+          "file": "shared/types/Pricing.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Pricing.ts",
+          "hash": "504107292176696023"
+        },
+        {
+          "file": "shared/types/Promotion.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Promotion.ts",
+          "hash": "11354679909286312462"
+        },
+        {
+          "file": "shared/types/Reservation.ts",
+          "hash": "1920891797822745755"
+        },
+        {
+          "file": "shared/types/Root.js",
+          "hash": "10533815908077531553"
+        },
+        {
+          "file": "shared/types/Root.ts",
+          "hash": "8325191967287872691"
+        }
+      ],
       "@bayou/client": [
         {
           "file": "client/.gitignore",
@@ -125,6 +230,10 @@
         {
           "file": "client/src/lib/api/menu.ts",
           "hash": "5189992887733636626"
+        },
+        {
+          "file": "client/src/lib/api/reservations.ts",
+          "hash": "2470239474003779868"
         },
         {
           "file": "client/src/lib/api/root.ts",
@@ -244,7 +353,7 @@
         },
         {
           "file": "client/src/lib/components/MeetTimesCard.svelte",
-          "hash": "8876957213537323958"
+          "hash": "4943277205670872970"
         },
         {
           "file": "client/src/lib/components/cards/CategoryCard.svelte",
@@ -268,7 +377,7 @@
         },
         {
           "file": "client/src/lib/components/cart/CartMeetSummary.svelte",
-          "hash": "11003914124791105157"
+          "hash": "15454387419819842042"
         },
         {
           "file": "client/src/lib/components/home/AvailabilityCalendar.svelte",
@@ -400,15 +509,15 @@
         },
         {
           "file": "client/src/routes/+page.svelte",
-          "hash": "8207973583817686760"
+          "hash": "3265138656110435324"
         },
         {
           "file": "client/src/routes/cart/+page.svelte",
-          "hash": "9541332309808283358"
+          "hash": "7889040471386634607"
         },
         {
           "file": "client/src/routes/cart/+page.ts",
-          "hash": "8639506185475624276"
+          "hash": "10842768706065831799"
         },
         {
           "file": "client/src/routes/confirm-sign-up/+page.svelte",
@@ -584,89 +693,7 @@
         },
         {
           "file": "client/vite.config.ts",
-          "hash": "1631270818815352193"
-        }
-      ],
-      "@bayou/lambdas": [
-        {
-          "file": "lambdas/admin/content/availability/index.ts",
-          "hash": "15907986371969899527"
-        },
-        {
-          "file": "lambdas/admin/content/home/index.ts",
-          "hash": "14165291605821119112"
-        },
-        {
-          "file": "lambdas/admin/content/menu/index.ts",
-          "hash": "497861124438643175"
-        },
-        {
-          "file": "lambdas/admin/content/root/index.ts",
-          "hash": "1861848846669123032"
-        },
-        {
-          "file": "lambdas/admin/images/index.ts",
-          "hash": "11895257909626949963"
-        },
-        {
-          "file": "lambdas/admin/images/upload.ts",
-          "hash": "6737745151517151486"
-        },
-        {
-          "file": "lambdas/approve-access-request/index.ts",
-          "hash": "11403765497235890585"
-        },
-        {
-          "file": "lambdas/create-access-request/index.ts",
-          "hash": "14435525931111012295"
-        },
-        {
-          "file": "lambdas/deny-access-request/index.ts",
-          "hash": "13862904472378761382"
-        },
-        {
-          "file": "lambdas/get-access-request/index.ts",
-          "hash": "10549471722725488699"
-        },
-        {
-          "file": "lambdas/list-access-requests/index.ts",
-          "hash": "5857019819614038288"
-        },
-        {
-          "file": "lambdas/package-lock.json",
-          "hash": "17975783623713632533"
-        },
-        {
-          "file": "lambdas/package.json",
-          "hash": "17543440541398406933",
-          "deps": [
-            "npm:@types/aws-lambda",
-            "npm:@types/node",
-            "npm:typescript",
-            "npm:@aws-sdk/client-cloudfront",
-            "npm:@aws-sdk/client-dynamodb",
-            "npm:@aws-sdk/client-eventbridge",
-            "npm:@aws-sdk/client-s3",
-            "npm:@aws-sdk/client-ses",
-            "npm:@aws-sdk/lib-dynamodb",
-            "npm:@aws-sdk/s3-request-presigner"
-          ]
-        },
-        {
-          "file": "lambdas/tsconfig.build.json",
-          "hash": "13717386851590478334"
-        },
-        {
-          "file": "lambdas/tsconfig.json",
-          "hash": "1640744803390800099"
-        },
-        {
-          "file": "lambdas/update-menu/index.ts",
-          "hash": "4059162903607325221"
-        },
-        {
-          "file": "lambdas/util/jsonResponse.ts",
-          "hash": "15601141925642238577"
+          "hash": "7155374660300712104"
         }
       ],
       "@bayou/admin": [
@@ -869,7 +896,7 @@
         },
         {
           "file": "admin/src/pages/FeaturedDeals.tsx",
-          "hash": "7335495623204055094"
+          "hash": "13197773258368914138"
         },
         {
           "file": "admin/src/pages/ImageLibrary.tsx",
@@ -929,108 +956,7 @@
         },
         {
           "file": "admin/vite.config.ts",
-          "hash": "12046244874089299862"
-        }
-      ],
-      "@bayou/shared": [
-        {
-          "file": "shared/constants/categories.ts",
-          "hash": "9849205384742732313"
-        },
-        {
-          "file": "shared/package-lock.json",
-          "hash": "9765185385958257446"
-        },
-        {
-          "file": "shared/package.json",
-          "hash": "7375526165584460305",
-          "deps": [
-            "npm:typescript"
-          ]
-        },
-        {
-          "file": "shared/tsconfig.json",
-          "hash": "1905082765446832403"
-        },
-        {
-          "file": "shared/types/Availability.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Availability.ts",
-          "hash": "11532697988151730510"
-        },
-        {
-          "file": "shared/types/Cart.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Cart.ts",
-          "hash": "4648781360704615659"
-        },
-        {
-          "file": "shared/types/Category.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Category.ts",
-          "hash": "14911595827313045973"
-        },
-        {
-          "file": "shared/types/FAQ.ts",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "shared/types/Featured.ts",
-          "hash": "9437884382110318554"
-        },
-        {
-          "file": "shared/types/Home.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Home.ts",
-          "hash": "2293225832954969069"
-        },
-        {
-          "file": "shared/types/Listing.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Listing.ts",
-          "hash": "10237662108669724597"
-        },
-        {
-          "file": "shared/types/Menu.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Menu.ts",
-          "hash": "12738798907957563631"
-        },
-        {
-          "file": "shared/types/Pricing.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Pricing.ts",
-          "hash": "504107292176696023"
-        },
-        {
-          "file": "shared/types/Promotion.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Promotion.ts",
-          "hash": "11354679909286312462"
-        },
-        {
-          "file": "shared/types/Root.js",
-          "hash": "10533815908077531553"
-        },
-        {
-          "file": "shared/types/Root.ts",
-          "hash": "8325191967287872691"
+          "hash": "16637829305619622932"
         }
       ],
       "@bayou/infra": [
@@ -1044,7 +970,7 @@
         },
         {
           "file": "infra/lib/infra-stack.ts",
-          "hash": "659670681786663723"
+          "hash": "11666141331428866464"
         },
         {
           "file": "infra/package-lock.json",
@@ -1064,6 +990,100 @@
         {
           "file": "infra/tsconfig.json",
           "hash": "14899864924681375378"
+        }
+      ],
+      "@bayou/lambdas": [
+        {
+          "file": "lambdas/admin/content/availability/index.ts",
+          "hash": "15907986371969899527"
+        },
+        {
+          "file": "lambdas/admin/content/home/index.ts",
+          "hash": "14165291605821119112"
+        },
+        {
+          "file": "lambdas/admin/content/menu/index.ts",
+          "hash": "497861124438643175"
+        },
+        {
+          "file": "lambdas/admin/content/root/index.ts",
+          "hash": "1861848846669123032"
+        },
+        {
+          "file": "lambdas/admin/images/index.ts",
+          "hash": "11895257909626949963"
+        },
+        {
+          "file": "lambdas/admin/images/upload.ts",
+          "hash": "6737745151517151486"
+        },
+        {
+          "file": "lambdas/admin/reservations/confirm.ts",
+          "hash": "5446576127700760219"
+        },
+        {
+          "file": "lambdas/admin/reservations/index.ts",
+          "hash": "106493088312346848"
+        },
+        {
+          "file": "lambdas/approve-access-request/index.ts",
+          "hash": "11403765497235890585"
+        },
+        {
+          "file": "lambdas/create-access-request/index.ts",
+          "hash": "14435525931111012295"
+        },
+        {
+          "file": "lambdas/deny-access-request/index.ts",
+          "hash": "13862904472378761382"
+        },
+        {
+          "file": "lambdas/get-access-request/index.ts",
+          "hash": "10549471722725488699"
+        },
+        {
+          "file": "lambdas/list-access-requests/index.ts",
+          "hash": "5857019819614038288"
+        },
+        {
+          "file": "lambdas/package-lock.json",
+          "hash": "17975783623713632533"
+        },
+        {
+          "file": "lambdas/package.json",
+          "hash": "17543440541398406933",
+          "deps": [
+            "npm:@types/aws-lambda",
+            "npm:@types/node",
+            "npm:typescript",
+            "npm:@aws-sdk/client-cloudfront",
+            "npm:@aws-sdk/client-dynamodb",
+            "npm:@aws-sdk/client-eventbridge",
+            "npm:@aws-sdk/client-s3",
+            "npm:@aws-sdk/client-ses",
+            "npm:@aws-sdk/lib-dynamodb",
+            "npm:@aws-sdk/s3-request-presigner"
+          ]
+        },
+        {
+          "file": "lambdas/reservations/index.ts",
+          "hash": "1945856755912376218"
+        },
+        {
+          "file": "lambdas/tsconfig.build.json",
+          "hash": "6264284108353174920"
+        },
+        {
+          "file": "lambdas/tsconfig.json",
+          "hash": "1640744803390800099"
+        },
+        {
+          "file": "lambdas/update-menu/index.ts",
+          "hash": "4059162903607325221"
+        },
+        {
+          "file": "lambdas/util/jsonResponse.ts",
+          "hash": "15601141925642238577"
         }
       ]
     }

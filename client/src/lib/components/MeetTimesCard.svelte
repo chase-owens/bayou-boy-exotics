@@ -26,6 +26,7 @@
 			{#each meetTimesDisplay.meets as meet (meet.time)}
 				<button
 					type="button"
+					disabled={!meetTimesDisplay}
 					class={[
 						'rounded-vintage border px-4 py-4 font-semibold transition',
 						selectedMeetTime === meet.label

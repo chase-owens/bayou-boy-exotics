@@ -24,22 +24,13 @@ type FeatureDraft = {
   headline: string;
   summary: string;
   image: string;
+
   listingId: string;
   priceOptionId: string;
-};
 
-const toStandaloneFeature = (feature: Feature) => {
-  const next = { ...feature } as Feature & {
-    cartItem?: unknown;
-    listingId?: string;
-    price?: number;
-  };
-
-  delete next.cartItem;
-  delete next.listingId;
-  delete next.price;
-
-  return next as Feature;
+  price: string;
+  priceLabel: string;
+  units: string;
 };
 
 const createFeatureDraft = (): FeatureDraft => ({
@@ -50,6 +41,9 @@ const createFeatureDraft = (): FeatureDraft => ({
   image: "",
   listingId: "",
   priceOptionId: "",
+  price: "",
+  priceLabel: "",
+  units: "",
 });
 
 const getListingPriceOptions = (listing?: Listing) => listing?.pricing ?? [];
@@ -112,10 +106,9 @@ export default function FeaturedDeals() {
     const cartItem =
       "cartItem" in feature && feature.cartItem ? feature.cartItem : undefined;
 
-    const legacyListingId =
-      "listingId" in feature && typeof feature.listingId === "string"
-        ? feature.listingId
-        : "";
+    const isCurrentListing = listings.some(
+      (listing) => listing.id === cartItem?.listingId,
+    );
 
     setEditingIndex(index);
 
@@ -125,8 +118,13 @@ export default function FeaturedDeals() {
       headline: feature.headline ?? "",
       summary: feature.summary ?? "",
       image: feature.image ?? "",
-      listingId: cartItem?.listingId ?? legacyListingId,
-      priceOptionId: cartItem?.priceOptionId ?? "",
+
+      listingId: isCurrentListing ? (cartItem?.listingId ?? "") : "",
+      priceOptionId: isCurrentListing ? (cartItem?.priceOptionId ?? "") : "",
+
+      price: !isCurrentListing ? String(cartItem?.price ?? "") : "",
+      priceLabel: !isCurrentListing ? (cartItem?.priceLabel ?? "") : "",
+      units: !isCurrentListing ? String(cartItem?.units ?? "") : "",
     });
   };
 
@@ -177,9 +175,32 @@ export default function FeaturedDeals() {
     let feature: Feature;
 
     if (!featureDraft.listingId) {
-      feature = toStandaloneFeature(baseFeature as Feature);
+      const existingCartItem =
+        existingFeature &&
+        "cartItem" in existingFeature &&
+        existingFeature.cartItem
+          ? existingFeature.cartItem
+          : undefined;
+
+      feature = {
+        ...baseFeature,
+        cartItem: {
+          image: featureDraft.image,
+
+          listingId: existingCartItem?.listingId ?? crypto.randomUUID(),
+
+          listingName: featureDraft.headline.trim(),
+
+          priceOptionId: existingCartItem?.priceOptionId ?? crypto.randomUUID(),
+
+          priceLabel: featureDraft.priceLabel.trim(),
+          price: Number(featureDraft.price),
+          units: Number(featureDraft.units),
+
+          selections: [],
+        },
+      } as Feature;
     } else if (selectedListing && selectedPriceOption) {
-      // Current product selected — rebuild cart data from the product.
       feature = {
         ...baseFeature,
         cartItem: {
@@ -194,7 +215,6 @@ export default function FeaturedDeals() {
         },
       } as Feature;
     } else if (existingFeature) {
-      // Editing legacy/unresolved data — preserve its existing relationship.
       feature = baseFeature as Feature;
     } else {
       return;
@@ -222,7 +242,14 @@ export default function FeaturedDeals() {
     }));
   };
 
-  const canSave = !!featureDraft?.headline.trim() && !!featureDraft?.image;
+  const canSave =
+    !!featureDraft?.headline.trim() &&
+    !!featureDraft?.image &&
+    (selectedListing
+      ? !!selectedPriceOption
+      : !!featureDraft?.priceLabel.trim() &&
+        Number(featureDraft?.price) > 0 &&
+        Number(featureDraft?.units) > 0);
 
   return (
     <>
@@ -242,9 +269,14 @@ export default function FeaturedDeals() {
             <>
               <div className="space-y-3">
                 {features.map((feature, index) => {
-                  const isLinkedProduct =
-                    ("cartItem" in feature && !!feature.cartItem) ||
-                    ("listingId" in feature && !!feature.listingId);
+                  const cartItem =
+                    "cartItem" in feature && feature.cartItem
+                      ? feature.cartItem
+                      : undefined;
+
+                  const isLinkedProduct = listings.some(
+                    (listing) => listing.id === cartItem?.listingId,
+                  );
 
                   return (
                     <div
@@ -276,7 +308,7 @@ export default function FeaturedDeals() {
                           <span>•</span>
 
                           <span>
-                            {isLinkedProduct ? "Linked Product" : "Standalone"}
+                            {isLinkedProduct ? "Linked Product" : "Custom Deal"}
                           </span>
                         </div>
                       </div>
@@ -370,7 +402,7 @@ export default function FeaturedDeals() {
                   onChange={(event) => handleListingChange(event.target.value)}
                   className="admin-select mt-2"
                 >
-                  <option value="">Standalone feature</option>
+                  <option value="">Custom featured deal</option>
 
                   {listings.map((listing) => (
                     <option key={listing.id} value={listing.id}>
@@ -379,7 +411,54 @@ export default function FeaturedDeals() {
                   ))}
                 </select>
               </div>
+              {!selectedListing && (
+                <div className="grid gap-4 sm:grid-cols-3">
+                  <div>
+                    <label className="admin-label text-white">Price</label>
 
+                    <input
+                      type="number"
+                      min="0"
+                      value={featureDraft.price}
+                      onChange={(event) =>
+                        updateFeatureDraft("price", event.target.value)
+                      }
+                      className="admin-input mt-2"
+                      placeholder="100"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="admin-label text-white">
+                      Price Label
+                    </label>
+
+                    <input
+                      value={featureDraft.priceLabel}
+                      onChange={(event) =>
+                        updateFeatureDraft("priceLabel", event.target.value)
+                      }
+                      className="admin-input mt-2"
+                      placeholder="28g"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="admin-label text-white">Units</label>
+
+                    <input
+                      type="number"
+                      min="1"
+                      value={featureDraft.units}
+                      onChange={(event) =>
+                        updateFeatureDraft("units", event.target.value)
+                      }
+                      className="admin-input mt-2"
+                      placeholder="28"
+                    />
+                  </div>
+                </div>
+              )}
               {selectedListing && (
                 <div>
                   <label className="admin-label text-white">Price Option</label>
