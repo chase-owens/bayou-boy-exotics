@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { fetchAuthSession } from "aws-amplify/auth";
-import { getHours } from "date-fns";
+import {
+  addDays,
+  getHours,
+  isAfter,
+  parseISO,
+  set,
+  startOfDay,
+} from "date-fns";
 import { CalendarClock, Gift, Package, Users } from "lucide-react";
 
 import PageHeader from "../components/layout/PageHeader";
@@ -25,6 +32,26 @@ type AccessRequest = {
 };
 
 const API_URL = import.meta.env.VITE_API_URL;
+
+const getMeetAt = (reservation: Reservation) => {
+  const submittedAt = parseISO(reservation.submittedAt);
+  const submittedDay = startOfDay(submittedAt);
+
+  let meetDay = submittedDay;
+
+  if (reservation.meet.dayLabel.toLowerCase() === "tomorrow") {
+    meetDay = addDays(submittedDay, 1);
+  }
+
+  const [hours, minutes] = reservation.meet.time.split(":").map(Number);
+
+  return set(meetDay, {
+    hours,
+    minutes,
+    seconds: 0,
+    milliseconds: 0,
+  });
+};
 
 const fetchPendingRequestCount = async (): Promise<number> => {
   const session = await fetchAuthSession();
@@ -117,7 +144,13 @@ export default function Dashboard() {
       .then(([unconfirmed, confirmed]) => {
         if (cancelled) return;
 
-        setUnconfirmedReservationCount(unconfirmed.length);
+        const now = new Date();
+
+        const upcomingUnconfirmed = unconfirmed.filter((reservation) =>
+          isAfter(getMeetAt(reservation), now),
+        );
+
+        setUnconfirmedReservationCount(upcomingUnconfirmed.length);
         setConfirmedReservations(confirmed);
       })
       .finally(() => {

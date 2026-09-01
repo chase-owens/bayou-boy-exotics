@@ -115,7 +115,13 @@ export default function Reservations() {
       fetchReservations("submitted"),
       fetchReservations("confirmed"),
     ]).then(([pending, confirmed]) => {
-      setPendingReservations(pending);
+      const now = new Date();
+
+      const upcomingPending = pending.filter((reservation) =>
+        isAfter(getMeetAt(reservation), now),
+      );
+
+      setPendingReservations(upcomingPending);
       setConfirmedReservations(confirmed);
     });
   }, []);
