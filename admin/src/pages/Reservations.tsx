@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { addDays, format, isAfter, parseISO, set, startOfDay } from "date-fns";
+import {
+  addDays,
+  format,
+  isAfter,
+  isToday,
+  parseISO,
+  set,
+  startOfDay,
+} from "date-fns";
 
 import type { Reservation } from "../../../shared/types/Reservation";
 
@@ -16,6 +24,8 @@ type ConfirmationDraft = {
   location: string;
   message: string;
 };
+
+type ReservationView = "upcoming" | "past";
 
 type ReservationGroup = {
   meetAt: Date;
@@ -41,17 +51,22 @@ const getMeetAt = (reservation: Reservation) => {
     milliseconds: 0,
   });
 };
-
 const groupReservationsByMeetTime = (
   reservations: Reservation[],
+  view: ReservationView,
 ): ReservationGroup[] => {
   const now = new Date();
   const groups = new Map<string, ReservationGroup>();
 
   reservations.forEach((reservation) => {
     const meetAt = getMeetAt(reservation);
+    const isUpcoming = isAfter(meetAt, now);
 
-    if (!isAfter(meetAt, now)) {
+    if (view === "upcoming" && !isUpcoming) {
+      return;
+    }
+
+    if (view === "past" && isUpcoming) {
       return;
     }
 
@@ -69,12 +84,18 @@ const groupReservationsByMeetTime = (
     });
   });
 
-  return Array.from(groups.values()).sort(
-    (a, b) => a.meetAt.getTime() - b.meetAt.getTime(),
+  return Array.from(groups.values()).sort((a, b) =>
+    view === "upcoming"
+      ? a.meetAt.getTime() - b.meetAt.getTime()
+      : b.meetAt.getTime() - a.meetAt.getTime(),
   );
 };
 
 export default function Reservations() {
+  type ReservationView = "upcoming" | "past";
+
+  const [reservationView, setReservationView] =
+    useState<ReservationView>("upcoming");
   const [pendingReservations, setPendingReservations] = useState<Reservation[]>(
     [],
   );
@@ -99,7 +120,10 @@ export default function Reservations() {
     });
   }, []);
 
-  const confirmedGroups = groupReservationsByMeetTime(confirmedReservations);
+  const confirmedGroups = groupReservationsByMeetTime(
+    confirmedReservations,
+    reservationView,
+  );
 
   const updateConfirmationDraft = (
     reservationId: string,
@@ -226,7 +250,7 @@ export default function Reservations() {
                 >
                   <div className="flex items-start justify-between gap-5">
                     <div>
-                      <p className="font-semibold text-white">
+                      <p className="font-semibold text-black">
                         {reservation.customerName}
                       </p>
 
@@ -234,22 +258,16 @@ export default function Reservations() {
                         {reservation.customerPhone}
                       </p>
 
-                      {reservation.customerEmail && (
-                        <p className="mt-1 text-sm text-white/70">
-                          {reservation.customerEmail}
-                        </p>
-                      )}
-
                       <p className="mt-3 text-sm font-semibold text-white">
                         {reservation.meet.dayLabel} · {reservation.meet.label}
                       </p>
 
-                      <p className="mt-1 text-xl font-bold text-white">
+                      <p className="mt-1 text-xl font-bold text-accent">
                         ${reservation.total}
                       </p>
                     </div>
 
-                    <span className="rounded-md border border-white/15 px-3 py-1 text-xs font-semibold text-white/70">
+                    <span className="rounded-md border border-white/15 px-3 py-1 text-xs font-semibold text-highlight">
                       Unconfirmed
                     </span>
                   </div>
@@ -336,18 +354,45 @@ export default function Reservations() {
 
         <section>
           <div className="mb-4 flex items-end justify-between gap-4">
-            <div>
+            <div className="flex flex-col gap-1 ">
               <h2 className="text-xl font-bold text-foreground">
                 Confirmed Reservations
               </h2>
 
-              <p className="mt-1 text-sm text-muted-dark">
-                Upcoming meet times
-              </p>
+              <div className="mb-4 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setReservationView("upcoming")}
+                  className={[
+                    "rounded-vintage px-4 py-2 text-sm font-semibold transition",
+                    reservationView === "upcoming"
+                      ? "bg-secondary text-accent"
+                      : "border border-border bg-white text-muted-dark hover:border-accent",
+                  ].join(" ")}
+                >
+                  Upcoming
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setReservationView("past")}
+                  className={[
+                    "rounded-vintage px-4 py-2 text-sm font-semibold transition",
+                    reservationView === "past"
+                      ? "bg-secondary text-accent"
+                      : "border border-border bg-white text-muted-dark hover:border-accent",
+                  ].join(" ")}
+                >
+                  Past
+                </button>
+              </div>
             </div>
 
             <span className="rounded-vintage border border-border bg-white px-3 py-1 text-sm font-semibold text-muted-dark">
-              {confirmedReservations.length}
+              {confirmedGroups.reduce(
+                (total, group) => total + group.reservations.length,
+                0,
+              )}
             </span>
           </div>
 
@@ -355,75 +400,84 @@ export default function Reservations() {
             {confirmedGroups.length === 0 && (
               <div className="admin-card p-5">
                 <p className="text-sm text-white/60">
-                  No upcoming confirmed reservations.
+                  {reservationView === "upcoming"
+                    ? "No upcoming confirmed reservations."
+                    : "No past confirmed reservations."}
                 </p>
               </div>
             )}
 
-            {confirmedGroups.map((group) => (
-              <div
-                key={group.meetAt.toISOString()}
-                className="admin-card w-full p-5"
-              >
-                <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-white/50">
-                      {format(group.meetAt, "EEEE, MMMM d")}
-                    </p>
+            {confirmedGroups.map((group) => {
+              const groupTotal = group.reservations.reduce(
+                (total, reservation) => total + reservation.total,
+                0,
+              );
+              return (
+                <div
+                  key={group.meetAt.toISOString()}
+                  className="admin-card w-full p-5"
+                >
+                  <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-highlight">
+                        {isToday(group.meetAt)
+                          ? "Today"
+                          : format(group.meetAt, "EEEE, MMMM d")}
+                      </p>
 
-                    <h3 className="mt-1 text-2xl font-bold text-white">
-                      {format(group.meetAt, "h:mm a")}
-                    </h3>
+                      <h3 className="mt-1 text-2xl font-bold text-black">
+                        {format(group.meetAt, "h:mm a")}
+                      </h3>
+                    </div>
+
+                    <div className="flex gap-3">
+                      <span className="rounded-md border border-white/15 px-3 py-1 text-xs font-semibold text-accent">
+                        {group.reservations.length}{" "}
+                        {group.reservations.length === 1
+                          ? "reservation"
+                          : "reservations"}
+                      </span>
+                      <span className="rounded-md border border-white/15 px-3 py-1 text-xs font-semibold text-black">
+                        ${groupTotal}
+                      </span>
+                    </div>
                   </div>
 
-                  <span className="rounded-md border border-white/15 px-3 py-1 text-xs font-semibold text-white/70">
-                    {group.reservations.length}{" "}
-                    {group.reservations.length === 1
-                      ? "reservation"
-                      : "reservations"}
-                  </span>
-                </div>
-
-                <div className="divide-y divide-white/10">
-                  {group.reservations.map((reservation) => (
-                    <div
-                      key={reservation.reservationId}
-                      className="py-5 first:pt-5 last:pb-0"
-                    >
-                      <div className="flex items-start justify-between gap-5">
-                        <div>
-                          <p className="font-semibold text-white">
-                            {reservation.customerName}
-                          </p>
-
-                          <p className="mt-1 text-sm text-white/70">
-                            {reservation.customerPhone}
-                          </p>
-
-                          {reservation.customerEmail && (
-                            <p className="mt-1 text-sm text-white/70">
-                              {reservation.customerEmail}
+                  <div className="divide-y divide-white/10">
+                    {group.reservations.map((reservation) => (
+                      <div
+                        key={reservation.reservationId}
+                        className="py-5 first:pt-5 last:pb-0"
+                      >
+                        <div className="flex items-start justify-between gap-5">
+                          <div>
+                            <p className="font-semibold text-black">
+                              {reservation.customerName}
                             </p>
-                          )}
+
+                            <p className="mt-1 text-sm text-accent">
+                              {reservation.customerPhone}
+                            </p>
+                          </div>
+
+                          <p className="text-xl font-bold text-white">
+                            ${reservation.total}
+                          </p>
                         </div>
 
-                        <p className="text-xl font-bold text-white">
-                          ${reservation.total}
-                        </p>
+                        <div className="mt-4">
+                          {reservation.items.map((item) => (
+                            <p key={item.id} className="text-sm text-white/80">
+                              {item.listingName} — {item.priceLabel}
+                            </p>
+                          ))}
+                        </div>
                       </div>
-
-                      <div className="mt-4">
-                        {reservation.items.map((item) => (
-                          <p key={item.id} className="text-sm text-white/80">
-                            {item.listingName} — {item.priceLabel}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       </div>

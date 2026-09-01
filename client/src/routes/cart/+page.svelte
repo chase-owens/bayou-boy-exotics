@@ -37,13 +37,13 @@
 			}
 		};
 		try {
-			submitReservation(payload);
+			await submitReservation(payload);
 
 			isSuccess = true;
-			cart.clear();
 
 			setTimeout(() => {
 				isSuccess = false;
+				cart.clear();
 			}, 5000);
 		} catch (err) {
 			error = err instanceof Error ? err.message : 'Reservation failed to send';
