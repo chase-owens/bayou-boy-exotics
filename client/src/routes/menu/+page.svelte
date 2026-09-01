@@ -28,7 +28,7 @@
 		activeListings.filter((listing) => listing.categoryId === categoryId);
 </script>
 
-<Header listingsCount={activeListings.length} />
+<Header />
 
 {#if isSoldOut}
 	<div class="flex flex-col gap-8 px-4 pt-8 sm:px-6 lg:px-8"><SoldOutCard /></div>

@@ -72,11 +72,11 @@
 					</span>
 				</a>
 
-				<div class="hidden w-12 justify-end sm:flex">
+				<div class="relative hidden w-12 justify-end sm:flex">
 					<a href="/cart"
 						><Briefcase class="h-10 text-accent opacity-80" />
 						{#if cart.count > 0}<span
-								class="absolute top-4 right-3 rounded-full bg-white px-2 py-1 text-xs font-bold text-black"
+								class="absolute -top-1 -right-3 rounded-full bg-white px-2 py-1 text-xs font-bold text-black"
 								>{cart.count}</span
 							>{/if}</a
 					>

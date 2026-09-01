@@ -14,6 +14,7 @@ type Reservation = {
 
   customerName: string;
   customerPhone: string;
+  customerEmail: string;
 
   items: CartItem[];
   total: number;

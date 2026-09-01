@@ -1,12 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { fetchAuthSession } from "aws-amplify/auth";
 import { getHours } from "date-fns";
-import { Gift, Package, Users } from "lucide-react";
+import { CalendarClock, Gift, Package, Users } from "lucide-react";
 
 import PageHeader from "../components/layout/PageHeader";
 import AdminCard from "../components/ui/AdminCard";
 import StatCard from "../components/ui/StatCard";
 import { useDraft } from "../context/draft/useDraft";
+import { fetchReservations } from "../api/reservations";
+import type { Reservation } from "../../../shared/types/Reservation";
+import ConfirmedReservationGroups from "../components/ui/ConfirmedReservationGroups";
 
 const fileLabels = {
   availability: "Availability",
@@ -59,6 +62,15 @@ export default function Dashboard() {
     publishSucceeded,
   } = useDraft();
 
+  const [unconfirmedReservationCount, setUnconfirmedReservationCount] =
+    useState(0);
+
+  const [confirmedReservations, setConfirmedReservations] = useState<
+    Reservation[]
+  >([]);
+
+  const [isReservationsLoading, setIsReservationsLoading] = useState(true);
+
   const [pendingRequestCount, setPendingRequestCount] = useState(0);
   const [isPendingLoading, setIsPendingLoading] = useState(true);
 
@@ -95,6 +107,30 @@ export default function Dashboard() {
     };
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+
+    void Promise.all([
+      fetchReservations("submitted"),
+      fetchReservations("confirmed"),
+    ])
+      .then(([unconfirmed, confirmed]) => {
+        if (cancelled) return;
+
+        setUnconfirmedReservationCount(unconfirmed.length);
+        setConfirmedReservations(confirmed);
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setIsReservationsLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <>
       <PageHeader
@@ -105,7 +141,7 @@ export default function Dashboard() {
         description="Here's what's happening with Bayou Boy Exotics."
       />
 
-      <div className="grid gap-5 lg:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           label="Pending Requests"
           value={pendingRequestCount}
@@ -113,6 +149,15 @@ export default function Dashboard() {
           actionLabel="View all"
           to="/users"
           isLoading={isPendingLoading}
+        />
+
+        <StatCard
+          label="Unconfirmed Reservations"
+          value={unconfirmedReservationCount}
+          icon={CalendarClock}
+          actionLabel="View"
+          to="/reservations"
+          isLoading={isReservationsLoading}
         />
 
         <StatCard
@@ -134,11 +179,18 @@ export default function Dashboard() {
         />
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <AdminCard>
-          <p className="admin-eyebrow">Recent Activity</p>
-          <h2 className="mt-2 text-2xl">Latest Updates</h2>
-        </AdminCard>
+      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+        <div>
+          <div className="mb-4">
+            <p className="admin-eyebrow">Schedule</p>
+            <h2 className="mt-2 text-2xl">Upcoming Reservations</h2>
+          </div>
+
+          <ConfirmedReservationGroups
+            reservations={confirmedReservations}
+            limit={3}
+          />
+        </div>
 
         <AdminCard>
           <div className="flex h-full items-center justify-between gap-6">
