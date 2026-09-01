@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, isToday } from "date-fns";
 import { CalendarClock } from "lucide-react";
 
 import type { Reservation } from "../../../../shared/types/Reservation";
@@ -30,61 +30,77 @@ export default function ConfirmedReservationGroups({
 
   return (
     <div className="flex flex-col gap-5">
-      {visibleGroups.map((group) => (
-        <DataCard
-          key={group.meetAt.toISOString()}
-          eyebrow={format(group.meetAt, "EEEE, MMMM d")}
-          icon={CalendarClock}
-        >
-          <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
-            <h3 className="text-2xl font-bold text-white">
-              {format(group.meetAt, "h:mm a")}
-            </h3>
+      {visibleGroups.map((group) => {
+        const groupTotal = group.reservations.reduce(
+          (total, reservation) => total + reservation.total,
+          0,
+        );
+        return (
+          <div
+            key={group.meetAt.toISOString()}
+            className="admin-card w-full p-5"
+          >
+            <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-highlight">
+                  {isToday(group.meetAt)
+                    ? "Today"
+                    : format(group.meetAt, "EEEE, MMMM d")}
+                </p>
 
-            <span className="rounded-md border border-white/15 px-3 py-1 text-xs font-semibold text-white/70">
-              {group.reservations.length}{" "}
-              {group.reservations.length === 1 ? "reservation" : "reservations"}
-            </span>
-          </div>
+                <h3 className="mt-1 text-2xl font-bold text-black">
+                  {format(group.meetAt, "h:mm a")}
+                </h3>
+              </div>
 
-          <div className="divide-y divide-white/10">
-            {group.reservations.map((reservation) => (
-              <div
-                key={reservation.reservationId}
-                className="py-4 first:pt-4 last:pb-0"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="font-semibold text-white">
-                      {reservation.customerName}
-                    </p>
+              <div className="flex gap-3">
+                <span className="rounded-md border border-white/15 px-3 py-1 text-xs font-semibold text-accent">
+                  {group.reservations.length}{" "}
+                  {group.reservations.length === 1
+                    ? "reservation"
+                    : "reservations"}
+                </span>
+                <span className="rounded-md border border-white/15 px-3 py-1 text-xs font-semibold text-black">
+                  ${groupTotal}
+                </span>
+              </div>
+            </div>
 
-                    <p className="mt-1 text-sm text-white/60">
-                      {reservation.customerPhone}
+            <div className="divide-y divide-white/10">
+              {group.reservations.map((reservation) => (
+                <div
+                  key={reservation.reservationId}
+                  className="py-5 first:pt-5 last:pb-0"
+                >
+                  <div className="flex items-start justify-between gap-5">
+                    <div>
+                      <p className="font-semibold text-black">
+                        {reservation.customerName}
+                      </p>
+
+                      <p className="mt-1 text-sm text-accent">
+                        {reservation.customerPhone}
+                      </p>
+                    </div>
+
+                    <p className="text-xl font-bold text-white">
+                      ${reservation.total}
                     </p>
                   </div>
 
-                  <p className="font-bold text-white">${reservation.total}</p>
+                  <div className="mt-4">
+                    {reservation.items.map((item) => (
+                      <p key={item.id} className="text-sm text-white/80">
+                        {item.listingName} — {item.priceLabel}
+                      </p>
+                    ))}
+                  </div>
                 </div>
-
-                <div className="mt-3">
-                  {reservation.items.map((item) => (
-                    <p key={item.id} className="text-sm text-white/75">
-                      {item.listingName} — {item.priceLabel}
-                    </p>
-                  ))}
-                </div>
-
-                {reservation.meetupAddress && (
-                  <p className="mt-3 text-sm text-white/60">
-                    {reservation.meetupAddress}
-                  </p>
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </DataCard>
-      ))}
+        );
+      })}
     </div>
   );
 }
