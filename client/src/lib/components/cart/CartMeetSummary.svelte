@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Arrow from '../../assets/icons/Arrow.svelte';
+	import ReservationSuccess from '../ui/ReservationSuccess.svelte';
 
 	type CartMeetSummaryProps = {
 		error: string;
@@ -81,4 +82,6 @@
 			{/if}
 		</div>
 	</div>
+
+	<ReservationSuccess open={!!isSuccess} onClose={() => {}} />
 </section>

@@ -32,6 +32,7 @@
 	);
 
 	const canEdit = $derived(existingCartItem?.selections.length);
+	console.log('🚀 ~ canEdit:', canEdit);
 
 	let hasInitialized = $state(false);
 
@@ -143,6 +144,7 @@
 		const totalUnits = hasOptions
 			? selectedOptions.reduce((acc, cur) => {
 					const currUnits = (acc += cur.units);
+					console.log('🚀 ~ addToCart ~ currUnits:', currUnits);
 					return acc;
 				}, 0)
 			: 1;
@@ -173,6 +175,7 @@
 	const isInBag = $derived(
 		selectedPriceOption ? cart.hasItem(listing.id, selectedPriceOption?.id) : false
 	);
+	console.log('🚀 ~ isInBag:', isInBag);
 
 	const buttonLabel = $derived(
 		existingCartItem

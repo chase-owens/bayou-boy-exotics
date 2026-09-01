@@ -1,5 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
+import * as iam from "aws-cdk-lib/aws-iam";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
@@ -557,6 +558,19 @@ export class InfraStack extends cdk.Stack {
       },
     );
 
+    // Location Lambdas
+    const autocompleteAddressLambda = new lambda.Function(
+      this,
+      "AutocompleteAddressLambda",
+      {
+        runtime: lambda.Runtime.NODEJS_22_X,
+        handler: "autocomplete.handler",
+        code: lambda.Code.fromAsset(
+          path.join(__dirname, "../../lambdas/dist/admin/places"),
+        ),
+      },
+    );
+
     // Content Permissions
     contentBucket.grantWrite(updateAvailabilityLambda);
     contentBucket.grantWrite(updateHomeLambda);
@@ -569,6 +583,34 @@ export class InfraStack extends cdk.Stack {
     this.reservationsTable.grantReadData(listReservationsLambda);
     this.reservationsTable.grantReadWriteData(confirmReservationLambda);
 
+    autocompleteAddressLambda.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ["geo-places:Autocomplete"],
+        resources: ["*"],
+      }),
+    );
+
+    confirmReservationLambda.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ["sns:Publish"],
+        resources: ["*"],
+      }),
+    );
+
+    createReservationLambda.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ["sns:Publish"],
+        resources: ["*"],
+      }),
+    );
+
+    confirmReservationLambda.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ["ses:SendEmail"],
+        resources: ["*"],
+      }),
+    );
+
     // API Resources
     const accessRequests = api.root.addResource("access-requests");
     const reservations = api.root.addResource("reservations");
@@ -578,6 +620,7 @@ export class InfraStack extends cdk.Stack {
     const adminContent = admin.addResource("content");
     const adminImages = admin.addResource("images");
     const adminReservations = admin.addResource("reservations");
+    const adminPlaces = admin.addResource("places");
 
     // Client Access Request Routes
     accessRequests.addMethod(
@@ -708,6 +751,17 @@ export class InfraStack extends cdk.Stack {
       .addMethod(
         "PATCH",
         new apigateway.LambdaIntegration(confirmReservationLambda),
+        {
+          authorizationType: apigateway.AuthorizationType.COGNITO,
+          authorizer: adminAuthorizer,
+        },
+      );
+
+    adminPlaces
+      .addResource("autocomplete")
+      .addMethod(
+        "GET",
+        new apigateway.LambdaIntegration(autocompleteAddressLambda),
         {
           authorizationType: apigateway.AuthorizationType.COGNITO,
           authorizer: adminAuthorizer,

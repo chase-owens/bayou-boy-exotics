@@ -1,11 +1,10 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, QueryCommand } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
 const TABLE_NAME = process.env.RESERVATIONS_TABLE_NAME!;
-const STATUS_INDEX_NAME = process.env.STATUS_INDEX_NAME ?? "status-index";
 
 const allowedStatuses = new Set([
   "submitted",
@@ -25,15 +24,38 @@ const getCorsHeaders = (origin?: string) => ({
       ? origin
       : "https://admin.bayouboyexotics.com",
   "Access-Control-Allow-Headers": "Content-Type,Authorization",
-  "Access-Control-Allow-Methods": "GET,OPTIONS",
+  "Access-Control-Allow-Methods": "PATCH,OPTIONS",
 });
 
 export const handler = async (event: any) => {
   const origin = event.headers?.origin ?? event.headers?.Origin;
   const headers = getCorsHeaders(origin);
 
-  const status =
-    event.queryStringParameters?.status?.toLowerCase() ?? "submitted";
+  const adminUserId = event.requestContext.authorizer?.claims?.sub;
+  const reservationId = event.pathParameters?.reservationId;
+
+  if (!adminUserId) {
+    return {
+      statusCode: 401,
+      headers,
+      body: JSON.stringify({
+        message: "Unauthorized",
+      }),
+    };
+  }
+
+  if (!reservationId) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({
+        message: "Missing reservationId",
+      }),
+    };
+  }
+
+  const body = JSON.parse(event.body ?? "{}");
+  const status = body.status;
 
   if (!allowedStatuses.has(status)) {
     return {
@@ -47,11 +69,18 @@ export const handler = async (event: any) => {
 
   try {
     const result = await docClient.send(
-      new QueryCommand({
+      new UpdateCommand({
         TableName: TABLE_NAME,
-        IndexName: STATUS_INDEX_NAME,
 
-        KeyConditionExpression: "#status = :status",
+        Key: {
+          reservationId,
+        },
+
+        UpdateExpression: `
+          SET #status = :status,
+              updatedAt = :updatedAt,
+              updatedBy = :updatedBy
+        `,
 
         ExpressionAttributeNames: {
           "#status": "status",
@@ -59,10 +88,11 @@ export const handler = async (event: any) => {
 
         ExpressionAttributeValues: {
           ":status": status,
+          ":updatedAt": new Date().toISOString(),
+          ":updatedBy": adminUserId,
         },
 
-        // newest reservations first
-        ScanIndexForward: false,
+        ReturnValues: "ALL_NEW",
       }),
     );
 
@@ -70,17 +100,17 @@ export const handler = async (event: any) => {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        reservations: result.Items ?? [],
+        reservation: result.Attributes,
       }),
     };
   } catch (error) {
-    console.error("Failed to list reservations", error);
+    console.error("Failed to update reservation status", error);
 
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
-        message: "Failed to load reservations",
+        message: "Failed to update reservation status",
       }),
     };
   }

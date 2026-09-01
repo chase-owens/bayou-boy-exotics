@@ -6,6 +6,7 @@ type AuthUser = {
 	username: string;
 	email?: string;
 	name?: string;
+	phone?: string;
 };
 
 type AccessStatus = 'pending' | 'approved' | 'denied';
@@ -27,7 +28,8 @@ const createAuth = () => {
 				userId: currentUser.userId,
 				username: currentUser.username,
 				email: attributes.email,
-				name: attributes.name
+				name: attributes.name,
+				phone: attributes.phone_number
 			};
 
 			isAuthenticated = true;

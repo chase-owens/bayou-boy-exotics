@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { submitReservation } from '$lib/api/reservations';
+	import CartMeetSummary from '$lib/components/cart/CartMeetSummary.svelte';
 	import CartItem from '../../lib/components/cart/CartItem.svelte';
-	import CartMeetSummary from '../../lib/components/cart/CartMeetSummary.svelte';
 	import MeetTimesCard from '../../lib/components/MeetTimesCard.svelte';
 	import { cart } from '../../lib/stores/cart.svelte';
 	import type { PageData } from './$types';
@@ -18,13 +18,13 @@
 	let error = $state('');
 
 	const selectedMeet = $derived(
-		meetTimesDisplay?.meets.find((meet) => meet.time === selectedMeetTime) ?? null
+		meetTimesDisplay?.meets.find((meet) => meet.label === selectedMeetTime) ?? null
 	);
 
 	const canContinue = $derived(cart.items.length > 0 && Boolean(selectedMeet));
 
 	const handleSubmit = async () => {
-		if (!selectedMeet || !meetTimesDisplay || !canContinue) return;
+		if (!selectedMeet || meetTimesDisplay === null || !canContinue) return;
 
 		error = '';
 		const payload = {
@@ -36,11 +36,12 @@
 				label: selectedMeet.label
 			}
 		};
-
 		try {
 			submitReservation(payload);
 
 			isSuccess = true;
+			cart.clear();
+
 			setTimeout(() => {
 				isSuccess = false;
 			}, 5000);

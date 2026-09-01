@@ -1,9 +1,9 @@
 <script lang="ts">
-	type HeaderProps = {
-		listingsCount: number;
-	};
+	// type HeaderProps = {
+	// 	listingsCount: number;
+	// };
 
-	const { listingsCount }: HeaderProps = $props();
+	// const { listingsCount }: HeaderProps = $props();
 </script>
 
 <section class="relative overflow-hidden bg-black shadow-soft">
