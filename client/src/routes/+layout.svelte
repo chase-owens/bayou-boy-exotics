@@ -12,7 +12,7 @@
 	import { resolve } from '$app/paths';
 
 	const anonymousOnlyRoutes = ['/sign-up', '/confirm-sign-up', '/login'];
-	const protectedRoutes = ['/', '/cart', '/menu'];
+	const protectedRoutes = ['/', '/cart', '/menu', '/reservations'];
 
 	const isProtectedRoute = (pathname: string) =>
 		protectedRoutes.some(

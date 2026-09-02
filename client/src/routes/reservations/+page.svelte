@@ -8,6 +8,7 @@
 	import Calendar from '$lib/assets/icons/Calendar.svelte';
 	import Clock from '$lib/assets/icons/Clock.svelte';
 	import Ticket from '$lib/assets/icons/Ticket.svelte';
+	import { auth } from '$lib/stores/auth.svelte';
 
 	let reservations = $state<Reservation[]>([]);
 	let view = $state<'upcoming' | 'past'>('upcoming');
@@ -110,20 +111,31 @@
 </svelte:head>
 
 <section class="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
-	<div class="mb-8">
-		<p class="mb-2 text-xs font-semibold tracking-[0.32em] text-accent uppercase">Your Account</p>
+	<header class="mb-10">
+		<p class="mb-3 text-xs font-semibold tracking-[0.35em] text-accent uppercase">Your Account</p>
 
-		<h1 class="text-3xl font-bold sm:text-4xl">Reservations</h1>
+		<div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+			<div>
+				<h1 class="text-3xl font-bold sm:text-4xl">Reservations</h1>
 
-		<p class="mt-3 max-w-2xl text-sm leading-6 text-muted">
-			Keep track of your upcoming reservations and review your reservation history.
-		</p>
-	</div>
+				<p class="mt-3 max-w-xl text-sm leading-6 text-muted">
+					Keep track of your upcoming reservations and review your reservation history.
+				</p>
+			</div>
+
+			<p class="text-sm text-muted">
+				Welcome back,
+				<span class="font-semibold text-foreground">
+					{auth.user?.name ?? auth.user?.username}
+				</span>
+			</p>
+		</div>
+	</header>
 
 	<div class="mb-7 grid grid-cols-2 rounded-vintage border border-border bg-black/20 p-1">
 		<button
 			type="button"
-			on:click={() => (view = 'upcoming')}
+			onclick={() => (view = 'upcoming')}
 			class="rounded-lg px-4 py-3 text-sm font-semibold transition"
 			class:bg-surface={view === 'upcoming'}
 			class:text-accent={view === 'upcoming'}
@@ -137,7 +149,7 @@
 
 		<button
 			type="button"
-			on:click={() => (view = 'past')}
+			onclick={() => (view = 'past')}
 			class="rounded-lg px-4 py-3 text-sm font-semibold transition"
 			class:bg-surface={view === 'past'}
 			class:text-accent={view === 'past'}

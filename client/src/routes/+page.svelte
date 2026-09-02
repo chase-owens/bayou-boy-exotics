@@ -6,6 +6,7 @@
 	import FeaturedDeals from '$lib/components/ui/FeaturedDeals.svelte';
 	import ShopCta from '$lib/components/home/ShopCta.svelte';
 	import { isFuture, parseISO } from 'date-fns';
+	import { auth } from '$lib/stores/auth.svelte.js';
 
 	const isRaffleActive = (drawAt: string) => isFuture(parseISO(drawAt));
 
@@ -35,6 +36,14 @@
 
 <Hero hero={home.hero} />
 <div class="flex flex-col gap-8 px-4 pt-8 sm:px-6 lg:px-8">
+	<div class="mb-4 flex items-center justify-between">
+		<p class="text-sm text-muted">
+			Welcome back,
+			<span class="font-semibold text-accent">
+				{auth.user?.name ?? auth.user?.username}
+			</span>
+		</p>
+	</div>
 	<MeetTimesCard {meetTimesDisplay} />
 	<FeaturedDeals features={home.features} tintHeaderIcon />
 	<AvailabilityCalendar {...calendarProps} />
