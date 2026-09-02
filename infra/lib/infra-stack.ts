@@ -511,6 +511,17 @@ export class InfraStack extends cdk.Stack {
       },
     });
 
+    const deleteImageLambda = new lambda.Function(this, "DeleteImageLambda", {
+      runtime: lambda.Runtime.NODEJS_22_X,
+      handler: "delete.handler",
+      code: lambda.Code.fromAsset(
+        path.join(__dirname, "../../lambdas/dist/admin/images"),
+      ),
+      environment: {
+        CONTENT_BUCKET_NAME: contentBucket.bucketName,
+      },
+    });
+
     // Reservations Lambdas
     const createReservationLambda = new lambda.Function(
       this,
@@ -608,6 +619,7 @@ export class InfraStack extends cdk.Stack {
     contentBucket.grantWrite(updateRootLambda);
     contentBucket.grantRead(listImagesLambda);
     contentBucket.grantWrite(uploadImagesLambda);
+    contentBucket.grantDelete(deleteImageLambda);
 
     this.reservationsTable.grantWriteData(createReservationLambda);
     this.reservationsTable.grantReadData(listReservationsLambda);
@@ -725,6 +737,15 @@ export class InfraStack extends cdk.Stack {
     adminImages.addMethod(
       "POST",
       new apigateway.LambdaIntegration(uploadImagesLambda),
+      {
+        authorizationType: apigateway.AuthorizationType.COGNITO,
+        authorizer: adminAuthorizer,
+      },
+    );
+
+    adminImages.addMethod(
+      "DELETE",
+      new apigateway.LambdaIntegration(deleteImageLambda),
       {
         authorizationType: apigateway.AuthorizationType.COGNITO,
         authorizer: adminAuthorizer,

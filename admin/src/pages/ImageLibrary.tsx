@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { format } from "date-fns";
-import { ImagePlus, LoaderCircle } from "lucide-react";
+import { ImagePlus, LoaderCircle, Trash2 } from "lucide-react";
 
 import PageHeader from "../components/layout/PageHeader";
 import { fetchImages, uploadImages, type ImageLibraryResponse } from "../api";
+import { deleteImage } from "../api/deleteImage";
 
 const UUID_PREFIX =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}-/i;
@@ -20,6 +21,7 @@ export default function ImageLibrary() {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [deletingKey, setDeletingKey] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -70,6 +72,34 @@ export default function ImageLibrary() {
     } finally {
       setIsUploading(false);
       event.target.value = "";
+    }
+  };
+
+  const handleDeleteImage = async (key: string) => {
+    const confirmed = window.confirm(
+      "Delete this image? This cannot be undone.",
+    );
+
+    if (!confirmed) return;
+
+    setDeletingKey(key);
+    setError("");
+
+    try {
+      await deleteImage(key);
+
+      setLibrary((current) => {
+        if (!current) return current;
+
+        return {
+          ...current,
+          images: current.images.filter((image) => image.key !== key),
+        };
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to delete image.");
+    } finally {
+      setDeletingKey(null);
     }
   };
 
@@ -130,16 +160,32 @@ export default function ImageLibrary() {
                 />
               </div>
 
-              <div className="p-4">
-                <p className="truncate text-sm font-semibold text-white">
-                  {getImageName(image.name)}
-                </p>
-
-                {image.lastModified && (
-                  <p className="mt-1 text-xs text-white/60">
-                    {format(new Date(image.lastModified), "MMM d, yyyy")}
+              <div className="flex items-start justify-between gap-3 p-4">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-white">
+                    {getImageName(image.name)}
                   </p>
-                )}
+
+                  {image.lastModified && (
+                    <p className="mt-1 text-xs text-white/60">
+                      {format(new Date(image.lastModified), "MMM d, yyyy")}
+                    </p>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  title="Delete image"
+                  disabled={deletingKey === image.key}
+                  onClick={() => void handleDeleteImage(image.key)}
+                  className="shrink-0 rounded-md p-2 text-white/50 transition hover:bg-error/15 hover:text-error disabled:opacity-50"
+                >
+                  {deletingKey === image.key ? (
+                    <LoaderCircle className="size-4 animate-spin" />
+                  ) : (
+                    <Trash2 className="size-4 text-error" />
+                  )}
+                </button>
               </div>
             </article>
           ))}
