@@ -43,6 +43,7 @@ export const fetchReservations = async (
 
 export const cancelReservation = async (
   reservationId: string,
+  message = "cancel reason unknown",
 ): Promise<Reservation> => {
   const session = await fetchAuthSession();
   const token = session.tokens?.idToken?.toString();
@@ -56,8 +57,10 @@ export const cancelReservation = async (
     {
       method: "PATCH",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({ message }),
     },
   );
 
@@ -103,6 +106,41 @@ export const confirmReservation = async (
     const data = await response.json().catch(() => null);
 
     throw new Error(data?.message ?? "Failed to confirm reservation");
+  }
+
+  const data = await response.json();
+
+  return data.reservation;
+};
+
+export const completeReservation = async (
+  reservationId: string,
+): Promise<Reservation> => {
+  const session = await fetchAuthSession();
+  const token = session.tokens?.idToken?.toString();
+
+  if (!token) {
+    throw new Error("Unable to load admin session.");
+  }
+
+  const response = await fetch(
+    `${API_URL}admin/reservations/${reservationId}/status`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        status: "completed",
+      }),
+    },
+  );
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => null);
+
+    throw new Error(data?.message ?? "Failed to complete reservation");
   }
 
   const data = await response.json();

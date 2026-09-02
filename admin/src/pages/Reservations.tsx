@@ -13,12 +13,14 @@ import type { Reservation } from "../../../shared/types/Reservation";
 
 import {
   cancelReservation,
+  completeReservation,
   confirmReservation,
   fetchReservations,
 } from "../api/reservations";
 
 import PageHeader from "../components/layout/PageHeader";
 import AddressAutocomplete from "../components/ui/AddressAutomplete";
+import { Check, XIcon } from "lucide-react";
 
 type ConfirmationDraft = {
   location: string;
@@ -185,10 +187,15 @@ export default function Reservations() {
   };
 
   const handleCancel = async (reservationId: string) => {
+    const draft = confirmationDrafts[reservationId];
+    const message = draft?.message.trim();
+
+    if (!message) return;
+
     setUpdatingId(reservationId);
 
     try {
-      await cancelReservation(reservationId);
+      await cancelReservation(reservationId, message);
 
       setPendingReservations((current) =>
         current.filter(
@@ -201,6 +208,41 @@ export default function Reservations() {
         delete next[reservationId];
         return next;
       });
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
+  const handlePastCancel = async (reservationId: string) => {
+    setUpdatingId(reservationId);
+
+    try {
+      await cancelReservation(
+        reservationId,
+        "Reservation cancelled after scheduled meet time.",
+      );
+
+      setConfirmedReservations((current) =>
+        current.filter(
+          (reservation) => reservation.reservationId !== reservationId,
+        ),
+      );
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
+  const handleComplete = async (reservationId: string) => {
+    setUpdatingId(reservationId);
+
+    try {
+      await completeReservation(reservationId);
+
+      setConfirmedReservations((current) =>
+        current.filter(
+          (reservation) => reservation.reservationId !== reservationId,
+        ),
+      );
     } finally {
       setUpdatingId(null);
     }
@@ -342,7 +384,7 @@ export default function Reservations() {
 
                       <button
                         type="button"
-                        disabled={isUpdating}
+                        disabled={!draft.message.trim() || isUpdating}
                         onClick={() =>
                           void handleCancel(reservation.reservationId)
                         }
@@ -457,18 +499,54 @@ export default function Reservations() {
                       >
                         <div className="flex items-start justify-between gap-5">
                           <div>
-                            <p className="font-semibold text-black">
-                              {reservation.customerName}
-                            </p>
+                            <div>
+                              <p className="font-semibold text-black">
+                                {reservation.customerName}
+                              </p>
 
-                            <p className="mt-1 text-sm text-accent">
-                              {reservation.customerPhone}
+                              <p className="mt-1 text-sm text-accent">
+                                {reservation.customerPhone}
+                              </p>
+                            </div>
+
+                            <p className="text-xl font-bold text-white">
+                              ${reservation.total}
                             </p>
                           </div>
 
-                          <p className="text-xl font-bold text-white">
-                            ${reservation.total}
-                          </p>
+                          {reservationView === "past" && (
+                            <div className="mt-4 flex gap-3">
+                              <button
+                                type="button"
+                                disabled={
+                                  updatingId === reservation.reservationId
+                                }
+                                onClick={() =>
+                                  void handlePastCancel(
+                                    reservation.reservationId,
+                                  )
+                                }
+                                className="flex items-center gap-2 rounded-md border border-white/15 px-3 py-1 text-xs font-semibold text-error disabled:opacity-50"
+                              >
+                                <XIcon className="size-4" />
+                                <span>Cancel</span>
+                              </button>
+
+                              <button
+                                type="button"
+                                disabled={
+                                  updatingId === reservation.reservationId
+                                }
+                                onClick={() =>
+                                  void handleComplete(reservation.reservationId)
+                                }
+                                className="flex items-center gap-2 rounded-md border border-white/15 px-3 py-1 text-xs font-semibold text-accent disabled:opacity-50"
+                              >
+                                <Check className="size-4" />
+                                <span>Complete</span>
+                              </button>
+                            </div>
+                          )}
                         </div>
 
                         <div className="mt-4">

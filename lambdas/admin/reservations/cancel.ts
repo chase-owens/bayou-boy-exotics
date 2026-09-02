@@ -1,12 +1,12 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import { SNSClient, PublishCommand } from "@aws-sdk/client-sns";
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
+const sns = new SNSClient({});
 
 const TABLE_NAME = process.env.RESERVATIONS_TABLE_NAME!;
-
-const allowedStatuses = new Set(["completed"]);
 
 const allowedOrigins = new Set([
   "http://localhost:5174",
@@ -33,9 +33,7 @@ export const handler = async (event: any) => {
     return {
       statusCode: 401,
       headers,
-      body: JSON.stringify({
-        message: "Unauthorized",
-      }),
+      body: JSON.stringify({ message: "Unauthorized" }),
     };
   }
 
@@ -43,21 +41,19 @@ export const handler = async (event: any) => {
     return {
       statusCode: 400,
       headers,
-      body: JSON.stringify({
-        message: "Missing reservationId",
-      }),
+      body: JSON.stringify({ message: "Missing reservationId" }),
     };
   }
 
   const body = JSON.parse(event.body ?? "{}");
-  const status = body.status;
+  const cancellationMessage = body.message?.trim();
 
-  if (!allowedStatuses.has(status)) {
+  if (!cancellationMessage) {
     return {
       statusCode: 400,
       headers,
       body: JSON.stringify({
-        message: "Invalid reservation status",
+        message: "Cancellation message is required",
       }),
     };
   }
@@ -72,9 +68,10 @@ export const handler = async (event: any) => {
         },
 
         UpdateExpression: `
-          SET #status = :status,
-              updatedAt = :updatedAt,
-              updatedBy = :updatedBy
+          SET #status = :cancelled,
+              cancelledAt = :cancelledAt,
+              cancelledBy = :cancelledBy,
+              cancellationMessage = :cancellationMessage
         `,
 
         ExpressionAttributeNames: {
@@ -82,30 +79,42 @@ export const handler = async (event: any) => {
         },
 
         ExpressionAttributeValues: {
-          ":status": status,
-          ":updatedAt": new Date().toISOString(),
-          ":updatedBy": adminUserId,
+          ":cancelled": "cancelled",
+          ":cancelledAt": new Date().toISOString(),
+          ":cancelledBy": adminUserId,
+          ":cancellationMessage": cancellationMessage,
         },
 
         ReturnValues: "ALL_NEW",
       }),
     );
 
+    const reservation = result.Attributes;
+
+    if (reservation?.customerPhone) {
+      await sns.send(
+        new PublishCommand({
+          PhoneNumber: reservation.customerPhone,
+          Message: cancellationMessage,
+        }),
+      );
+    }
+
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        reservation: result.Attributes,
+        reservation,
       }),
     };
   } catch (error) {
-    console.error("Failed to update reservation status", error);
+    console.error("Failed to cancel reservation", error);
 
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
-        message: "Failed to update reservation status",
+        message: "Failed to cancel reservation",
       }),
     };
   }

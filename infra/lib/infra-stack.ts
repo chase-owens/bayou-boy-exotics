@@ -558,6 +558,36 @@ export class InfraStack extends cdk.Stack {
       },
     );
 
+    const cancelReservationLambda = new lambda.Function(
+      this,
+      "CancelReservationLambda",
+      {
+        runtime: lambda.Runtime.NODEJS_22_X,
+        handler: "cancel.handler",
+        code: lambda.Code.fromAsset(
+          path.join(__dirname, "../../lambdas/dist/admin/reservations"),
+        ),
+        environment: {
+          RESERVATIONS_TABLE_NAME: this.reservationsTable.tableName,
+        },
+      },
+    );
+
+    const updateReservationStatusLambda = new lambda.Function(
+      this,
+      "UpdateReservationStatusLambda",
+      {
+        runtime: lambda.Runtime.NODEJS_22_X,
+        handler: "status.handler",
+        code: lambda.Code.fromAsset(
+          path.join(__dirname, "../../lambdas/dist/admin/reservations"),
+        ),
+        environment: {
+          RESERVATIONS_TABLE_NAME: this.reservationsTable.tableName,
+        },
+      },
+    );
+
     // Location Lambdas
     const autocompleteAddressLambda = new lambda.Function(
       this,
@@ -582,13 +612,8 @@ export class InfraStack extends cdk.Stack {
     this.reservationsTable.grantWriteData(createReservationLambda);
     this.reservationsTable.grantReadData(listReservationsLambda);
     this.reservationsTable.grantReadWriteData(confirmReservationLambda);
-
-    autocompleteAddressLambda.addToRolePolicy(
-      new iam.PolicyStatement({
-        actions: ["geo-places:Autocomplete"],
-        resources: ["*"],
-      }),
-    );
+    this.reservationsTable.grantReadWriteData(cancelReservationLambda);
+    this.reservationsTable.grantReadWriteData(updateReservationStatusLambda);
 
     confirmReservationLambda.addToRolePolicy(
       new iam.PolicyStatement({
@@ -607,6 +632,20 @@ export class InfraStack extends cdk.Stack {
     confirmReservationLambda.addToRolePolicy(
       new iam.PolicyStatement({
         actions: ["ses:SendEmail"],
+        resources: ["*"],
+      }),
+    );
+
+    cancelReservationLambda.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ["sns:Publish"],
+        resources: ["*"],
+      }),
+    );
+
+    autocompleteAddressLambda.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ["geo-places:Autocomplete"],
         resources: ["*"],
       }),
     );
@@ -745,12 +784,35 @@ export class InfraStack extends cdk.Stack {
       },
     );
 
-    adminReservations
-      .addResource("{reservationId}")
+    const adminReservation = adminReservations.addResource("{reservationId}");
+
+    adminReservation
       .addResource("confirm")
       .addMethod(
         "PATCH",
         new apigateway.LambdaIntegration(confirmReservationLambda),
+        {
+          authorizationType: apigateway.AuthorizationType.COGNITO,
+          authorizer: adminAuthorizer,
+        },
+      );
+
+    adminReservation
+      .addResource("cancel")
+      .addMethod(
+        "PATCH",
+        new apigateway.LambdaIntegration(cancelReservationLambda),
+        {
+          authorizationType: apigateway.AuthorizationType.COGNITO,
+          authorizer: adminAuthorizer,
+        },
+      );
+
+    adminReservation
+      .addResource("status")
+      .addMethod(
+        "PATCH",
+        new apigateway.LambdaIntegration(updateReservationStatusLambda),
         {
           authorizationType: apigateway.AuthorizationType.COGNITO,
           authorizer: adminAuthorizer,
