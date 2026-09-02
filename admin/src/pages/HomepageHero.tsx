@@ -1,13 +1,33 @@
-import { Image as ImageIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  Image as ImageIcon,
+  ImagePlus,
+  LoaderCircle,
+  Trash2,
+} from "lucide-react";
 
 import PageHeader from "../components/layout/PageHeader";
 import DataCard from "../components/ui/DataCard";
 import { useDraft } from "../context/draft/useDraft";
+import { fetchImages, type ImageLibraryResponse } from "../api";
 
 import type { Action, Hero } from "../../../shared/types/Home";
 
 export default function HomepageHero() {
   const { home, updateHomeDraft } = useDraft();
+
+  const [imageLibrary, setImageLibrary] = useState<ImageLibraryResponse | null>(
+    null,
+  );
+  const [showImagePicker, setShowImagePicker] = useState(false);
+
+  const isLoadingImages = showImagePicker && !imageLibrary;
+
+  useEffect(() => {
+    if (!showImagePicker || imageLibrary) return;
+
+    void fetchImages().then(setImageLibrary);
+  }, [showImagePicker, imageLibrary]);
 
   if (!home) {
     return null;
@@ -39,6 +59,22 @@ export default function HomepageHero() {
     }));
   };
 
+  const selectImage = (key: string) => {
+    const imagePath = key.startsWith("/") ? key : `/${key}`;
+
+    updateHero({
+      image: imagePath,
+    });
+
+    setShowImagePicker(false);
+  };
+
+  const removeImage = () => {
+    updateHero({
+      image: "",
+    });
+  };
+
   return (
     <>
       <PageHeader
@@ -55,19 +91,70 @@ export default function HomepageHero() {
         >
           <div className="space-y-5">
             <div>
-              <label className="admin-label">Image</label>
+              <div className="flex items-end justify-between gap-4">
+                <div>
+                  <p className="admin-label">Image</p>
+                  <p className="mt-1 text-xs text-white/60">
+                    Select an image from the image library.
+                  </p>
+                </div>
 
-              <input
-                type="text"
-                value={hero.image}
-                onChange={(event) =>
-                  updateHero({
-                    image: event.target.value,
-                  })
-                }
-                placeholder="/images/hero5.png"
-                className="admin-input"
-              />
+                <button
+                  type="button"
+                  onClick={() => setShowImagePicker((current) => !current)}
+                  className="flex items-center gap-2 text-sm font-semibold text-accent"
+                >
+                  <ImagePlus className="size-4" />
+                  {hero.image ? "Change Image" : "Add Image"}
+                </button>
+              </div>
+
+              {hero.image && (
+                <div className="mt-4 flex items-center gap-4">
+                  <img
+                    src={hero.image}
+                    alt=""
+                    className="h-24 w-36 rounded-md object-cover"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={removeImage}
+                    className="flex items-center gap-2 text-sm font-semibold text-highlight"
+                  >
+                    <Trash2 className="size-4" />
+                    Remove
+                  </button>
+                </div>
+              )}
+
+              {showImagePicker && (
+                <div className="mt-4 border-t border-white/10 pt-4">
+                  {isLoadingImages ? (
+                    <div className="flex items-center gap-2 text-sm text-white/60">
+                      <LoaderCircle className="size-4 animate-spin" />
+                      Loading images...
+                    </div>
+                  ) : (
+                    <div className="grid max-h-96 grid-cols-2 gap-3 overflow-y-auto sm:grid-cols-3">
+                      {(imageLibrary?.images ?? []).map((image) => (
+                        <button
+                          key={image.key}
+                          type="button"
+                          onClick={() => selectImage(image.key)}
+                          className="overflow-hidden rounded-md border border-white/10 transition hover:border-accent"
+                        >
+                          <img
+                            src={image.url}
+                            alt={image.name}
+                            className="aspect-square w-full object-cover"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div>

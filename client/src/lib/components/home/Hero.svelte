@@ -35,10 +35,10 @@
 				{#if hero.primaryAction}
 					<div class="mt-1">
 						<a
-							href={resolve('/menu')}
+							href={hero.primaryAction.href}
 							class="inline-flex items-center gap-3 rounded-xl border border-highlight bg-black/70 px-6 py-3 font-semibold text-accent backdrop-blur transition hover:border-accent/80 hover:bg-black/85 hover:text-white"
 						>
-							<span>Shop Now</span>
+							<span>{hero.primaryAction.label}</span>
 							<Arrow class="h-4" />
 						</a>
 					</div>

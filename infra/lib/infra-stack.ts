@@ -441,8 +441,8 @@ export class InfraStack extends cdk.Stack {
 
     const contentEnvironment = {
       CONTENT_BUCKET_NAME: contentBucket.bucketName,
-      CLIENT_DISTRIBUTION_ID: clientDistribution.distributionId,
-      ADMIN_DISTRIBUTION_ID: adminDistribution.distributionId,
+      // CLIENT_DISTRIBUTION_ID: clientDistribution.distributionId,
+      // ADMIN_DISTRIBUTION_ID: adminDistribution.distributionId,
     };
 
     // Content Lambdas

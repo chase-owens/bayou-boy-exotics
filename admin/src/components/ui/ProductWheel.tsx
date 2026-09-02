@@ -20,9 +20,10 @@ export default function ProductWheel({
 }: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  if (listings.length === 0) {
-    return null;
-  }
+  const safeActiveIndex = Math.min(
+    activeIndex,
+    Math.max(listings.length - 1, 0),
+  );
 
   const goPrevious = () => {
     setActiveIndex(
@@ -35,7 +36,7 @@ export default function ProductWheel({
   };
 
   const getPosition = (index: number) => {
-    let offset = index - activeIndex;
+    let offset = index - safeActiveIndex;
 
     if (offset > listings.length / 2) {
       offset -= listings.length;
@@ -184,7 +185,7 @@ export default function ProductWheel({
           </button>
 
           <span className="min-w-16 text-center text-xs font-semibold text-white/60">
-            {activeIndex + 1} / {listings.length}
+            {Math.min(activeIndex + 1, listings.length)} / {listings.length}
           </span>
 
           <button
