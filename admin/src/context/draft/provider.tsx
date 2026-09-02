@@ -40,7 +40,9 @@ const contentPaths: Record<DraftFileKey, string> = {
 };
 
 const fetchJson = async <T,>(path: string): Promise<T> => {
-  const response = await fetch(path);
+  const response = await fetch(path, {
+    cache: "no-store",
+  });
 
   if (!response.ok) {
     throw new Error(`Failed to load ${path}`);

@@ -7,7 +7,7 @@ import MeetTimes from "../pages/MeetTimes";
 import Reservations from "../pages/Reservations";
 import FeaturedDeals from "../pages/FeaturedDeals";
 import Raffle from "../pages/Raffle";
-import Categories from "../pages/Categories";
+import HomepageHero from "../pages/HomepageHero";
 import Users from "../pages/Users";
 import Login from "../pages/Login";
 
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
               { path: "featured-deals", element: <FeaturedDeals /> },
               { path: "image-library", element: <ImageLibrary /> },
               { path: "raffle", element: <Raffle /> },
-              { path: "categories", element: <Categories /> },
+              { path: "homepage-hero", element: <HomepageHero /> },
               {
                 element: <AdminRoute />,
                 children: [

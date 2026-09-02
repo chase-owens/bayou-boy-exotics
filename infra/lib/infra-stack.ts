@@ -439,6 +439,12 @@ export class InfraStack extends cdk.Stack {
     accessRequestsTable.grantReadWriteData(denyAccessRequestLambda);
     accessRequestsTable.grantReadData(getAccessRequestLambda);
 
+    const contentEnvironment = {
+      CONTENT_BUCKET_NAME: contentBucket.bucketName,
+      CLIENT_DISTRIBUTION_ID: clientDistribution.distributionId,
+      ADMIN_DISTRIBUTION_ID: adminDistribution.distributionId,
+    };
+
     // Content Lambdas
     const updateAvailabilityLambda = new lambda.Function(
       this,
@@ -449,9 +455,7 @@ export class InfraStack extends cdk.Stack {
         code: lambda.Code.fromAsset(
           path.join(__dirname, "../../lambdas/dist/admin/content/availability"),
         ),
-        environment: {
-          CONTENT_BUCKET_NAME: contentBucket.bucketName,
-        },
+        environment: contentEnvironment,
       },
     );
 
@@ -461,9 +465,7 @@ export class InfraStack extends cdk.Stack {
       code: lambda.Code.fromAsset(
         path.join(__dirname, "../../lambdas/dist/admin/content/home"),
       ),
-      environment: {
-        CONTENT_BUCKET_NAME: contentBucket.bucketName,
-      },
+      environment: contentEnvironment,
     });
 
     const updateMenuLambda = new lambda.Function(this, "UpdateMenuLambda", {
@@ -472,9 +474,7 @@ export class InfraStack extends cdk.Stack {
       code: lambda.Code.fromAsset(
         path.join(__dirname, "../../lambdas/dist/admin/content/menu"),
       ),
-      environment: {
-        CONTENT_BUCKET_NAME: contentBucket.bucketName,
-      },
+      environment: contentEnvironment,
     });
 
     const updateRootLambda = new lambda.Function(this, "UpdateRootLambda", {
@@ -483,9 +483,7 @@ export class InfraStack extends cdk.Stack {
       code: lambda.Code.fromAsset(
         path.join(__dirname, "../../lambdas/dist/admin/content/root"),
       ),
-      environment: {
-        CONTENT_BUCKET_NAME: contentBucket.bucketName,
-      },
+      environment: contentEnvironment,
     });
 
     // Images Lambdas
