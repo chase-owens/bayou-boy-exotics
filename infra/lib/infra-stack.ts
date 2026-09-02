@@ -538,6 +538,22 @@ export class InfraStack extends cdk.Stack {
       },
     );
 
+    const getMyReservationsLambda = new lambda.Function(
+      this,
+      "GetMyReservationsLambda",
+      {
+        runtime: lambda.Runtime.NODEJS_22_X,
+        handler: "mine.handler",
+        code: lambda.Code.fromAsset(
+          path.join(__dirname, "../../lambdas/dist/reservations"),
+        ),
+        environment: {
+          RESERVATIONS_TABLE_NAME: this.reservationsTable.tableName,
+          USER_INDEX_NAME: "user-index",
+        },
+      },
+    );
+
     const listReservationsLambda = new lambda.Function(
       this,
       "ListReservationsLambda",
@@ -622,6 +638,7 @@ export class InfraStack extends cdk.Stack {
     contentBucket.grantDelete(deleteImageLambda);
 
     this.reservationsTable.grantWriteData(createReservationLambda);
+    this.reservationsTable.grantReadData(getMyReservationsLambda);
     this.reservationsTable.grantReadData(listReservationsLambda);
     this.reservationsTable.grantReadWriteData(confirmReservationLambda);
     this.reservationsTable.grantReadWriteData(cancelReservationLambda);
@@ -794,6 +811,17 @@ export class InfraStack extends cdk.Stack {
         authorizer: clientAuthorizer,
       },
     );
+
+    reservations
+      .addResource("mine")
+      .addMethod(
+        "GET",
+        new apigateway.LambdaIntegration(getMyReservationsLambda),
+        {
+          authorizationType: apigateway.AuthorizationType.COGNITO,
+          authorizer: clientAuthorizer,
+        },
+      );
 
     // Admin Reservation Routes
     adminReservations.addMethod(

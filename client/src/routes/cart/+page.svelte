@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { submitReservation } from '$lib/api/reservations';
 	import CartMeetSummary from '$lib/components/cart/CartMeetSummary.svelte';
@@ -44,6 +45,7 @@
 			setTimeout(() => {
 				isSuccess = false;
 				cart.clear();
+				goto(resolve('/reservations'));
 			}, 5000);
 		} catch (err) {
 			error = err instanceof Error ? err.message : 'Reservation failed to send';
